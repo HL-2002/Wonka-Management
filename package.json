@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node ./backend/index.js"
   },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
