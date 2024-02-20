@@ -4,9 +4,11 @@
   "description": "Wonka's Management System proof of concept for Web Programming's  final project",
   "type": "module",
   "scripts": {
-    "start": "node ./backend/index.js"
+    "start": "node ./backend/index.js",
+    "dev": "node --env-file=.env --watch ./backend/index.js"
   },
   "dependencies": {
+    "@libsql/client": "^0.5.1",
     "express": "^4.18.2"
   },
   "keywords": [],
