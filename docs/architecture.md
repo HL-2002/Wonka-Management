@@ -34,5 +34,12 @@ Dicho módulo será conectado al enrutador (Router API) para que a través de el
 Para el **frontend**, la idea es general es en primer lugar construir la estructura y estilo de la página como si fuera estática, de manera que luego se pueda inyectar el HTML dinámico según los resultados de las llamadas a la API.
 
 <img src="pics/front.jpg" alt="Imágen de la arquitectura del front" width="500"/>
+<br><br>
+
+# Despliegue
+
+La API, al igual que el front, serán desplegadas en [Render](https://render.com).
+
+Por otro lado, las bases de datos de cada módulo serán desplegadas en [Turso](https://turso.tech).
  
 
