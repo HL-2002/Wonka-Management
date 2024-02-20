@@ -23,3 +23,6 @@ private.key
 # Ignore compiled binaries or executables
 *.exe
 *.dll
+
+# Ignore mac build files
+.DS_Store
