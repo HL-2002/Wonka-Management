@@ -1,0 +1,12 @@
+{
+  "name": "wonka-management",
+  "version": "1.0.0",
+  "description": "Wonka's Management System proof of concept for Web Programming's  final project",
+  "type": "module",
+  "scripts": {
+    "start": "node ./backend/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
