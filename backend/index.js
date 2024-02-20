@@ -2,6 +2,9 @@ import express from 'express'
 import matenimientoRouter from './routes/mantenimiento/index.js'
 const app = express()
 
+// define port
+const port = process.env.PORT || 3000
+
 // Router api
 const ApiRouter = express.Router()
 
@@ -15,6 +18,6 @@ app.use('/api', ApiRouter)
 app.use(express.static('frontend'))
 
 //  start the server
-app.listen(3000, () => {
-  console.log('Server is running on  http://localhost:3000/')
+app.listen(port, () => {
+  console.log(`Server is running on  http://localhost:${port}/`)
 })
