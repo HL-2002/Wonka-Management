@@ -17,5 +17,5 @@ npm install
 then you can run the project with the following command
 
 ```bash
-npm run start
+npm run dev
 ```
