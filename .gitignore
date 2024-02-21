@@ -10,6 +10,7 @@ dist/
 # Ignore logs and temporary files
 *.log
 *.tmp
+*.db
 
 # Ignore environment-specific files
 .env
