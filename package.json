@@ -1,23 +1,28 @@
 {
   "name": "wonka-management",
   "version": "1.0.0",
+  
   "description": "Wonka's Management System proof of concept for Web Programming's  final project",
   "type": "module",
   "scripts": {
-    "start": "node ./backend/index.js",
-    "dev": "node --env-file=.env --watch ./backend/index.js"
+    "start": "mode=production   node ./backend/index.js",
+    "dev": " mode=development   node  --watch ./backend/index.js"
   },
   "dependencies": {
-    "@libsql/client": "^0.5.1",
-    "express": "^4.18.2"
+    "@libsql/client": "0.5.1",
+    "express": "4.18.2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^17.1.0"
+    "standard": "17.1.0"
   },
   "eslintConfig": {
     "extends": "standard"
+  },
+
+  "engines": {
+    "node": ">20.0.0"
   }
 }
