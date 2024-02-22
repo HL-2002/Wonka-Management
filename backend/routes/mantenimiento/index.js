@@ -12,8 +12,8 @@ Router.get('/', async (req, res) => {
   await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE date(dateAvailability) <= date()' })
 
   const { rows: machines } = await client.execute('SELECT MACHINE.*, MAINTENANCE.type as typeMaintenance ,MAINTENANCE.dateMaintenance, MAINTENANCE.dateAvailability  FROM MACHINE LEFT JOIN MAINTENANCE ON MACHINE.id = MAINTENANCE.machineId')
-
-  res.json({ machines })
+  const data = machines ?? []
+  res.json({ machines: data })
 })
 
 // create a new maintenance
