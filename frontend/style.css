@@ -1,5 +1,4 @@
 .header {
-    width: 100%;
     border-bottom: 1px solid #bbbbbbcb;
 }
 
@@ -7,17 +6,27 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 4rem;
     gap: 1.2rem;
 
 }
 
-
+.header-navbar img {
+    margin-right: 50px;
+}
 
 .header-navbar li {
+    margin-left: 10px;
+    margin-right: 20px;
     list-style: none;
     transition: all 0.3s ease;
+}
 
+.header-navbar li img {
+    float: left;
+    width: 32px;
+    height: 32px;
+    margin-right: -50px;
 }
 
 .header-navbar li a {
@@ -25,6 +34,7 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
+    margin-left: 40px;
 }
 
 .header-navbar li:hover {
@@ -33,54 +43,63 @@
 }
 
 
-. .header-navbar li:last-child {
-    margin-left: auto;
-}
-
-
 .lading-container {
     min-height: 100vh;
     background-color: #6f27ff;
 }
 
+section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .main {
-    display: grid;
-    max-width: 700px;
-    margin: 6rem auto 0 auto;
-    gap: 1.5rem;
-    place-content: center;
-    justify-items: center;
-
-}
-
-
-
-.main-title-container {
-    color: white;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-wrap: pretty;
-
-}
-
-.main-title-container h1 {
-    font-size: 3rem;
-    text-wrap: balance;
-    background: linear-gradient(90deg, #ff8a00, #fff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-}
-
-
-.main img {
-    width: 1200;
-    max-width: 1200px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -60px;
+    background-color: rgb(52, 0, 95);
     border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.main .text-box {
+    position: relative;
+    max-width: 600px;
+    margin-left: 50px;
+}
+
+.main .text-box h1 {
+    color: #ececec;
+    font-size: 4em;
+    line-height: 1.4em;
+    font-weight: 500;
+}
+
+.main .text-box h1 span {
+    background: #FF8911;
+    background: linear-gradient(to right, #FF8911 0%, #FDBF60 100%);
+    background-clip: content-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    font-weight: 900;
+}
+
+.main .text-box p {
+    color: #ececec;
+    font-size: 2em;
+
+}
+
+.main .img-box {
+    display: flex;
+    justify-content: flex-end;
+
 }
