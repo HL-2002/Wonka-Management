@@ -8,12 +8,14 @@ Router.get('/', async (req, res) => {
 // get the machines and the maintenance from the database
 
   // make a query to the database update the machines  state in base of the maintenance date
-  await client.execute({ sql: 'UPDATE MACHINE SET state = ? , availability = 0  WHERE date((select dateMaintenance from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) <= date() AND date((select dateAvailability from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) >= date();', args: ['mantenimiento'] })
-  await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE date(dateAvailability) <= date()' })
-
+  try {
+    await client.execute({ sql: 'UPDATE MACHINE SET state = ? , availability = 0  WHERE date((select dateMaintenance from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) <= date() AND date((select dateAvailability from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) >= date();', args: ['mantenimiento'] })
+    await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE date(dateAvailability) <= date()' })
+  } catch (error) {
+    console.error('dont have maintenance to update the state of the machine', error)
+  }
   const { rows: machines } = await client.execute('SELECT MACHINE.*, MAINTENANCE.type as typeMaintenance ,MAINTENANCE.dateMaintenance, MAINTENANCE.dateAvailability  FROM MACHINE LEFT JOIN MAINTENANCE ON MACHINE.id = MAINTENANCE.machineId')
-  const data = machines ?? []
-  res.json({ machines: data })
+  res.json({ machines })
 })
 
 // create a new maintenance
