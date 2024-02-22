@@ -48,7 +48,7 @@
     background-color: #6f27ff;
 }
 
-section {
+.main {
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -58,7 +58,7 @@ section {
     align-items: center;
 }
 
-.main {
+.main>div {
     position: relative;
     width: 100%;
     display: flex;
@@ -69,20 +69,20 @@ section {
     border-radius: 10px;
 }
 
-.main .text-box {
+.main>div .text-box {
     position: relative;
     max-width: 600px;
     margin-left: 50px;
 }
 
-.main .text-box h1 {
+.main>div .text-box h1 {
     color: #ececec;
     font-size: 4em;
     line-height: 1.4em;
     font-weight: 500;
 }
 
-.main .text-box h1 span {
+.main>div .text-box h1 span {
     background: #FF8911;
     background: linear-gradient(to right, #FF8911 0%, #FDBF60 100%);
     background-clip: content-box;
@@ -92,13 +92,13 @@ section {
     font-weight: 900;
 }
 
-.main .text-box p {
+.main>div .text-box p {
     color: #ececec;
     font-size: 2em;
 
 }
 
-.main .img-box {
+.main>div .img-box {
     display: flex;
     justify-content: flex-end;
 
