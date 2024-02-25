@@ -1,15 +1,15 @@
 {
   "name": "wonka-management",
   "version": "1.0.0",
-  
   "description": "Wonka's Management System proof of concept for Web Programming's  final project",
   "type": "module",
   "scripts": {
-    "start": "mode=production   node ./backend/index.js",
-    "dev": " mode=development   node  --watch ./backend/index.js"
+    "start": "cross-env mode=production   node ./backend/index.js",
+    "dev": "cross-env mode=development   node  --watch ./backend/index.js"
   },
   "dependencies": {
     "@libsql/client": "0.5.1",
+    "cross-env": "7.0.3",
     "express": "4.18.2"
   },
   "keywords": [],
@@ -21,7 +21,6 @@
   "eslintConfig": {
     "extends": "standard"
   },
-
   "engines": {
     "node": "20.9.0"
   }
