@@ -1,21 +1,31 @@
-const dialog = document.getElementById('frame')
-const button = document.getElementById('openP')
-const btn = document.getElementById('pre-close')
-button.addEventListener('click', (e) => {
-  dialog.classList.remove('close')
-  dialog.classList.add('open')
-  dialog.showModal()
+// obtener los botones de abrir y cerrar
+const btns = document.querySelectorAll('.btn-open')
+const btnsClose = document.querySelectorAll('.close-button')
+
+// recorrer los botones de abrir y agregar el evento click
+btns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const dialog = document.getElementById(btn.value)
+    dialog.classList.remove('close')
+    dialog.classList.add('open')
+    dialog.showModal()
+  })
 })
 
-btn.addEventListener('click', (e) => {
-  e.preventDefault()
-  dialog.classList.remove('open')
-  dialog.classList.add('close')
+// recorrer los botones de cerrar y agregar el evento click
+btnsClose.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault()
+    const dialog = document.getElementById(e.target.parentElement.parentElement.id)
+    dialog.classList.remove('open')
+    dialog.classList.add('close')
 
-  const closeDialog = () => {
-    dialog.close()
-    dialog.removeEventListener('animationend', closeDialog)
-  }
+    const close = () => {
+      dialog.close()
+      dialog.removeEventListener('animationend', close)
+    }
 
-  dialog.addEventListener('animationend', closeDialog)
-})
+    dialog.addEventListener('animationend', close)
+  })
+}
+)
