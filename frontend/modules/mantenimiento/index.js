@@ -1,8 +1,21 @@
-const dialog = document.getElementById("frame")
-const button = document.getElementById("openP")
+const dialog = document.getElementById('frame')
+const button = document.getElementById('openP')
+const btn = document.getElementById('pre-close')
+button.addEventListener('click', (e) => {
+  dialog.classList.remove('close')
+  dialog.classList.add('open')
+  dialog.showModal()
+})
 
-button.addEventListener("click",(e)=>{
+btn.addEventListener('click', (e) => {
+  e.preventDefault()
+  dialog.classList.remove('open')
+  dialog.classList.add('close')
 
-dialog.showModal()
+  const closeDialog = () => {
+    dialog.close()
+    dialog.removeEventListener('animationend', closeDialog)
+  }
 
+  dialog.addEventListener('animationend', closeDialog)
 })
