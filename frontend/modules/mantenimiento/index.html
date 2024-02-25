@@ -110,6 +110,50 @@
                         <p style="color:red;">Defectuosas</p>
                         <p>Total</p>
                     </div>
+
+                    <dialog id="frae" class="dialog">
+                        <div style="width: 300px;">
+                            <form id="form">
+
+                                <button id="pre-close" class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Agregar máquina</h2>
+
+                                <div>
+                                    <label class="form-element">Tipo</label>
+                                    <select class="form-element">
+                                        <option>Chocolatera</option>
+                                        <option>Caramelizadora</option>
+                                        <option>Caramelera</option>
+                                        <option>Chiclera</option>
+                                    </select>
+                                </div>
+
+                                <input type="submit" value="Listo" class="form-element" id="submit">
+                            </form>
+                        </div>
+                    </dialog>
+
+                    <button id="openP">Agregar</button>
+
+
+                    <dialog id="frame" class="dialog">
+                        <div style="width: 300px;">
+                            <form id="form">
+
+                                <button id="pre-close" class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Eliminar máquina</h2>
+
+                                <div>
+                                    <label class="form-element">id</label>
+                                    <input type="text" placeholder="ingresar id"> <br>
+                                </div>
+
+                                <input type="submit" value="Listo" class="form-element" id="submit">
+                            </form>
+                        </div>
+                    </dialog>
+
+                    <button id="openP">Eliminar</button>
                 </div>
             </section>
 
@@ -119,19 +163,155 @@
                 </h2>
 
                 <dialog id="frame" class="dialog">
-                    <form>
+                    <form id="form">
 
-                        <h2>Predictivo</h2>
-                        <button id="pre-close">cerrar</button>
+                        <button id="pre-close" class="close-button">x</button>
+                        <h2 class="form-element" id="form-title">Preventivo</h2>
 
+                        <div>
+                            <label class="form-element">Selección</label>
+                            <select class="form-element">
+                                <option>maquina 1</option>
+                                <option>maquina 2</option>
+                                <option>maquina 3</option>
+                            </select> <br>
+                            <label class="form-element">Fecha de mantenimiento</label>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
+                        </div>
 
+                        <input type="submit" value="Listo" class="form-element" id="submit">
                     </form>
+                </dialog>
 
+                <button id="openP">Preventivo</button>
 
+                <dialog id="frame" class="dialog">
+                    <form id="form">
 
+                        <button id="pre-close" class="close-button">x</button>
+                        <h2 class="form-element" id="form-title">Predictivo</h2>
+
+                        <div>
+                            <label class="form-element">Selección</label>
+                            <select class="form-element">
+                                <option>notificada 1</option>
+                                <option>notificada 2</option>
+                                <option>notificada 3</option>
+                            </select> <br>
+                            <label class="form-element">Fecha de mantenimiento</label>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
+                        </div>
+
+                        <input type="submit" value="Listo" class="form-element" id="submit">
+                    </form>
                 </dialog>
 
                 <button id="openP">Predictivo</button>
+
+
+                <dialog id="frame" class="dialog">
+                    <form id="form">
+
+                        <button id="pre-close" class="close-button">x</button>
+                        <h2 class="form-element" id="form-title">Correctivo</h2>
+
+                        <div>
+                            <label class="form-element">Selección</label>
+                            <select class="form-element">
+                                <option>Defectuosa 1</option>
+                                <option>Defectuosa 2</option>
+                                <option>Defectuosa 3</option>
+                            </select> <br>
+                            <label class="form-element">Finalización</label>
+                            <input type="date" class="form-element"> <br>
+                        </div>
+
+                        <input type="submit" value="Listo" class="form-element" id="submit">
+                    </form>
+                </dialog>
+
+                <button id="openP">Correctivo</button>
+
+
+                <dialog id="frame" class="dialog">
+                    <form id="form">
+
+                        <button id="pre-close" class="close-button">x</button>
+                        <h2 class="form-element" id="form-title">Modificar plan</h2>
+
+                        <div>
+                            <label class="form-element">Selección</label>
+                            <select class="form-element">
+                                <option>Mantenimiento 1</option>
+                                <option>Mantenimiento 2</option>
+                                <option>Mantenimiento 3</option>
+                            </select> <br>
+                            <label class="form-element">Fecha de mantenimiento</label>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
+                        </div>
+
+                        <input type="submit" value="Listo" class="form-element" id="submit">
+                    </form>
+                </dialog>
+
+                <button id="openP">Modificar plan</button>
+
+
+                <dialog id="frame" class="dialog">
+                    <div style="width: 400px;">
+                        <form id="form">
+
+                            <button id="pre-close" class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Modificar mantenimiento</h2>
+
+                            <div>
+                                <label class="form-element">Selección</label>
+                                <select class="form-element">
+                                    <option>Mantenimiento 1</option>
+                                    <option>Mantenimiento 2</option>
+                                    <option>Mantenimiento 3</option>
+                                </select> <br>
+                                <label class="form-element">Finalización</label><br>
+                                <div class="form-element" id="duration">*calcular duracion*</div>
+                            </div>
+
+                            <input type="submit" value="Listo" class="form-element" id="submit">
+                        </form>
+                    </div>
+                </dialog>
+
+                <button id="openP">Modificar mantenimiento</button>
+            </section>
+
+            <section class="section">
+                <h2>
+                    Estado
+                </h2>
+
+                <div>
+                    <ul>
+                        <li>
+                            <h3>Chocolateras</h3>
+                        </li>
+                        <li>
+                            <h3>Caramelizadoras</h3>
+                        </li>
+                        <li>
+                            <h3>Carameleras</h3>
+                        </li>
+                        <li>
+                            <h3>Chicleras</h3>
+                        </li>
+                    </ul>
+
+                </div>
+
             </section>
         </main>
     </div>
