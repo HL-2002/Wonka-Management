@@ -124,6 +124,7 @@ button:active {
     background-color: #ececec;
     border-radius: 5px;
     border: none;
+    min-width: 500px;
 }
 
 .form {
@@ -133,7 +134,7 @@ button:active {
 
 .close-button {
     position: absolute;
-    right: 3%;
+    right: 4px;
     top: 0;
 }
 
