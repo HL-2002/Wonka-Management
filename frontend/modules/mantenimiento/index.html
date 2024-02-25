@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../header.css">
-    <link rel="stylesheet" href="../../reset.css">
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/reset.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
     <title>Mantenimiento</title>
 </head>
 
@@ -18,26 +19,26 @@
             <nav>
                 <ul class="header-navbar">
 
-                    <a href="../../index.html">
-                        <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp"
-                            alt="logo de wonka's">
+                    <a href="/">
+                        <img width="160px" height="160px" src="/public/logotipo-blanco-op.webp" alt="logo de wonka's">
                     </a>
 
-                    <li><a href="#"><img src="../../public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                    <li><a href="#"><img src="../../public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
-                    <li><a href="#"><img src="../../public/icono_3.webp" alt="icono de inventario">Inventario</a></li>
-                    <li><a href="#"><img src="../../public/icono_4.webp" alt="icono Produccion">Producción</a></li>
-                    <li><a href="#"><img src="../../public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento</a>
+                    <li><a href="#"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                    <li><a href="#"><img src="/public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
+                    <li><a href="#"><img src="/public/icono_3.webp" alt="icono de inventario">Inventario</a></li>
+                    <li><a href="#"><img src="/public/icono_4.webp" alt="icono Produccion">Producción</a></li>
+                    <li><a href="#"><img src="/public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento</a>
                     </li>
-                    <li><a href="#"><img src="../../public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+                    <li><a href="#"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
 
                 </ul>
             </nav>
         </header>
 
-        <h1>Mantenimiento</h1>
         <main class="main">
-            <div class="section">
+            <h1>Mantenimiento</h1>
+
+            <section class="section">
                 <h2>
                     Máquinas
                 </h2>
@@ -102,7 +103,6 @@
                     </ul>
                     <div class="data">
                         <p class="head">Cantidad</p>
-                        <br>
                         <p style="color: #6f27ff;">En uso </p>
                         <p style="color:greenyellow;">Con modificación</p>
                         <p style="color:forestgreen;">Disponibles</p>
@@ -111,26 +111,28 @@
                         <p>Total</p>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="section">
+            <section class="section">
                 <h2>
                     Mantenimiento
                 </h2>
 
-                <dialog id="frame" class="predictive">
-                    <form method="dialog">
-                        <div>
-                            <h2>Predictivo</h2>
-                            <button>cerrar</button>
-                        </div>
+                <dialog id="frame" class="dialog">
+                    <form>
+
+                        <h2>Predictivo</h2>
+                        <button id="pre-close">cerrar</button>
+
+
                     </form>
+
 
 
                 </dialog>
 
                 <button id="openP">Predictivo</button>
-            </div>
+            </section>
         </main>
     </div>
     <script src="index.js"></script>
