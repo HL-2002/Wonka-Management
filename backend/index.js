@@ -1,5 +1,7 @@
 import express from 'express'
 import matenimientoRouter from './routes/mantenimiento/index.js'
+import inventarioRouter from './routes/inventario/index.js'
+
 const app = express()
 
 // define port
@@ -9,11 +11,12 @@ app.use(express.json())
 
 // Router api
 const ApiRouter = express.Router()
-
-// add the mantenimiento_router to the api router
-ApiRouter.use('/mantenimiento', matenimientoRouter)
 // add the api router to the app
 app.use('/api', ApiRouter)
+
+// add the modu_router to the api router
+ApiRouter.use('/mantenimiento', matenimientoRouter)
+ApiRouter.use('/inventario', inventarioRouter)
 
 // add the frontend to the app
 app.use(express.static('frontend'))
