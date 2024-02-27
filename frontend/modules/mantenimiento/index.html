@@ -50,6 +50,10 @@
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: greenyellow;"></div>
                                 <div class="square" style="background-color: greenyellow;"></div>
                                 <div class="square" style="background-color: forestgreen;"></div>
@@ -61,6 +65,8 @@
                         <li>
                             <h3>Caramelizadoras</h3>
                             <div class="container">
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
@@ -92,6 +98,9 @@
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
+                                <div class="square" style="background-color: #6f27ff;"></div>
                                 <div class="square" style="background-color: greenyellow;"></div>
                                 <div class="square" style="background-color: greenyellow;"></div>
                                 <div class="square" style="background-color: forestgreen;"></div>
@@ -102,13 +111,50 @@
                         </li>
                     </ul>
                     <div class="data">
-                        <p class="head">Cantidad</p>
-                        <p style="color: #6f27ff;">En uso </p>
-                        <p style="color:greenyellow;">Con modificación</p>
-                        <p style="color:forestgreen;">Disponibles</p>
-                        <p style="color:orange;">En mantenimiento</p>
-                        <p style="color:red;">Defectuosas</p>
-                        <p>Total</p>
+                        <div class="data-grid">
+                            <div class="grid-item"></div>
+                            <div class="grid-item">Chocolateras</div>
+                            <div class="grid-item">Caramelizadoras</div>
+                            <div class="grid-item">Carameleras</div>
+                            <div class="grid-item">Chicleras</div>
+                            <!--En uso -->
+                            <p style="color: #6f27ff;" class="first-item">En uso </p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <!--Modificadas -->
+                            <p style="color: greenyellow;" class="first-item">Modificadas</p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <!--Disponibles -->
+                            <p style="color:forestgreen;" class="first-item">Disponibles</p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <!--Mantenimiento -->
+                            <p style="color:orange;" class="first-item">Mantenimiento</p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <!--Defectuosas-->
+                            <p style="color:red;" class="first-item">Defectuosas</p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <!--Total -->
+                            <p class="first-item">Total</p>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+                            <div class="grid-item">0</div>
+
+                        </div>
                     </div>
 
                     <dialog id="add" class="dialog">
@@ -299,22 +345,9 @@
                     Estado
                 </h2>
 
-                <div>
-                    <ul>
-                        <li>
-                            <h3>Chocolateras</h3>
-                        </li>
-                        <li>
-                            <h3>Caramelizadoras</h3>
-                        </li>
-                        <li>
-                            <h3>Carameleras</h3>
-                        </li>
-                        <li>
-                            <h3>Chicleras</h3>
-                        </li>
-                    </ul>
-
+                <div class="state-container">
+                    <div class="state">id</div>
+                    <div class="state-info">Texto de prueba del estado</div>
                 </div>
 
             </section>

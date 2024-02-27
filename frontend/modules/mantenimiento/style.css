@@ -40,6 +40,7 @@ h1 {
     flex-basis: 100%;
     color: #ececec;
     font-size: 2em;
+    margin-bottom: 10px;
 }
 
 
@@ -74,7 +75,8 @@ h1 {
 }
 
 .data {
-    padding: 2rem 3rem;
+    display: flex;
+    padding: 2rem 1rem;
     /* gap: 3rem; */
     font-size: 1.5em;
     /* font-weight: 500; */
@@ -82,8 +84,33 @@ h1 {
     background-color: #ececec;
     /* width: 50%; */
     border-radius: 10px;
-    max-width: 550px;
+    max-width: 1000px;
 }
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-left: 70px;
+    gap: 15px;
+}
+
+.first-item {
+    text-align: left;
+    padding: 5px;
+    font-weight: 900;
+}
+
+
+.grid-item {
+    text-align: center;
+}
+
+@media (max-width: 800px) {
+    .data-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
 
 .head {
     text-align: right;
@@ -118,8 +145,6 @@ button:active {
     transform: translateY(2px);
     background: #6f27ff;
 }
-
-
 
 
 .dialog {
@@ -180,6 +205,32 @@ button:active {
     cursor: pointer;
     box-shadow: black 2px 1px 10px;
     margin-top: 20px;
+}
+
+.state-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.state {
+    width: 60px;
+    height: 60px;
+    background-color: red;
+    border-radius: 10px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.state-info {
+    padding: 10px 40px;
+    background-color: #ececec;
+    border-radius: 5px;
+    margin-left: -15px;
 }
 
 #submit:hover {
