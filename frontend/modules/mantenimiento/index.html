@@ -113,9 +113,10 @@
 
                     <dialog id="add" class="dialog">
                         <form class="form">
-
-                            <button class="close-button">x</button>
-                            <h2 class="form-element" id="form-title">Agregar máquina</h2>
+                            <div class="dialog-head">
+                                <button class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Agregar máquina</h2>
+                            </div>
 
                             <div>
                                 <label class="form-element">Tipo</label>
@@ -131,14 +132,13 @@
                         </form>
                     </dialog>
 
-                    <button value="add" class="btn-open">Agregar</button>
-
 
                     <dialog id="delete" class="dialog">
                         <form class="form">
-
-                            <button class="close-button">x</button>
-                            <h2 class="form-element" id="form-title">Eliminar máquina</h2>
+                            <div class="dialog-head">
+                                <button class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Eliminar máquina</h2>
+                            </div>
 
                             <div>
                                 <label class="form-element">id</label>
@@ -148,21 +148,27 @@
                             <input type="submit" value="Listo" class="form-element" id="submit">
                         </form>
                     </dialog>
+                    <div class="btn-dialogs">
+                        <button value="add" class="btn-open">Agregar</button>
+                        <button value="delete" class="btn-open">Eliminar</button>
+                    </div>
 
-                    <button value="delete" class="btn-open">Eliminar</button>
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section mantenimiento">
                 <h2>
                     Mantenimiento
                 </h2>
 
                 <dialog id="prevent" class="dialog">
                     <form class="form">
+                        <div class="dialog-head">
+                            <button class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Preventivo</h2>
 
-                        <button class="close-button">x</button>
-                        <h2 class="form-element" id="form-title">Preventivo</h2>
+                        </div>
+
 
                         <div>
                             <label class="form-element">Selección</label>
@@ -185,9 +191,10 @@
 
                 <dialog id="predict" class="dialog">
                     <form class="form">
-
-                        <button class="close-button">x</button>
-                        <h2 class="form-element" id="form-title">Predictivo</h2>
+                        <div class="dialog-head">
+                            <button class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Predictivo</h2>
+                        </div>
 
                         <div>
                             <label class="form-element">Selección</label>
@@ -211,9 +218,10 @@
 
                 <dialog id="correct" class="dialog">
                     <form class="form">
-
-                        <button class="close-button">x</button>
-                        <h2 class="form-element" id="form-title">Correctivo</h2>
+                        <div class="dialog-head">
+                            <button class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Correctivo</h2>
+                        </div>
 
                         <div>
                             <label class="form-element">Selección</label>
@@ -235,9 +243,10 @@
 
                 <dialog id="mPlan" class="dialog">
                     <form class="form">
-
-                        <button class="close-button">x</button>
-                        <h2 class="form-element" id="form-title">Modificar plan</h2>
+                        <div class="dialog-head">
+                            <button class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Modificar plan</h2>
+                        </div>
 
                         <div>
                             <label class="form-element">Selección</label>
@@ -262,8 +271,10 @@
                 <dialog id="mMan" class="dialog">
                     <form class="form">
 
-                        <button class="close-button">x</button>
-                        <h2 class="form-element" id="form-title">Modificar mantenimiento</h2>
+                        <div class="dialog-head">
+                            <button class="close-button">x</button>
+                            <h2 class="form-element" id="form-title">Modificar mantenimiento</h2>
+                        </div>
 
                         <div>
                             <label class="form-element">Selección</label>

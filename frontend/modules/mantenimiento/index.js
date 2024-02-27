@@ -16,7 +16,7 @@ btns.forEach((btn) => {
 btnsClose.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault()
-    const dialog = document.getElementById(e.target.parentElement.parentElement.id)
+    const dialog = document.getElementById(e.target.parentElement.parentElement.parentElement.id)
     dialog.classList.remove('open')
     dialog.classList.add('close')
 
