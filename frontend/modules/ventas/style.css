@@ -50,6 +50,7 @@ main{
     padding:15px 30px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .sales-container label{
@@ -186,4 +187,6 @@ main{
     text-align: center;
     width: 33%;
     border: var(--action) solid 1px;
+
 }
+
