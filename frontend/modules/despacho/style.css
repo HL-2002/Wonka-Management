@@ -1,0 +1,43 @@
+body {
+    background-color: #6f27ff;
+}
+
+.facturacion{
+    position: relative;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: rgb(52, 0, 95);
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+h1 {
+    color: #ececec;
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 10px 0px 30px 20px;
+    align-self: self-start;
+}
+.facturacion h3 {
+    flex-basis: 100%;
+    color: #ececec;
+    font-size: 1.7em;
+    margin: -100px 0px 20px 20px;
+}
+
+.facturacion input{
+    margin: -15px 0px 0px 20px;
+}
+
+.facturacion img {
+    display: block; /* Cambiar de "flex" a "block" para que se alinee a la derecha */
+    float: right;
+    margin-right: 15%;
+    padding: 0;
+    width: 200px; /* Ajusta el ancho de la imagen según tus necesidades */
+    height: auto; /* Ajusta la altura de la imagen según tus necesidades */
+  }
