@@ -1,6 +1,7 @@
 import express from 'express'
 import matenimientoRouter from './routes/mantenimiento/index.js'
 import inventarioRouter from './routes/inventario/index.js'
+import ventasRouter from './routes/ventas/index.js'
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use('/api', ApiRouter)
 // add the modu_router to the api router
 ApiRouter.use('/mantenimiento', matenimientoRouter)
 ApiRouter.use('/inventario', inventarioRouter)
+ApiRouter.use('/ventas', ventasRouter)
 
 // add the frontend to the app
 app.use(express.static('frontend'))
