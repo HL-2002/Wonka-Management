@@ -82,10 +82,10 @@ Router.patch('/machine/:id', async (req, res) => {
 // create a new machine
 Router.post('/machine', async (req, res) => {
   // get the data from the request
-  const { type, line } = req.body
+  const { type } = req.body
   // insert the machine into the database
   try {
-    await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: [type, 'disponible', 1, line] })
+    await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: [type, 'disponible', 1, 0] })
     res.status(201).end()
   } catch (error) {
     console.error(error)
