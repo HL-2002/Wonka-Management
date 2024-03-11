@@ -4,18 +4,18 @@ import client from './model.js';
 const ventasRouter = express.Router();
 
 ventasRouter.post('/orders', async (req, res) => {
-    const { name, customerId, email, shipping, products } = req.body;
+    const { name, customerId, email, phoneNumber,time, products } = req.body;
    
     
 
-    if (!name || !customerId || !email || !shipping || !products || products.length === 0) {
+    if (!name || !customerId || !email || !phoneNumber || !time   || !products || products.length === 0) {
         return res.status(400).json({ error: 'Por favor complete todos los campos del formulario y agregue al menos un producto al ticket.' });
     }
 
     try {
         const clientInsertResult = await client.execute({
-            sql: 'INSERT INTO OrderTable (customerName, customerId, email, shipping) VALUES (?, ?, ?, ?)',
-            args: [name, customerId, email, shipping]
+            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time) VALUES (?, ?, ?, ?, ?)',
+            args: [name, customerId, email, phoneNumber, time ]
         });
 
         const result = await client.execute({
@@ -24,10 +24,11 @@ ventasRouter.post('/orders', async (req, res) => {
     
         const orderId = result.rows[0].orderId;
 
-        for (const { productName, quantity } of products) {
+        for (const { productName, quantity, price} of products) {
             await client.execute({
-                sql: 'INSERT INTO OrderProduct (orderId, productName, quantity) VALUES (?, ?, ?)',
-                args: [orderId, productName, quantity]
+                
+                sql: 'INSERT INTO OrderProduct (orderId, productName, quantity, price) VALUES (?, ?, ?, ?)',
+                args: [orderId, productName, quantity, price]
             });
         }
 
@@ -69,8 +70,9 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
             customerName: order.customerName,
             customerId: order.customerId,
             email: order.email,
-            shipping: order.shipping,
+            phoneNumber: order.phoneNumber,
             status: order.status,
+            time: order.time,
             products: products
         };
 
@@ -103,8 +105,9 @@ ventasRouter.get('/orders', async (req, res) => {
                 customerName: order.customerName,
                 customerId: order.customerId,
                 email: order.email,
-                shipping: order.shipping,
+                phoneNumber: order.phoneNumber,
                 status: order.status,
+                time: order.time,
                 products: products
             };
         }));

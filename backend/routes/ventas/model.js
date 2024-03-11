@@ -28,7 +28,8 @@ await client.execute(`
         customerName TEXT NOT NULL,
         customerId INTEGER NOT NULL,
         email TEXT NOT NULL,
-        shipping TEXT NOT NULL,
+        phoneNumber TEXT NOT NULL,
+        time TEXT NOT NULL,
         status TEXT DEFAULT 'pending'
     )
 `);
@@ -39,6 +40,7 @@ await client.execute(`
         orderId INTEGER NOT NULL,
         productName TEXT NOT NULL,
         quantity INTEGER NOT NULL,
+        price  REAL NOT NULL,
         FOREIGN KEY (orderId) REFERENCES OrderTable(id)
     )
 `);

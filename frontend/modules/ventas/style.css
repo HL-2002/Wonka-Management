@@ -35,8 +35,7 @@ main{
 }
 
 .sales-container h2{
-    font-size: 2rem;
-    
+    font-size: 2rem;   
     color: var(--action);
     
 }
@@ -50,14 +49,16 @@ main{
     padding:15px 30px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B; 
+    box-shadow: 5px 5px 15px -3px #0B0B0B;
+
 }
 
 .sales-container label{
     font-weight: 500;
 }
 
-.sales-container__name,.sales-container__email,.sales-container__id,.sales-container__shipping,.sales-container__products,.sales-container__quantity{
+.sales-container__name,.sales-container__email,.sales-container__id,.sales-container__phone,.sales-container__products,.sales-container__quantity{
     margin-top: 10px;
 }
 .sales-container__name input{
@@ -83,16 +84,25 @@ main{
     border: none;
 }
 
-.sales-container__shipping textarea{
+.sales-container__phone input{
     border-radius: 4px;
     width: 550px;
     resize: none;
+    border: none;
+}
+
+h3{
+    margin-top: 20px;
+    color: var(--action);
+    font-size: 1.3rem;
+
 }
 
 .products{
     display: flex;
     gap: 10px;
 }
+
 .sales-container__products select{
     width: 270px;
     border-radius: 4px;
@@ -145,6 +155,8 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B; 
+    box-shadow: 5px 5px 15px -3px #0B0B0B;
 }
 
 .ticket-container button{
