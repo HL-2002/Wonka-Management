@@ -34,10 +34,15 @@ router.get('/category', async (req, res) => {
 })
 
 router.post('/new/product', async (req, res) => {
-  const { description, categoryId, ref, cost, price } = req.body[0]
+  const { description, categoryId, ref, cost, pre } = req.body
+
+  const category = parseInt(categoryId)
+  const referencia = ref || null
+  const costo = cost || null
+  const price = pre || null
 
   try {
-    await client.execute({ sql: 'INSERT INTO PRODUCTS (description, categoryId, ref, cost, price) VALUES (?, ?, ?, ?)', args: [description, categoryId, ref, cost, price] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (description, categoryId, ref, cost, price) VALUES (?, ?, ?, ?, ?)', args: [description, category, referencia, costo, price] })
     res.status(201).end()
   } catch (error) {
     console.log(error)
@@ -47,9 +52,10 @@ router.post('/new/product', async (req, res) => {
 
 router.patch('/set/product/:id', async (req, res) => {
   const { id } = req.params
-  const { description, categoryId, ref, cost, price } = req.body
+  const { description } = req.body
+
   try {
-    await client.execute({ sql: 'UPDATE PRODUCTS SET description = ? categoryId = ? ref = ? cost = ? price = ? WHERE id = ?', args: [description, categoryId, ref, cost, price, id] })
+    await client.execute({ sql: 'UPDATE PRODUCTS SET description = ? WHERE id = ?', args: [description, id] })
     res.status(201).end()
   } catch (error) {
     console.log(error)
@@ -107,6 +113,17 @@ router.get('/products/:id', async (req, res) => {
   const { id } = req.params
   try {
     const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE id = ?', args: [id] })
+    res.json(products)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+router.delete('/products/delete/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const { rows: products } = await client.execute({ sql: 'delete FROM PRODUCTS WHERE id = ?', args: [id] })
     res.json(products)
   } catch (error) {
     console.log(error)
