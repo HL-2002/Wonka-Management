@@ -46,67 +46,22 @@
                     <ul>
                         <li>
                             <h3>Chocolateras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="chocolateras">
                             </div>
                         </li>
                         <li>
                             <h3>Caramelizadoras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="caramelizadoras">
                             </div>
                         </li>
                         <li>
                             <h3>Carameleras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="carameleras">
                             </div>
                         </li>
                         <li>
                             <h3>Chicleras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="chicleras">
                             </div>
                         </li>
                     </ul>
@@ -344,13 +299,46 @@
                 <h2>
                     Estado
                 </h2>
-
-                <div class="state-container">
-                    <div class="state">id</div>
-                    <div class="state-info">Texto de prueba del estado</div>
+                <div class="splitter">
+                    <div class="state-container">
+                        <div class="state preventivo">id</div>
+                        <div class="state-info"> Preventivo</div>
+                    </div>
+                    <div class="state-container">
+                        <div class="state predictivo">id</div>
+                        <div class="state-info"> Predictivo</div>
+                    </div>
+                    <div class="state-container">
+                        <div class="state correctivo">id</div>
+                        <div class="state-info"> Correctivo</div>
+                    </div>
                 </div>
 
+
+                <div class="splitter">
+                    <div id="planificado">
+                        <h3>Planificado</h3>
+                        <div class="state-container">
+                            <div class="state preventivo">id</div>
+                            <div class="state-info"> Mantenimiento en n días</div>
+                        </div>
+
+                        <div class="state-container">
+                            <div class="state predictivo">id</div>
+                            <div class="state-info"> Mantenimiento en n días</div>
+                        </div>
+
+                    </div>
+                    <div id="realizando">
+                        <h3>Realizando</h3>
+                        <div class="state-container">
+                            <div class="state correctivo">id</div>
+                            <div class="state-info"> Disponible en n días, y m horas</div>
+                        </div>
+                    </div>
+                </div>
             </section>
+
         </main>
     </div>
     <script src="index.js"></script>

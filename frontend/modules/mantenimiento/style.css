@@ -74,6 +74,26 @@ h1 {
     border-radius: 4px;
 }
 
+div.uso {
+    background-color: #9f70fd
+}
+
+div.disponible {
+    background-color: #42c087;
+}
+
+div.notificada {
+    background-color: #ddfa5b;
+}
+
+div.mantenimiento {
+    background-color: #f5be56;
+}
+
+div.defectuosa {
+    background-color: #dd505a;
+}
+
 .data {
     display: flex;
     padding: 2rem 1rem;
@@ -131,7 +151,7 @@ button {
     text-decoration: none;
     transition: background 0.3s ease, transform 0.3s ease;
     cursor: pointer;
-    box-shadow: black 2px 1px 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 2px 1px 10px;
 }
 
 
@@ -217,13 +237,29 @@ button:active {
 .state {
     width: 60px;
     height: 60px;
-    background-color: red;
     border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
+}
+
+.preventivo {
+    background-color: #FDBF60;
+}
+
+.predictivo {
+    background-color: #ddfa5b;
+}
+
+.correctivo {
+    background-color: #dd505a;
+}
+
+div>h3 {
+    color: #ececec;
 }
 
 .state-info {
@@ -249,6 +285,7 @@ button:active {
     display: block;
     animation: fadeIn 0.5s ease;
 }
+
 
 .dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
@@ -320,6 +357,14 @@ section.mantenimiento {
     gap: 2rem;
 }
 
+.splitter {
+    margin-bottom: 2rem;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 
 
 @media screen and (min-width: 728px) {
