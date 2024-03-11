@@ -70,6 +70,11 @@ La visualización del estado de las máquinas de manera dinámica y la gestión 
 * dateAvailability: str
     - null
     - date
+* typeMaintenance: str
+    - preventivo
+    - predictivo
+    - correctivo
+    - null
 * line: int
 
 _Nota:_ Las fechas estarán en formato YYYY/MM/DD.
