@@ -64,12 +64,12 @@ La visualización del estado de las máquinas de manera dinámica y la gestión 
     - mantenimiento
     - notificada
     - defectuosa
-* plan: str
-    - none
-    - preventivo/predictivo: fecha de mantenimiento, fecha de disponibilidad
-* availability: str
-    - disponible
-    - fecha
+* dateMaintenance: str
+    - null
+    - date
+* dateAvailability: str
+    - null
+    - date
 * line: int
 
 _Nota:_ Las fechas estarán en formato YYYY/MM/DD.
