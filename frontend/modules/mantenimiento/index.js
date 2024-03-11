@@ -1,19 +1,18 @@
-document.addEventListener('DOMContentLoaded', async () => { 
-  const machines = await getMachines().then((json)=>{return json.machines})
+document.addEventListener('DOMContentLoaded', async () => {
+  const machines = await getMachines().then((json) => { return json.machines })
   console.log(machines)
-  display_machines(machines)
-  display_maintenance(machines)
-
+  displayMachines(machines)
+  displayMaintenance(machines)
 })
 
 // Obtener el array de las máquinas
-async function getMachines() {
+async function getMachines () {
   const response = await fetch('http://localhost:3000/api/mantenimiento/')
   return response.json()
 }
 
 // Actualizar el display de las máquinas
-function display_machines(machines) {
+function displayMachines (machines) {
   // Obtener los contenedores de las máquinas
   const chocolateras = document.getElementById('chocolateras')
   const caramelizadoras = document.getElementById('caramelizadoras')
@@ -21,21 +20,21 @@ function display_machines(machines) {
   const chicleras = document.getElementById('chicleras')
 
   // Crear colección de máquinas por tipo
-  let choco = {
+  const choco = {
     uso: 0,
     disponible: 0,
     notificada: 0,
-    mantenimiento : 0,
+    mantenimiento: 0,
     defectuosa: 0
   }
 
-  let cara = structuredClone(choco)
-  let caramel = structuredClone(choco)
-  let chicl = structuredClone(choco)
+  const cara = structuredClone(choco)
+  const caramel = structuredClone(choco)
+  const chicl = structuredClone(choco)
 
   // Crear grid de números por tipo de máquina
   let grid = []
-  let total = []
+  const total = []
 
   // Añadir máquinas según su tipo
   machines.forEach((machine) => {
@@ -61,77 +60,102 @@ function display_machines(machines) {
   // Display de las máquinas en orden
   col.forEach((set) => {
     const [container, type] = set
-    for (state in type) {
+    for (const state in type) {
       container.innerHTML += `<div class='square ${state}'></div>`.repeat(type[state])
     }
     // Añadir valores al grid
-    values = Object.values(type)
+    const values = Object.values(type)
     grid.push(values)
     total.push(values.reduce((a, b) => a + b, 0))
   })
 
   // Display de los números en orden
-  const data_grid = document.getElementById('grid')
+  const dataGrid = document.getElementById('grid')
   // Trasponer grid para iterar por columnas y agregar total de máquinas por tipo
-  grid = grid[0].map((_, colIndex) => grid.map(row => row[colIndex]));
+  grid = grid[0].map((_, colIndex) => grid.map(row => row[colIndex]))
   grid.push(total)
-  console.log(grid)
 
   // Iterar para añadir datos al data_grid
   for (let i = 0; i < grid.length; i++) {
     for (let j = -1; j < grid[i].length; j++) {
-      if (j == -1) {
+      if (j === -1) {
         switch (i) {
           case 0:
-            data_grid.innerHTML += `<p style="color: #9f70fd;" class="first-item">En uso </p>`
+            dataGrid.innerHTML += '<p style="color: #9f70fd;" class="first-item">En uso </p>'
             break
           case 1:
-            data_grid.innerHTML += `<p style="color: #42c087;" class="first-item">Disponibles </p>`
+            dataGrid.innerHTML += '<p style="color: #42c087;" class="first-item">Disponibles </p>'
             break
           case 2:
-            data_grid.innerHTML += `<p style="color: #f17c37;" class="first-item">Notificadas</p>`
+            dataGrid.innerHTML += '<p style="color: #f17c37;" class="first-item">Notificadas</p>'
             break
           case 3:
-            data_grid.innerHTML += `<p style="color: #f1c40f;" class="first-item"> Mantenimiento</p>`
+            dataGrid.innerHTML += '<p style="color: #f1c40f;" class="first-item"> Mantenimiento</p>'
             break
           case 4:
-            data_grid.innerHTML += `<p style="color: #e74c3c;" class="first-item">Defectuosas</p>`
+            dataGrid.innerHTML += '<p style="color: #e74c3c;" class="first-item">Defectuosas</p>'
             break
           case 5:
-            data_grid.innerHTML += `<p style="color: #34495e;" class="first-item">Total</p>`
+            dataGrid.innerHTML += '<p style="color: #34495e;" class="first-item">Total</p>'
             break
         }
-      }
-      else {
-        data_grid.innerHTML += `<div class='grid-item'>${grid[i][j]}</div>`
+      } else {
+        dataGrid.innerHTML += `<div class='grid-item'>${grid[i][j]}</div>`
       }
     }
   }
 }
 
-function display_maintenance(machines) {
+function displayMaintenance (machines) {
   // Obtener el contenedor de las máquinas en mantenimiento
   const planificado = document.getElementById('planificado')
   const realizando = document.getElementById('realizando')
-  let planificados = 0, realizandos = 0
+  const planificacion = []; const realizacion = []
 
-  // Añadir máquinas en mantenimiento
+  // Obtener la fecha actual
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener máquinas con mantenimiento
   machines.forEach((machine) => {
-    // Validar tipo de mantenimiento y generar estado y mensaje
-    if (machine.state != "disponible") {
-      state = "correctivo"
-    }
+    if (machine.typeMaintenance !== null) {
+      // Obtener fechas de mantenimiento
+      machine.dateMaintenance = new Date(machine.dateMaintenance)
+      machine.dateAvailability = new Date(machine.dateAvailability)
 
-    if (machine.state === 'maintenance') {
-      const tag = `<div class="state-container">
-                      <div class="state ${state}">${machine.id}</div>
-                      <div class="state-info">Preventivo</div>
-                   </div>`
-      mantenimiento.innerHTML += tag
+      // Agrupar máquinas según fecha de mantenimiento
+      // Si es menor que la fecha actual o no la tiene, se está realizando
+      if (machine.dateMaintenance < date || machine.dateMaintenance === null) {
+        realizacion.push(machine)
+      } else {
+        planificacion.push(machine)
+      }
     }
   })
-}
 
+  // Sortear máquinas por fecha de mantenimiento
+  planificacion.sort((a, b) => a.dateMaintenance - b.dateMaintenance)
+  realizacion.sort((a, b) => a.dateAvailability - b.dateAvailability)
+
+  // Agregar máquinas a su contenedor correspondiente
+  planificacion.forEach((machine) => {
+    const days = Math.ceil((machine.dateMaintenance - date) / (1000 * 60 * 60 * 24))
+    const tag = `<div class="state-container">
+                      <div class="state ${machine.typeMaintenance}">${machine.id}</div>
+                      <div class="state-info">Mantenimiento en ${days} día(s)</div>
+                 </div>`
+    planificado.innerHTML += tag
+  })
+
+  realizacion.forEach((machine) => {
+    const days = Math.ceil((machine.dateAvailability - date) / (1000 * 60 * 60 * 24))
+    const tag = `<div class="state-container">
+                      <div class="state ${machine.typeMaintenance}">${machine.id}</div>
+                      <div class="state-info">Disponible en ${days} día(s)</div>
+                 </div>`
+    realizando.innerHTML += tag
+  })
+}
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')

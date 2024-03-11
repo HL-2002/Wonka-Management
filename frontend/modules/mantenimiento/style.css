@@ -59,8 +59,6 @@ h1 {
     list-style: none;
 }
 
-
-
 .container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
