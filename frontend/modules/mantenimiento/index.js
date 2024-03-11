@@ -1,3 +1,4 @@
+// Display de las máquinas y su mantenimiento al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
   const machines = await getMachines().then((json) => { return json.machines })
   console.log(machines)
@@ -18,6 +19,20 @@ function displayMachines (machines) {
   const caramelizadoras = document.getElementById('caramelizadoras')
   const carameleras = document.getElementById('carameleras')
   const chicleras = document.getElementById('chicleras')
+
+  // Obtener contenedor de los números de máquinas
+  const dataGrid = document.getElementById('grid')
+
+  // Limpiar cada contenedor antes de añadir las máquinas
+  chocolateras.innerHTML = ''
+  caramelizadoras.innerHTML = ''
+  carameleras.innerHTML = ''
+  chicleras.innerHTML = ''
+  dataGrid.innerHTML = `<div class="grid-item"></div>
+                        <div class="grid-item">Chocolateras</div>
+                        <div class="grid-item">Caramelizadoras</div>
+                        <div class="grid-item">Carameleras</div>
+                        <div class="grid-item">Chicleras</div>`
 
   // Crear colección de máquinas por tipo
   const choco = {
@@ -70,7 +85,6 @@ function displayMachines (machines) {
   })
 
   // Display de los números en orden
-  const dataGrid = document.getElementById('grid')
   // Trasponer grid para iterar por columnas y agregar total de máquinas por tipo
   grid = grid[0].map((_, colIndex) => grid.map(row => row[colIndex]))
   grid.push(total)
@@ -111,6 +125,10 @@ function displayMaintenance (machines) {
   const planificado = document.getElementById('planificado')
   const realizando = document.getElementById('realizando')
   const planificacion = []; const realizacion = []
+
+  // Limpiar contenedores antes de añadir los mantenimientos
+  planificado.innerHTML = '<h3> Planificado </h3>'
+  realizando.innerHTML = '<h3> Realizando </h3>'
 
   // Obtener la fecha actual
   const date = new Date()
@@ -156,6 +174,60 @@ function displayMaintenance (machines) {
     realizando.innerHTML += tag
   })
 }
+
+// Añadir máquinas
+const addForm = document.getElementById('add').children[0]
+// Evento al enviar el formulario
+addForm.addEventListener('submit', async (e) => {
+  // Evitar que se recargue la página
+  e.preventDefault()
+  // Obtener el tipo de máquina del formulario y cantidad
+  const tipo = document.getElementById('tipo-select').value.toLowerCase()
+  const cantidad = document.getElementById('cantidad').value
+
+  // Crear máquina con tipo dado en la base de datos
+  try {
+    for (let i = 0; i < cantidad; i++) {
+      const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ type: tipo })
+      })
+    }
+    alert(`Máquina ${tipo} añadida`)
+
+    // Actualizar las máquinas visibles
+    displayMachines(await getMachines().then((json) => { return json.machines }))
+  } catch(error) {
+    console.error(error)
+  }
+})
+
+// Eliminar máquinas
+const deleteForm = document.getElementById('delete').children[0]
+// Evento al enviar el formulario
+deleteForm.addEventListener('submit', async (e) => {
+  // Evitar que se recargue la página
+  e.preventDefault()
+  // Obtener el id de la máquina del formulario
+  const id = document.getElementById('id-delete').value
+
+  // Validar id entre las máquinas
+
+  /*
+  // Eliminar máquina con id dado en la base de datos
+  const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${id}`, {
+    method: 'DELETE'
+  }).then(() => {alert(`Máquina ${id} eliminada`)})
+  console.log(response)
+
+  // Actualizar las máquinas visibles
+  displayMachines(await getMachines().then((json) => { return json.machines }))
+  */
+})
+
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
