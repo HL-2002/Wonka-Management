@@ -61,7 +61,7 @@
                     <button >Recetas</button>
                 </div>
                 <div class="inv-row">
-                    <button onclick="fillModal()"  type="button" class="open-modal" data-open="modal3">Categorias</button>
+                    <button onclick="fillModalC()"  type="button" class="open-modal" data-open="modal3">Categorias</button>
                     <button onclick="fillModalW()"  type="button" class="open-modal" data-open="modal2">Almacenes</button>
                 </div>
                 
@@ -121,7 +121,7 @@
                 <div class="modal-dialog">
                     <header class="modal-header">
                         <h2>Categorias</h2>
-                        <div id="actions" class="">
+                        <div id="actionC" class="">
                             <button class="close-modal" aria-label="close modal" data-close style="margin: 10px;">Nuevo</button>
                             <button class="close-modal" aria-label="close modal" data-close style="margin-right: 10px;">Modificar</button>
                             <button onclick="saveProduct()" class="close-modal" aria-label="close modal" data-close>Guardar</button>
@@ -133,13 +133,11 @@
                             
                         </select>
                     </section>
-                    <section id="modal-detail" class="modal-detail">
+                    <section id="modal-detailC" class="modal-detail">
                         <article class="grid">
                             <h2>Detalles</h2>
                             <div class="article-wrapper">
                                 <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
-                                    <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Ingrese el código"></p>
-                                    <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción"></p>
                                 </div>
                             </div>
                           </article>

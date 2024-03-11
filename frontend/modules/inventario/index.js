@@ -42,7 +42,7 @@ document.getElementById('store').addEventListener('change', (evt) => {
 })
 document.getElementById('category').addEventListener('change', (evt) => {
   const option = evt.currentTarget.selectedOptions[0]
-  fillModal(option.value)
+  fillModalC(option.value)
 })
 async function fillSearch () {
   const lstProducts = await getProducts()
@@ -62,6 +62,15 @@ async function fillSearchW () {
     `)
 
   const selectElement = document.getElementById('store')
+  selectElement.innerHTML = options.join('')
+}
+async function fillSearchC () {
+  const lstProducts = await getCategory()
+  const options = lstProducts.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+
+  const selectElement = document.getElementById('category')
   selectElement.innerHTML = options.join('')
 }
 
@@ -184,7 +193,40 @@ async function fillModalW (id) {
   `
   document.getElementById('actionW').innerHTML = actions
   document.getElementById('modal-detailw').innerHTML = detalles
-  document.getElementById('W').style.backgroundColor = 'grey'
+  document.getElementById('sW').style.backgroundColor = 'grey'
+}
+
+/* //Category
+-------------------- */
+async function fillModalC (id) {
+  const lstProducts = await getCategory()
+  const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
+  const viewID = selected?.id || ''
+  const viewDescription = selected?.description || ''
+  const status = 'readonly'
+
+  const actions = `
+    <button id="dW" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
+    <button id="mW" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
+    <button id="sC" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+  `
+  if (!id) {
+    await fillSearchC()
+  }
+  const detalles = `
+    <article class="grid">
+      <h2>Detalles</h2>
+      <div class="article-wrapper">
+        <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
+        </div>
+      </div>
+    </article>
+  `
+  document.getElementById('actionC').innerHTML = actions
+  document.getElementById('modal-detailC').innerHTML = detalles
+  document.getElementById('sC').style.backgroundColor = 'grey'
 }
 
 /* //CONTROLERS
@@ -221,6 +263,10 @@ async function getProducts (params) {
 }
 async function getWarehouse (params) {
   const response = await fetch('/api/inventario/warehouse')
+  return await response.json()
+}
+async function getCategory (params) {
+  const response = await fetch('/api/inventario/category')
   return await response.json()
 }
 async function insertProducts (params) {
