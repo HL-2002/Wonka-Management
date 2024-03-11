@@ -1,27 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
-  //  CAMBIO DE SECCION
-
   //  BOTONES DE MENU
   const btnRegistro = document.querySelector('.btn-registro')
   const btnRequisicion = document.querySelector('.btn-requisicion')
 
   //  SECCIONES DE REGISTRO Y REQUISICION
 
-  const solicitudesContenido = document.querySelector('.solicitudesContenido')
+  const solicitudesContenido = document.querySelector('.solicitudes')
   const registroContenido = document.querySelector('.registro')
 
-  btnRegistro.addEventListener('click', (e) => {
-    e.preventDefault()
-    console.log('Hola')
-    document.querySelector('.registro').style.display = 'none'
-    document.querySelector('.solicitudesContenido').style.display = 'block'
-  })
+  //  CAMBIAR SECCION DE REQUISICION A REGISTRO
 
   btnRequisicion.addEventListener('click', (e) => {
     e.preventDefault()
-    console.log('Hola')
-    registroContenido.style.display = 'block'
+    btnRequisicion.classList.add('active')
+    btnRegistro.classList.remove('active')
+
+    registroContenido.style.display = 'none'
+    solicitudesContenido.style.display = 'block'
+  })
+
+  //  CAMBIAR SECCION DE REGISTRO A REQUISICION
+
+  btnRegistro.addEventListener('click', (e) => {
+    e.preventDefault()
+    btnRequisicion.classList.remove('active')
+    btnRegistro.classList.add('active')
+
     solicitudesContenido.style.display = 'none'
+    registroContenido.style.display = 'block'
   })
 
   //  MODAL
