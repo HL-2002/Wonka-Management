@@ -63,6 +63,7 @@ Router.delete('/:id', async (req, res) => {
   }
 })
 
+// Update machine state
 Router.patch('/machine/:id', async (req, res) => {
   // get the id from the request
   const { id } = req.params
@@ -78,6 +79,7 @@ Router.patch('/machine/:id', async (req, res) => {
   }
 })
 
+// create a new machine
 Router.post('/machine', async (req, res) => {
   // get the data from the request
   const { type, line } = req.body
@@ -91,6 +93,7 @@ Router.post('/machine', async (req, res) => {
   }
 })
 
+// delete the machine
 Router.delete('/machine/:id', async (req, res) => {
   // get the id from the request
   const { id } = req.params
