@@ -37,34 +37,70 @@ h1 {
   margin: 5px;
 }
 
-.ventanas{
+.menu{
   display: flex;
+  margin: auto;
 }
 
-.ventanas div{
-  margin-left: 10px;
+.menu button {
+  background-color: rgb(52, 0, 95);
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 5px;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.ventana-requisicion {
+.menu button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu button.active {
   background-color: #6f27ff;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.ventana-registro{
-  padding: 10px;
+  box-shadow: none;
 }
 
 
 
 .solicitudes {
-  background-color: #6124dd;
+  background-color: rgb(52, 0, 95);
+}
+
+.solicitud {
+  background-color: #6f27ff;
   border-radius: 10px;
   padding: 15px;
   margin-top: 20px;
 }
 
 .solicitudes a{
+  text-decoration: none;
+  background-color: green;
+  border: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  color: #ececec;
+}
+
+.registro {
+  display: none;
+  background-color: rgb(52, 0, 95);
+}
+
+.registros-hechos {
+  background-color: #6f27ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.registros-hechos a{
   text-decoration: none;
   background-color: green;
   border: transparent;
