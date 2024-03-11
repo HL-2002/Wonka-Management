@@ -75,7 +75,7 @@ h1 {
 }
 
 div.uso {
-    background-color: #9f70fd
+    background-color: #9f70fd;
 }
 
 div.disponible {
@@ -83,15 +83,15 @@ div.disponible {
 }
 
 div.notificada {
-    background-color: #ddfa5b;
+    background-color: #f17c37;
 }
 
 div.mantenimiento {
-    background-color: #f5be56;
+    background-color: #f2c43d;
 }
 
 div.defectuosa {
-    background-color: #dd505a;
+    background-color: #e0444e;
 }
 
 .data {
@@ -247,15 +247,15 @@ button:active {
 }
 
 .preventivo {
-    background-color: #FDBF60;
+    background-color: #f2c43d;
 }
 
 .predictivo {
-    background-color: #ddfa5b;
+    background-color: #f17c37;
 }
 
 .correctivo {
-    background-color: #dd505a;
+    background-color: #e0444e;
 }
 
 div>h3 {
