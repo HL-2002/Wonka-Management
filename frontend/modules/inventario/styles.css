@@ -9,6 +9,11 @@
 body{
     background-color: #6f27ff;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 main{
     width: 100%;
     padding-bottom: 50px;
@@ -32,6 +37,24 @@ main{
     gap: 20px;
     justify-content: center;
  
+}
+
+#products {
+  border-radius: 5px;
+  background: #fff;
+  border: none;
+}
+
+#store{
+  border-radius: 5px;
+  background: #fff;
+  border: none;
+}
+
+#category{
+  border-radius: 5px;
+  background: #fff;
+  border: none;
 }
 
 .inv-container h2{
@@ -171,7 +194,39 @@ main{
     visibility: visible;
     opacity: 1;
   }
+
+  .close-modal{
+    background: #6f27ff;
+    border: none;
+    min-width: 100px;
+    color: #ececec;
+    border-radius: 5px;
+    font-weight: 450;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: black 2px 1px 10px;
+    margin: center;
+    margin-top: 35px;
+    align-self: flex-end;
+  }
+
+  .close-modal:hover {
+    transform: scale(1.03);
+    background: #731d9e;
+  }
   
+  #codigo, #descripcion, #categoria {
+    width: 215px;
+    border-radius: 4px;
+    border: none;
+  }
+
+  #descripcion{
+    transform-origin: center center;
+    translate: 10px;
+  }
+
   .modal-dialog {
     position: relative;
     max-width: 800px;
@@ -183,6 +238,10 @@ main{
     cursor: default;
     width: 60%;
     height: 50vh;
+  }
+
+  .modal-dialog::-webkit-scrollbar {
+    display: none;
   }
   
   .modal-dialog > * {
@@ -223,6 +282,8 @@ article {
     transform-origin: center;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
+    padding-bottom: 15px;
+    padding-left: 20px;
   }
   
   article a::after {
@@ -235,13 +296,14 @@ article {
   
   /* basic article elements styling */
   article h2 {
+    text-align: center;
     font-size: 2rem;
     color: var(--action);
-    padding: 20px;
+    padding: 35px;
   }
 
 
-  
+
   article a {
     display: inline-flex;
     align-items: center;
