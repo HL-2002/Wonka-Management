@@ -183,33 +183,37 @@ addForm.addEventListener('submit', async (e) => {
   e.preventDefault()
   // Obtener el tipo de máquina del formulario y cantidad
   const tipo = document.getElementById('tipo-select').value.toLowerCase()
-  const id = document.getElementById('id-maquina').value
-  const machines = await getMachines().then((json) => { return json.machines })
-  let valid = false
+  const idInput = document.getElementById('id-maquina')
+  const id = idInput.value
+  let machines = await getMachines().then((json) => { return json.machines })
+  let repeated = false
 
   // Validar id entre las máquinas
-  machines.forEach((machine) => {
-    if (machine.id === id) {
-      valid = true
+  for (let i = 0; i < machines.length; i++) {
+    if (machines[i].id == id) {
+      repeated = true
+      break
     }
-  })
+  }
 
   // Crear máquina con tipo dado en la base de datos
-  if (valid) {
+  if (!repeated) {
     try {
-      for (let i = 0; i < cantidad; i++) {
-        const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id: id, type: tipo })
-        })
-      }
+      const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id, type: tipo })
+      })
       alert(`Máquina ${id} tipo ${tipo} añadida`)
+
+      // Clear form
+      idInput.value = ''
   
       // Actualizar las máquinas visibles
-      displayMachines()
+      let machines = await getMachines().then((json) => { return json.machines })
+      displayMachines(machines)
     } catch(error) {
       console.error(error)
       alert('Error al añadir máquina, revise la consola y/o servidor')
@@ -221,30 +225,72 @@ addForm.addEventListener('submit', async (e) => {
 
 // Eliminar máquinas
 const deleteForm = document.getElementById('delete').children[0]
+// Display datos de máquina indicada
+const idInput = document.getElementById('id-delete')
+
+// Obtener el id de la máquina del formulario
+idInput.onkeyup = async () => {
+  const id = idInput.value
+  const machines = await getMachines().then((json) => { return json.machines })
+
+  // Validar id entre las máquinas
+  for (let i = 0; i < machines.length; i++) {
+    if (machines[i].id == id) {
+      idInput.style.border = '1.5px solid lightgreen'
+      break
+    }
+    else {
+      idInput.style.border = '1.5px solid lightcoral'
+    }
+  }
+}
+
 // Evento al enviar el formulario
 deleteForm.addEventListener('submit', async (e) => {
   // Evitar que se recargue la página
   e.preventDefault()
 
-
-  // Display datos de la máquina a eliminar
-
-  // Obtener el id de la máquina del formulario
+  const idInput = document.getElementById('id-delete')
   const id = document.getElementById('id-delete').value
 
   // Validar id entre las máquinas
+  let valid = false
+  let machines = await getMachines().then((json) => { return json.machines })
+  for (let i = 0; i < machines.length; i++) {
+    if (machines[i].id == id) {
+      valid = true
+    }
+  }
+  if (valid) {
+    try {
+      // Eliminar máquina con id dado en la base de datos
+      const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${id}`, {
+        method: 'DELETE',
+      }).then(() => {alert(`Máquina ${id} eliminada`)})
+      console.log(response)
 
+      // Clear form
+      idInput.value = ''
+      idInput.style.border = '1.5px solid lightgray'
 
-  /*
-  // Eliminar máquina con id dado en la base de datos
-  const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${id}`, {
-    method: 'DELETE'
-  }).then(() => {alert(`Máquina ${id} eliminada`)})
-  console.log(response)
+      // Actualizar las máquinas y mantenimientos visibles
+      let machines = await getMachines().then((json) => { return json.machines })
+      displayMachines(machines)
+      displayMaintenance(machines)
+
+    } catch (error) {
+      console.error(error)
+      alert('Error al eliminar máquina, revise la consola y/o servidor')
+    }
+  }
+  else {
+    alert('Id de máquina no encontrada, por favor ingrese un id diferente')
+  }
+  
 
   // Actualizar las máquinas visibles
   displayMachines(await getMachines().then((json) => { return json.machines }))
-  */
+
 })
 
 
