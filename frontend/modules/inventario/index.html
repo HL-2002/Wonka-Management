@@ -36,9 +36,8 @@
             <section class="inv-container">
                 <h2>Logistica</h2>
                 <div class="inv-row">
-                    <button type="button" class="open-modal" data-open="modal4" >Cargo</button>
-                    <button type="button" class="open-modal" data-open="modal5">Descargo</button>
-                    <button type="button" class="open-modal" data-open="modal6">Inventario</button>
+                    <button onclick="fillModalCargo()" type="button" class="open-modal" data-open="modal4" >Cargo</button>
+                    <button onclick="fillModalDescargo()" type="button" class="open-modal" data-open="modal5">Descargo</button>
                 </div>
                 <h2 style="margin-top: 25px;">Tablas</h2>
                 <div class="inv-row">
@@ -128,17 +127,17 @@
              <div class="modal" id="modal4">
                 <div class="modal-dialog">
                     <header class="modal-header">
-                        <h2>Carga</h2>
-                        <div id="actions" class="">                            
+                        <h2>Cargo</h2>
+                        <div id="actionsCa" class="">                            
                         </div>
                     <button class="close-modal" aria-label="close modal" data-close>✕</button>
                     </header>
                     <section class="modal-content">Buscador
-                        <select name="products" id="products">
+                        <select name="cargo" id="cargo">
                             
                         </select>
                     </section>
-                    <section id="modal-detail" class="modal-detail">
+                    <section id="modal-detailCa" class="modal-detail">
                     </section>
                 </div>
             </div>
@@ -147,16 +146,16 @@
                 <div class="modal-dialog">
                     <header class="modal-header">
                         <h2>Descargo</h2>
-                        <div id="actions" class="">                            
+                        <div id="actionsDe" class="">                            
                         </div>
                     <button class="close-modal" aria-label="close modal" data-close>✕</button>
                     </header>
                     <section class="modal-content">Buscador
-                        <select name="products" id="products">
+                        <select name="descargo" id="descargo">
                             
                         </select>
                     </section>
-                    <section id="modal-detail" class="modal-detail">
+                    <section id="modal-detailDe" class="modal-detail">
                     </section>
                 </div>
             </div>

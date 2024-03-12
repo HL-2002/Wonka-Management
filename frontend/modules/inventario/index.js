@@ -44,6 +44,16 @@ document.getElementById('category').addEventListener('change', (evt) => {
   const option = evt.currentTarget.selectedOptions[0]
   fillModalC(option.value)
 })
+
+document.getElementById('cargo').addEventListener('change', (evt) => {
+  const option = evt.currentTarget.selectedOptions[0]
+  fillModalCargo(option.value)
+})
+
+document.getElementById('descargo').addEventListener('change', (evt) => {
+  const option = evt.currentTarget.selectedOptions[0]
+  fillModalDescargo(option.value)
+})
 async function fillSearch () {
   const lstProducts = await getProducts()
 
@@ -71,6 +81,26 @@ async function fillSearchC () {
     `)
 
   const selectElement = document.getElementById('category')
+  selectElement.innerHTML = options.join('')
+}
+async function fillSearchCargo () {
+  const lstProducts = await getProducts()
+
+  const options = lstProducts.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+
+  const selectElement = document.getElementById('cargo')
+  selectElement.innerHTML = options.join('')
+}
+async function fillSearchDescargo () {
+  const lstProducts = await getProducts()
+
+  const options = lstProducts.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+
+  const selectElement = document.getElementById('descargo')
   selectElement.innerHTML = options.join('')
 }
 
@@ -113,6 +143,30 @@ async function saveProduct() {
     await updateProducts(product)
   }
   await fillModal()
+}
+async function saveCargo() {
+  const codValue = document.getElementById('codigo').value
+  const cantidadValue = document.getElementById('cantidad').value
+
+  const product = {
+    id: codValue,
+    sum: 1,
+    units: cantidadValue
+  }
+  await insertCargo(product)
+  await fillModalCargo()
+}
+async function saveDescargo() {
+  const codValue = document.getElementById('codigo').value
+  const cantidadValue = document.getElementById('cantidad').value
+
+  const product = {
+    id: codValue,
+    sum: 0,
+    units: cantidadValue
+  }
+  await insertCargo(product)
+  await fillModalDescargo()
 }
 
 async function modProduct(id, des, category) {
@@ -228,6 +282,69 @@ async function fillModalC (id) {
   document.getElementById('modal-detailC').innerHTML = detalles
   document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
+/* //Cargo
+-------------------- */
+async function fillModalCargo (id) {
+  const lstProducts = await getProducts()
+  const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
+
+  const viewID = selected?.id || ''
+  const viewDescription = selected?.description || ''
+  const status = 'readonly'
+  const actions = `
+    <button id="saveCargo" onclick="saveCargo()" class="close-modal" >Guardar</button>
+  `
+
+  if (!id) {
+    await fillSearchCargo()
+  }
+  const detalles = `
+    <article class="grid">
+      <h2>Nuevo Movimiento</h2>
+      <div class="article-wrapper">
+        <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" ></p>
+        </div>
+      </div>
+    </article>
+  `
+  document.getElementById('actionsCa').innerHTML = actions
+  document.getElementById('modal-detailCa').innerHTML = detalles
+}
+
+/* //Descargp
+-------------------- */
+async function fillModalDescargo (id) {
+  const lstProducts = await getProducts()
+  const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
+
+  const viewID = selected?.id || ''
+  const viewDescription = selected?.description || ''
+  const status = 'readonly'
+  const actions = `
+    <button id="saveDescargo" onclick="saveDescargo()" class="close-modal" >Guardar</button>
+  `
+
+  if (!id) {
+    await fillSearchDescargo()
+  }
+  const detalles = `
+    <article class="grid">
+      <h2>Nuevo Movimiento</h2>
+      <div class="article-wrapper">
+        <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" ></p>
+        </div>
+      </div>
+    </article>
+  `
+  document.getElementById('actionsDe').innerHTML = actions
+  document.getElementById('modal-detailDe').innerHTML = detalles
+}
 
 /* //CONTROLERS
 -------------------- */
@@ -288,6 +405,26 @@ async function insertProducts (params) {
     console.error('Error de red:', error)
   }
 }
+async function insertCargo (params) {
+  try {
+    const response = await fetch('/api/inventario/set/product/stock', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar el producto:', response.status)
+    }
+  } catch (error) {
+    console.error('Error de red:', error)
+  }
+}
+
 
 async function updateProducts (params) {
   try {
