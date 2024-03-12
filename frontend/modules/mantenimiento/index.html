@@ -39,120 +39,58 @@
             <h1>Mantenimiento</h1>
 
             <section class="section">
-                <h2>
-                    Máquinas
-                </h2>
+                <div class="container">
+                    <h2>
+                        Máquinas
+                    </h2>
+                    <div class="search-bar">
+                        <input class="search-input" type="text" placeholder="Buscar máquina por Id">
+                        <button value="search" class="btn-open">Buscar</button>
+                    </div>
+
+                    <dialog id="search" class="dialog">
+                        <div class="dialog-content">
+                            <div class="dialog-head">
+                                <h2>Busqueda por Id</h2>
+                                <button class="close-button">x</button>
+                            </div>
+                            <p>*insertar contenido*</p>
+                        </div>
+                    </dialog>
+                </div>
                 <div>
                     <ul>
                         <li>
                             <h3>Chocolateras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="chocolateras">
                             </div>
                         </li>
                         <li>
                             <h3>Caramelizadoras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="caramelizadoras">
                             </div>
                         </li>
                         <li>
                             <h3>Carameleras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="carameleras">
                             </div>
                         </li>
                         <li>
                             <h3>Chicleras</h3>
-                            <div class="container">
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: #6f27ff;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: greenyellow;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: forestgreen;"></div>
-                                <div class="square" style="background-color: orange;"></div>
-                                <div class="square" style="background-color: red;"></div>
+                            <div class="container" id="chicleras">
                             </div>
                         </li>
                     </ul>
                     <div class="data">
-                        <div class="data-grid">
-                            <div class="grid-item"></div>
-                            <div class="grid-item">Chocolateras</div>
-                            <div class="grid-item">Caramelizadoras</div>
-                            <div class="grid-item">Carameleras</div>
-                            <div class="grid-item">Chicleras</div>
+                        <div class="data-grid" id="grid">
                             <!--En uso -->
-                            <p style="color: #6f27ff;" class="first-item">En uso </p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <!--Modificadas -->
-                            <p style="color: greenyellow;" class="first-item">Modificadas</p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <!--Disponibles -->
-                            <p style="color:forestgreen;" class="first-item">Disponibles</p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <!--Mantenimiento -->
-                            <p style="color:orange;" class="first-item">Mantenimiento</p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <!--Defectuosas-->
-                            <p style="color:red;" class="first-item">Defectuosas</p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <!--Total -->
-                            <p class="first-item">Total</p>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
-                            <div class="grid-item">0</div>
+                            <!-- Fila de ejemplo
+                                <p style="color: #9f70fd;" class="first-item">En uso </p>
+                                <div class="grid-item">0</div>
+                                <div class="grid-item">0</div>
+                                <div class="grid-item">0</div>
+                                <div class="grid-item">0</div>
+                            -->
 
                         </div>
                     </div>
@@ -160,13 +98,15 @@
                     <dialog id="add" class="dialog">
                         <form class="form">
                             <div class="dialog-head">
-                                <button class="close-button">x</button>
                                 <h2 class="form-element" id="form-title">Agregar máquina</h2>
+                                <button class="close-button">x</button>
                             </div>
 
                             <div>
+                                <label class="form-element">Id</label>
+                                <input type="number" placeholder="id" id="id-maquina" min="0"> <br> <br>
                                 <label class="form-element">Tipo</label>
-                                <select class="form-element">
+                                <select class="form-element" id="tipo-select">
                                     <option>Chocolatera</option>
                                     <option>Caramelizadora</option>
                                     <option>Caramelera</option>
@@ -188,7 +128,7 @@
 
                             <div>
                                 <label class="form-element">id</label>
-                                <input type="text" placeholder="ingresar id"> <br>
+                                <input type="number" placeholder="ingresar id" id="id-delete"> <br>
                             </div>
 
                             <input type="submit" value="Listo" class="form-element" id="submit">
@@ -218,15 +158,12 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element">
-                                <option>maquina 1</option>
-                                <option>maquina 2</option>
-                                <option>maquina 3</option>
+                            <select class="form-element" id="prevent-select">
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element"> <br>
-                            <label class="form-element">Duración</label><br>
-                            <div class="form-element" id="duration">*calcular duracion*</div>
+                            <input type="date" class="form-element" id="preventivo-date"> <br>
+                            <label class="form-element">Disponibilidad</label>
+                            <input type="date" class="form-element" id="preventivo-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -244,15 +181,12 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element">
-                                <option>notificada 1</option>
-                                <option>notificada 2</option>
-                                <option>notificada 3</option>
+                            <select class="form-element" id="predict-select">
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element"> <br>
-                            <label class="form-element">Duración</label><br>
-                            <div class="form-element" id="duration">*calcular duracion*</div>
+                            <input type="date" class="form-element" id="predict-date"> <br>
+                            <label class="form-element">Disponibilidad</label>
+                            <input type="date" class="form-element" id="predict-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -271,13 +205,10 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element">
-                                <option>Defectuosa 1</option>
-                                <option>Defectuosa 2</option>
-                                <option>Defectuosa 3</option>
+                            <select class="form-element" id="correct-select">
                             </select> <br>
                             <label class="form-element">Finalización</label>
-                            <input type="date" class="form-element"> <br>
+                            <input type="date" class="form-element" id="correct-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -296,15 +227,12 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element">
-                                <option>Mantenimiento 1</option>
-                                <option>Mantenimiento 2</option>
-                                <option>Mantenimiento 3</option>
+                            <select class="form-element" id="mPlan-select">
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element"> <br>
-                            <label class="form-element">Duración</label><br>
-                            <div class="form-element" id="duration">*calcular duracion*</div>
+                            <input type="date" class="form-element" id="mPlan-date"> <br>
+                            <label class="form-element">Disponibilidad</label>
+                            <input type="date" class="form-element" id="mPlan-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -324,13 +252,10 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element">
-                                <option>Mantenimiento 1</option>
-                                <option>Mantenimiento 2</option>
-                                <option>Mantenimiento 3</option>
+                            <select class="form-element" id="mMan-select">
                             </select> <br>
-                            <label class="form-element">Finalización</label><br>
-                            <div class="form-element" id="duration">*calcular duracion*</div>
+                            <label class="form-element">Disponibilidad</label>
+                            <input type="date" class="form-element" id="mMan-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -344,13 +269,30 @@
                 <h2>
                     Estado
                 </h2>
-
-                <div class="state-container">
-                    <div class="state">id</div>
-                    <div class="state-info">Texto de prueba del estado</div>
+                <div class="splitter">
+                    <div class="state-container">
+                        <div class="state preventivo">id</div>
+                        <div class="state-info"> Preventivo</div>
+                    </div>
+                    <div class="state-container">
+                        <div class="state predictivo">id</div>
+                        <div class="state-info"> Predictivo</div>
+                    </div>
+                    <div class="state-container">
+                        <div class="state correctivo">id</div>
+                        <div class="state-info"> Correctivo</div>
+                    </div>
                 </div>
 
+
+                <div class="splitter">
+                    <div id="planificado">
+                    </div>
+                    <div id="realizando">
+                    </div>
+                </div>
             </section>
+
         </main>
     </div>
     <script src="index.js"></script>

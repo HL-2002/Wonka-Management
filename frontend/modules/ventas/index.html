@@ -46,67 +46,75 @@
 
             <section class="sales-container">
 
-                <h2>Orden</h2>
-                <p>Ingresa los datos del cliente y la mercancia a comprar</p>
 
-                <form action="/" method="post">
-                    <div class="info-container">
 
-                        <div class="sales-container__name">
-                            <label>Nombre
-                                <input type="text" id="name" placeholder="Ingresa el nombre del cliente" required>
+                <div class="">
+                    <h2>Orden</h2>
+                    <p>Crea orden para nuestro distribuidor en Carabobo</p>
+
+                    <form action="/" method="post">
+
+                        <div class="info-container">
+
+                            <div class="sales-container__name">
+                                <label>Empresa
+                                    <input type="text" id="name" placeholder="Ingresa el nombre de la empresa" required>
+                                </label>
+                            </div>
+                            <div class="sales-container__id">
+                                <label>Rif
+                                    <input type="number" name="customerId" id="customerId"
+                                        placeholder="Ingresa rif de la empresa" required>
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sales-container__email">
+                            <label>E-mail
+                                <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
                             </label>
                         </div>
-                        <div class="sales-container__id">
-                            <label>Cedula
-                                <input type="number" name="customerId" id="customerId"
-                                    placeholder="Ingresa cedula del cliente" required>
+
+                        <div class="sales-container__phone">
+                            <label>Telefono
+                                <input type="number" id="phoneNumber" placeholder="Ingresa numero telefonico">
                             </label>
                         </div>
+                </div>
 
-                    </div>
 
 
-                    <div class="sales-container__email">
-                        <label>E-mail
-                            <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
+
+                <h3>Seleccion de productos</h3>
+
+                <div class="products">
+                    <div class="sales-container__products">
+                        <label>Productos
+                            <select name="why" id="why">
+                                <option value="1">Wonka Bar</option>
+                                <option value="2">Candied Apples</option>
+                                <option value="3">Wonka Swirl Lollipops</option>
+                                <option value="4">Bluebirds Egg Candy</option>
+                                <option value="5">Three Course Dinner Gum</option>
+                                <option value="6">Stained Glass Hard Candy</option>
+                                <option value="7">Wonka Whipple Scrumptious Fudgemallow Delight</option>
+                                <option value="8">Wonka Nutty Choccolate Surprise</option>
+                                <option value="9">Edible Grass</option>
+                                <option value="10">Eternal toothbreaker</option>
+                            </select>
                         </label>
                     </div>
 
-                    <div class="sales-container__shipping">
-                        <label>Direccion de envio
-                            <textarea name="shipping" id="shipping" cols="3" rows="3" required
-                                placeholder="Ingresa Direccion de envio"></textarea>
+                    <div class="sales-container__quantity">
+                        <label>Cantidad
+                            <input type="number" name="quantity" id="quantity" value="1" placeholder="1" min="1"
+                                max="99">
                         </label>
+
                     </div>
-                    <div class="products">
-
-                        <div class="sales-container__products">
-                            <label>Selecciona el Producto
-                                <select name="why" id="why">
-                                    <option value="1">Wonka Bar</option>
-                                    <option value="2">Candied Apples</option>
-                                    <option value="3">Wonka Swirl Lollipops</option>
-                                    <option value="4">Bluebird's Egg Candy</option>
-                                    <option value="5">Three-Course Dinner Gum</option>
-                                    <option value="6">Stained-Glass Hard Candy</option>
-                                    <option value="7">Wonka Whipple-Scrumptious Fudgemallow Delight</option>
-                                    <option value="8">Wonka Nutty Choccolate Surprise</option>
-                                    <option value="9">Edible Grass</option>
-                                    <option value="10">Eternal toothbreaker</option>
-
-                                </select>
-                            </label>
-                        </div>
-
-                        <div class="sales-container__quantity">
-                            <label>Cantidad
-                                <input type="number" name="quantity" id="quantity" value="1" placeholder="1" min="1"
-                                    max="99">
-                            </label>
-
-                        </div>
-                    </div>
+                </div>
 
                 </form>
                 <button onclick="addProduct()">Agregar Producto</button>

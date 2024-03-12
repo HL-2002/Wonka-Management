@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\frontend",
+    "\\frontend\\modules",
+    "\\frontend\\modules\\despacho",
+    "\\frontend\\modules\\inventario",
+    "\\frontend\\modules\\mantenimiento",
+    "\\frontend\\modules\\produccion",
+    "\\frontend\\modules\\ventas"
+  ],
+  "SelectedNode": "\\frontend\\modules\\ventas\\index.html",
+  "PreviewInSolutionExplorer": false
+}
