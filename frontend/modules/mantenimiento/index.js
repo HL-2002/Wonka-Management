@@ -183,25 +183,39 @@ addForm.addEventListener('submit', async (e) => {
   e.preventDefault()
   // Obtener el tipo de máquina del formulario y cantidad
   const tipo = document.getElementById('tipo-select').value.toLowerCase()
-  const cantidad = document.getElementById('cantidad').value
+  const id = document.getElementById('id-maquina').value
+  const machines = await getMachines().then((json) => { return json.machines })
+  let valid = false
+
+  // Validar id entre las máquinas
+  machines.forEach((machine) => {
+    if (machine.id === id) {
+      valid = true
+    }
+  })
 
   // Crear máquina con tipo dado en la base de datos
-  try {
-    for (let i = 0; i < cantidad; i++) {
-      const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ type: tipo })
-      })
+  if (valid) {
+    try {
+      for (let i = 0; i < cantidad; i++) {
+        const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id: id, type: tipo })
+        })
+      }
+      alert(`Máquina ${id} tipo ${tipo} añadida`)
+  
+      // Actualizar las máquinas visibles
+      displayMachines()
+    } catch(error) {
+      console.error(error)
+      alert('Error al añadir máquina, revise la consola y/o servidor')
     }
-    alert(`Máquina ${tipo} añadida`)
-
-    // Actualizar las máquinas visibles
-    displayMachines(await getMachines().then((json) => { return json.machines }))
-  } catch(error) {
-    console.error(error)
+  } else {
+    alert('Id de máquina ya asignada, por favor ingrese un id diferente')
   }
 })
 
@@ -211,10 +225,15 @@ const deleteForm = document.getElementById('delete').children[0]
 deleteForm.addEventListener('submit', async (e) => {
   // Evitar que se recargue la página
   e.preventDefault()
+
+
+  // Display datos de la máquina a eliminar
+
   // Obtener el id de la máquina del formulario
   const id = document.getElementById('id-delete').value
 
   // Validar id entre las máquinas
+
 
   /*
   // Eliminar máquina con id dado en la base de datos
