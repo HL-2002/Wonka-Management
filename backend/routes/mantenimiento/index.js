@@ -42,7 +42,7 @@ Router.patch('/:id', async (req, res) => {
   const { dateMaintenance = null, dateAvailability = null } = req.body
   // update the maintenance in the database
   try {
-    await client.execute({ sql: 'UPDATE MAINTENANCE SET dateMaintenance = ?, dateAvailability = ? WHERE id = ?', args: [dateMaintenance, dateAvailability, id] })
+    await client.execute({ sql: 'UPDATE MAINTENANCE SET dateMaintenance = ?, dateAvailability = ? WHERE machineId = ?', args: [dateMaintenance, dateAvailability, id] })
     res.status(204).end()
   } catch (error) {
     console.error(error)
@@ -56,7 +56,7 @@ Router.delete('/:id', async (req, res) => {
   const { id } = req.params
   // delete the maintenance from the database
   try {
-    await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE id = ?', args: [id] })
+    await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE machineId = ?', args: [id] })
     res.status(200).end()
   } catch (error) {
     console.error(error)
