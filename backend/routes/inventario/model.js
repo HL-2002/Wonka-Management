@@ -44,6 +44,7 @@ await client.execute(`
     ref TEXT,
     cost TEXT,
     price TEXT,
+    stock DECIMAL,
     FOREIGN KEY (categoryId) REFERENCES CATEGORY(id)
 
     
@@ -53,10 +54,10 @@ await client.execute(`
 // data for  development mode
 
 // if (process.env.mode !== 'production') {
-//   // await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Principal'] })
-//   // await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Ventas'] })
-//   // await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Produccion'] })
-//   // await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Category'] })
+//   await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Principal'] })
+//   await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Ventas'] })
+//   await client.execute({ sql: 'INSERT INTO WAREHOUSE (description) VALUES (?)', args: ['Produccion'] })
+//   await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Category'] })
 // }
 
 export default client

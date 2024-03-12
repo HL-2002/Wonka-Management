@@ -50,6 +50,31 @@ router.post('/new/product', async (req, res) => {
   }
 })
 
+router.patch('/stock/:sum/product/:id', async (req, res) => {
+  const { sum, id } = req.params
+  const { units } = req.body
+  let product
+  let stock
+  try {
+    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE id = ?', args: [id] })
+    product = products
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+  if (sum == '1') {
+    stock = product.stock + units
+  } else {
+    stock = product.stock - units
+  }
+  try {
+    await client.execute({ sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?', args: [stock, id] })
+    res.status(201).end()
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 router.patch('/set/product/:id', async (req, res) => {
   const { id } = req.params
   const { description } = req.body

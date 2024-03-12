@@ -77,11 +77,11 @@ async function fillSearchC () {
 /* //Reutilizables
 -------------------- */
 
-function addProduct(params) {
+function addItem(params) {
   const codValue = document.getElementById('codigo')
   const desValue = document.getElementById('descripcion')
   const categorValue = document.getElementById('categoria')
-  const save = document.getElementById('sProduct')
+  const save = document.getElementById('saveButton')
   save.style.backgroundColor = 'initial'
 
   codValue.value = ''
@@ -97,7 +97,7 @@ async function deleteProduct(id) {
   await fillModal()
 }
 
-async function saveProduct(id, des, category) {
+async function saveProduct() {
   const codValue = document.getElementById('codigo').value
   const desValue = document.getElementById('descripcion').value
   const categorValue = document.getElementById('categoria').value
@@ -116,7 +116,7 @@ async function saveProduct(id, des, category) {
 }
 
 async function modProduct(id, des, category) {
-  const save = document.getElementById('sProduct')
+  const save = document.getElementById('saveButton')
   save.disabled = false
   save.style.backgroundColor = 'initial'
   const desValue = document.getElementById('descripcion')
@@ -141,7 +141,7 @@ async function fillModal (id) {
   const actions = `
     <button id="dProduct" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
     <button id="dProduct" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
-    <button id="sProduct" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
   `
   if (!id) {
     await fillSearch()
@@ -160,7 +160,7 @@ async function fillModal (id) {
   `
   document.getElementById('actions').innerHTML = actions
   document.getElementById('modal-detail').innerHTML = detalles
-  document.getElementById('sProduct').style.backgroundColor = 'grey'
+  document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
 /* //Warehouse
@@ -175,7 +175,7 @@ async function fillModalW (id) {
   const actions = `
     <button id="dW" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
     <button id="mW" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
-    <button id="sW" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
   `
   if (!id) {
     await fillSearchW()
@@ -192,8 +192,8 @@ async function fillModalW (id) {
     </article>
   `
   document.getElementById('actionW').innerHTML = actions
-  document.getElementById('modal-detailw').innerHTML = detalles
-  document.getElementById('sW').style.backgroundColor = 'grey'
+  document.getElementById('modal-detailW').innerHTML = detalles
+  document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
 /* //Category
@@ -208,7 +208,7 @@ async function fillModalC (id) {
   const actions = `
     <button id="dW" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
     <button id="mW" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
-    <button id="sC" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
   `
   if (!id) {
     await fillSearchC()
@@ -226,7 +226,7 @@ async function fillModalC (id) {
   `
   document.getElementById('actionC').innerHTML = actions
   document.getElementById('modal-detailC').innerHTML = detalles
-  document.getElementById('sC').style.backgroundColor = 'grey'
+  document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
 /* //CONTROLERS
@@ -311,7 +311,7 @@ async function updateProducts (params) {
 
 async function removeProducts (id) {
   try {
-    const response = await fetch(`/api/inventario//products/delete/${id}`, {
+    const response = await fetch(`/api/inventario/products/delete/${id}`, {
       method: 'DELETE'
     })
 
