@@ -44,17 +44,19 @@
                         Máquinas
                     </h2>
                     <div class="search">
-                        <input class="search-input" type="text" placeholder="Buscar máquina por Id">
-                        <button value="search" class="btn-open">Buscar</button>
+                        <input class="search-input" id="search-input" type="num" placeholder="Buscar máquina por Id"
+                            min="1">
+                        <button value="search" class="btn-open" id="search-button">Buscar</button>
                     </div>
 
                     <dialog id="search" class="dialog">
                         <div class="dialog-content">
                             <div class="dialog-head">
-                                <h2>Busqueda por Id</h2>
+                                <h2 class="form-element" id="form-title">Busqueda por Id</h2>
                                 <button class="close-button">x</button>
                             </div>
-                            <p>*insertar contenido*</p>
+                            <div id="search-display">
+                            </div>
                         </div>
                     </dialog>
                 </div>
