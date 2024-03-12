@@ -177,6 +177,27 @@ function displayMaintenance (machines) {
 
 // Añadir máquinas
 const addForm = document.getElementById('add').children[0]
+
+// Display validación de id
+const idAddInput = document.getElementById('id-maquina')
+
+// Obtener el id de la máquina del formulario
+idAddInput.onkeyup = async () => {
+  const id = idAddInput.value
+  const machines = await getMachines().then((json) => { return json.machines })
+
+  // Validar id entre las máquinas
+  for (let i = 0; i < machines.length; i++) {
+    if (machines[i].id == id) {
+      idAddInput.style.border = '1.5px solid lightgreen'
+      break
+    }
+    else {
+      idAddInput.style.border = '1.5px solid lightcoral'
+    }
+  }
+}
+
 // Evento al enviar el formulario
 addForm.addEventListener('submit', async (e) => {
   // Evitar que se recargue la página
@@ -225,22 +246,22 @@ addForm.addEventListener('submit', async (e) => {
 
 // Eliminar máquinas
 const deleteForm = document.getElementById('delete').children[0]
-// Display datos de máquina indicada
-const idInput = document.getElementById('id-delete')
+// Display validación de id
+const idDeleteInput = document.getElementById('id-delete')
 
 // Obtener el id de la máquina del formulario
-idInput.onkeyup = async () => {
-  const id = idInput.value
+idDeleteInput.onkeyup = async () => {
+  const id = idDeleteInput.value
   const machines = await getMachines().then((json) => { return json.machines })
 
   // Validar id entre las máquinas
   for (let i = 0; i < machines.length; i++) {
     if (machines[i].id == id) {
-      idInput.style.border = '1.5px solid lightgreen'
+      idDeleteInput.style.border = '1.5px solid lightgreen'
       break
     }
     else {
-      idInput.style.border = '1.5px solid lightcoral'
+      idDeleteInput.style.border = '1.5px solid lightcoral'
     }
   }
 }
