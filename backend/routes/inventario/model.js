@@ -10,17 +10,17 @@ const client = createClient({
 
 // create the tables
 
-// if (process.env.mode !== 'production') {
-//   await client.execute(`
-//     DROP TABLE IF EXISTS PRODUCTS
-//   `)
-//   await client.execute(`
-//     DROP TABLE IF EXISTS WAREHOUSE
-//   `)
-//   await client.execute(`
-//     DROP TABLE IF EXISTS CATEGORY
-//   `)
-// }
+if (process.env.mode !== 'production') {
+  await client.execute(`
+    DROP TABLE IF EXISTS PRODUCTS
+  `)
+  await client.execute(`
+    DROP TABLE IF EXISTS WAREHOUSE
+  `)
+  await client.execute(`
+    DROP TABLE IF EXISTS CATEGORY
+  `)
+}
 
 await client.execute(`
   CREATE TABLE IF NOT EXISTS WAREHOUSE (
@@ -51,4 +51,8 @@ await client.execute(`
   )
 `)
 
+if (process.env.mode !== 'production') {
+  await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Materia Prima'] })
+  await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Producto Final'] })
+}
 export default client
