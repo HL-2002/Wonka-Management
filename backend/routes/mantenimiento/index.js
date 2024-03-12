@@ -18,6 +18,8 @@ Router.get('/', async (req, res) => {
   res.json({ machines })
 })
 
+
+// TODO: Entering into maintenance should set machine's line to null
 // create a new maintenance
 Router.post('/', async (req, res) => {
   // get the data from the request
@@ -79,7 +81,7 @@ Router.patch('/machine/:id', async (req, res) => {
   }
 })
 
-// TODO: Add id insertior with machine creation
+// TODO: Add id insertion with machine creation
 // create a new machine
 Router.post('/machine', async (req, res) => {
   // get the data from the request
