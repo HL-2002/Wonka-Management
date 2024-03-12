@@ -69,11 +69,17 @@ await client.execute(`
 // data for  development mode
 if (process.env.mode !== 'production') {
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'uso', 0, 1] })
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'disponible', 1, 1] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'disponible', 1, 0] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'defectuosa', 0, 1] })
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'defectuosa', 0, 1] })
 
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'uso', 1, 1] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'notificada', 1, 1] })
+
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'uso', 1, 2] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'defectuosa', 0, 2] })
+
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chiclera', 'notificada', 1, 0] })
 
   // add maintenance
   await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [1, 'preventivo', '2024-03-05', '2024-03-22'] })
