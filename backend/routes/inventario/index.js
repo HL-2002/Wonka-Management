@@ -34,15 +34,16 @@ router.get('/category', async (req, res) => {
 })
 
 router.post('/new/product', async (req, res) => {
-  const { description, categoryId, ref, cost, pre } = req.body
+  const { description, categoryId, ref, cost, pre, stock } = req.body
 
   const category = parseInt(categoryId)
   const referencia = ref || null
   const costo = cost || null
   const price = pre || null
+  const units = stock || null
 
   try {
-    await client.execute({ sql: 'INSERT INTO PRODUCTS (description, categoryId, ref, cost, price) VALUES (?, ?, ?, ?, ?)', args: [description, category, referencia, costo, price] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (description, categoryId, ref, cost, price, stock) VALUES (?, ?, ?, ?, ?, ?)', args: [description, category, referencia, costo, price, units] })
     res.status(201).end()
   } catch (error) {
     console.log(error)
@@ -58,6 +59,7 @@ router.patch('/set/product/stock', async (req, res) => {
   try {
     const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE id = ?', args: [id] })
     product = products[0]
+    console.log(products[0],'aaa')
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
   }
@@ -77,10 +79,13 @@ router.patch('/set/product/stock', async (req, res) => {
 
 router.patch('/set/product/:id', async (req, res) => {
   const { id } = req.params
-  const { description } = req.body
+  const { description, categoryId, cost, pre } = req.body
+  const category = parseInt(categoryId)
+  const costo = cost || null
+  const price = pre || null
 
   try {
-    await client.execute({ sql: 'UPDATE PRODUCTS SET description = ? WHERE id = ?', args: [description, id] })
+    await client.execute({ sql: 'UPDATE PRODUCTS SET description = ?, categoryId = ?, cost = ?, price = ? WHERE id = ?', args: [description, category, costo, price, id] })
     res.status(201).end()
   } catch (error) {
     console.log(error)
