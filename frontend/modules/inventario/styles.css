@@ -207,7 +207,7 @@ main{
     cursor: pointer;
     box-shadow: black 2px 1px 10px;
     margin: center;
-    margin-top: 35px;
+    /* margin-top: 35px; */
     align-self: flex-end;
   }
 
@@ -236,8 +236,8 @@ main{
     background-color: #6f27ff;
     overflow: auto;
     cursor: default;
-    width: 60%;
-    height: 50vh;
+    width: fit-content;
+    height: fit-content;
   }
 
   .modal-dialog::-webkit-scrollbar {
@@ -255,6 +255,7 @@ main{
   
   .modal-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
   }
@@ -322,5 +323,20 @@ article {
         align-items: center;
         justify-content: space-between;
     }
+    .modal-header{
+      display: flex;
+      flex-direction: column;
+    }
     
+}
+input{
+  background-color:#34005f70;
+  color: #ececec;
+  border: none;
+}
+#codigo{
+  max-width: 100px;
+}
+#descripcion{
+  max-width: 150px;
 }
