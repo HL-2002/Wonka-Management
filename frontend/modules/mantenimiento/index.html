@@ -67,11 +67,6 @@
                     </ul>
                     <div class="data">
                         <div class="data-grid" id="grid">
-                            <div class="grid-item"></div>
-                            <div class="grid-item">Chocolateras</div>
-                            <div class="grid-item">Caramelizadoras</div>
-                            <div class="grid-item">Carameleras</div>
-                            <div class="grid-item">Chicleras</div>
                             <!--En uso -->
                             <!-- Fila de ejemplo
                                 <p style="color: #9f70fd;" class="first-item">En uso </p>
@@ -92,8 +87,10 @@
                             </div>
 
                             <div>
+                                <label class="form-element">Id</label>
+                                <input type="number" placeholder="id" id="id-maquina" min="0"> <br> <br>
                                 <label class="form-element">Tipo</label>
-                                <select class="form-element">
+                                <select class="form-element" id="tipo-select">
                                     <option>Chocolatera</option>
                                     <option>Caramelizadora</option>
                                     <option>Caramelera</option>
@@ -115,7 +112,7 @@
 
                             <div>
                                 <label class="form-element">id</label>
-                                <input type="text" placeholder="ingresar id"> <br>
+                                <input type="number" placeholder="ingresar id" id="id-delete"> <br>
                             </div>
 
                             <input type="submit" value="Listo" class="form-element" id="submit">
@@ -289,11 +286,8 @@
 
                 <div class="splitter">
                     <div id="planificado">
-                        <h3>Planificado</h3>
-
                     </div>
                     <div id="realizando">
-                        <h3>Realizando</h3>
                     </div>
                 </div>
             </section>
