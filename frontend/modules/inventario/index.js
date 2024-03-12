@@ -112,14 +112,22 @@ function addItem(params) {
   const desValue = document.getElementById('descripcion')
   const categorValue = document.getElementById('categoria')
   const save = document.getElementById('saveButton')
+  const precioValue = document.getElementById('precio')
+  const costoValue = document.getElementById('costo')
+  const stock = document.getElementById('stock')
   save.style.backgroundColor = 'initial'
 
   codValue.value = ''
   desValue.value = ''
   categorValue.value = ''
+  precioValue.value = ''
+  costoValue.value = ''
+  stock.value = '0'
 
   desValue.readOnly = false
   categorValue.readOnly = false
+  precioValue.readOnly = false
+  costoValue.readOnly = false
   save.disabled = false
 }
 async function deleteProduct(id) {
@@ -131,11 +139,17 @@ async function saveProduct() {
   const codValue = document.getElementById('codigo').value
   const desValue = document.getElementById('descripcion').value
   const categorValue = document.getElementById('categoria').value
+  const precioValue = document.getElementById('precio').value
+  const costoValue = document.getElementById('costo').value
+  const units = document.getElementById('stock').value
 
   const product = {
     id: codValue,
     description: desValue,
-    categoryId: categorValue
+    categoryId: categorValue,
+    cost: costoValue,
+    pre: precioValue,
+    stock: units
   }
   if (codValue === '') {
     await insertProducts(product)
@@ -175,9 +189,13 @@ async function modProduct(id, des, category) {
   save.style.backgroundColor = 'initial'
   const desValue = document.getElementById('descripcion')
   const categorValue = document.getElementById('categoria')
+  const precioValue = document.getElementById('precio')
+  const costoValue = document.getElementById('costo')
 
   desValue.readOnly = false
   categorValue.readOnly = false
+  precioValue.readOnly = false
+  costoValue.readOnly = false
 }
 
 /* //PRODUCTOS
@@ -190,27 +208,53 @@ async function fillModal (id) {
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
   const viewCategory = selected?.categoryId || ''
+  const viewPrice = selected?.price || ''
+  const viewCost = selected?.cost || ''
+  const viewStock = selected?.stock || 0
+
   const status = 'readonly'
 
   const actions = `
     <button id="dProduct" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
     <button id="dProduct" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
     <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button onclick="addItem()" class="close-modal" >Nuevo</button>
+
   `
   if (!id) {
     await fillSearch()
   }
   const detalles = `
-    <article class="grid">
-      <h2>Detalles</h2>
-      <div class="article-wrapper">
-        <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
-          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong>Categoria:</strong> <input type="text" id="categoria" name="categoria" placeholder="Ingrese la categoría" value="${viewCategory}" ${status}></p>
-        </div>
+  <article class="grid">
+  <h2>Detalles</h2>
+  <div class="article-wrapper">
+      <div class="details-row">
+          <strong>Codigo:</strong>
+          <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}>
       </div>
-    </article>
+      <div class="details-row">
+          <strong>Descripcion:</strong>
+          <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Categoria:</strong>
+          <input type="text" id="categoria" name="categoria" placeholder="Ingrese la categoría" value="${viewCategory}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Precio:</strong>
+          <input type="text" id="precio" name="precio" placeholder="Precio" value="${viewPrice}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Costo:</strong>
+          <input type="text" id="costo" name="costo" placeholder="Costo" value="${viewCost}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Stock:</strong>
+          <input type="text" id="stock" name="stock" placeholder="Stock" value="${viewStock}" ${status}>
+      </div>
+  </div>
+</article>
+
   `
   document.getElementById('actions').innerHTML = actions
   document.getElementById('modal-detail').innerHTML = detalles
