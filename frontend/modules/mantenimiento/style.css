@@ -36,7 +36,37 @@ h1 {
 
 }
 
-.section>h2 {
+.container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 33px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #6f27ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+h2 {
     flex-basis: 100%;
     color: #ececec;
     font-size: 2em;
@@ -59,8 +89,6 @@ h1 {
     list-style: none;
 }
 
-
-
 .container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -72,6 +100,26 @@ h1 {
     width: 20px;
     height: 20px;
     border-radius: 4px;
+}
+
+div.uso {
+    background-color: #9f70fd;
+}
+
+div.disponible {
+    background-color: #42c087;
+}
+
+div.notificada {
+    background-color: #f17c37;
+}
+
+div.mantenimiento {
+    background-color: #f2c43d;
+}
+
+div.defectuosa {
+    background-color: #e0444e;
 }
 
 .data {
@@ -131,7 +179,7 @@ button {
     text-decoration: none;
     transition: background 0.3s ease, transform 0.3s ease;
     cursor: pointer;
-    box-shadow: black 2px 1px 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 2px 1px 10px;
 }
 
 
@@ -217,13 +265,29 @@ button:active {
 .state {
     width: 60px;
     height: 60px;
-    background-color: red;
     border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
+}
+
+.preventivo {
+    background-color: #f2c43d;
+}
+
+.predictivo {
+    background-color: #f17c37;
+}
+
+.correctivo {
+    background-color: #e0444e;
+}
+
+div>h3 {
+    color: #ececec;
 }
 
 .state-info {
@@ -249,6 +313,7 @@ button:active {
     display: block;
     animation: fadeIn 0.5s ease;
 }
+
 
 .dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
@@ -320,6 +385,14 @@ section.mantenimiento {
     gap: 2rem;
 }
 
+.splitter {
+    margin-bottom: 2rem;
+    margin-top: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 
 
 @media screen and (min-width: 728px) {

@@ -1,20 +1,21 @@
-:root{
+:root {
     --main-color: #6f27ff;
     --sup: #9f70fd;
     --interact: #fdbf60;
-    --action:#ff8911;
+    --action: #ff8911;
     --backgroud: #ececec;
 }
 
-body{
+body {
     background-color: #6f27ff;
 }
-main{
+
+main {
     width: 100%;
     padding-bottom: 50px;
 }
 
-.main-title{
+.main-title {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -23,7 +24,7 @@ main{
     font-size: 3rem;
 }
 
-.main-container{
+.main-container {
 
     color: #ececec;
     width: 80%;
@@ -31,75 +32,100 @@ main{
     margin: 10px auto;
     gap: 20px;
     justify-content: center;
- 
+
 }
 
-.sales-container h2{
+.sales-container h2 {
     font-size: 2rem;
-    
     color: var(--action);
-    
+
 }
 
-.sales-container{  
+.sales-container {
 
-    background-color:#34005f;
+    background-color: #34005f;
     width: 610px;
     height: 480px;
     border-radius: 10px;
-    padding:15px 30px;
+    padding: 15px 30px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B;
+    box-shadow: 5px 5px 15px -3px #0B0B0B;
+
 }
 
-.sales-container label{
+
+
+.seles-container .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sales-container label {
     font-weight: 500;
 }
 
-.sales-container__name,.sales-container__email,.sales-container__id,.sales-container__shipping,.sales-container__products,.sales-container__quantity{
+.sales-container__name,
+.sales-container__email,
+.sales-container__id,
+.sales-container__phone,
+.sales-container__products,
+.sales-container__quantity {
     margin-top: 10px;
 }
-.sales-container__name input{
-    width:270px;
+
+.sales-container__name input {
+    width: 270px;
     border: none;
     border-radius: 4px;
 }
 
-.sales-container__id input{
+.sales-container__id input {
     width: 270px;
     border-radius: 4px;
     border: none;
 }
 
-.info-container{
+.info-container {
     display: flex;
     gap: 10px;
 }
 
-.sales-container__email input{
+.sales-container__email input {
     width: 550px;
     border-radius: 4px;
     border: none;
 }
 
-.sales-container__shipping textarea{
+.sales-container__phone input {
     border-radius: 4px;
     width: 550px;
     resize: none;
+    border: none;
 }
 
-.products{
+h3 {
+    margin-top: 20px;
+    color: var(--action);
+    font-size: 1.3rem;
+
+}
+
+.products {
     display: flex;
     gap: 10px;
 }
-.sales-container__products select{
+
+.sales-container__products select {
     width: 270px;
     border-radius: 4px;
     border: none;
 }
 
-.sales-container__quantity input{
+.sales-container__quantity input {
     width: 270px;
     border-radius: 4px;
     border: none;
@@ -108,7 +134,7 @@ main{
 
 
 
-.sales-container button{
+.sales-container button {
     background: #6f27ff;
     border: none;
     padding: 0.5rem 1rem;
@@ -122,7 +148,7 @@ main{
     margin: 0 auto;
     margin-top: 35px;
     align-self: flex-end;
-    
+
 }
 
 .sales-container button:hover {
@@ -135,19 +161,21 @@ main{
     background: #6f27ff;
 }
 
-.ticket-container{
-    background-color:#34005f;
+.ticket-container {
+    background-color: #34005f;
     width: 500px;
     height: 480px;
     border-radius: 10px;
-    padding:15px 25px;
-    overflow-y: auto; 
+    padding: 15px 25px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B;
+    box-shadow: 5px 5px 15px -3px #0B0B0B;
 }
 
-.ticket-container button{
+.ticket-container button {
     background: #6f27ff;
     border: none;
     padding: 0.5rem 1rem;
@@ -160,8 +188,8 @@ main{
     box-shadow: black 2px 1px 10px;
     margin: 20px auto;
 
-    
-   
+
+
 }
 
 .ticket-container button:hover {
@@ -173,20 +201,20 @@ main{
     transform: translateY(2px);
     background: #6f27ff;
 }
+
 .ticket-container h2 {
     font-size: 2rem;
     color: var(--action);
 }
 
-.ticket-table{
+.ticket-table {
     width: 100%;
 
 }
 
-.ticket-table td{
+.ticket-table td {
     text-align: center;
     width: 33%;
     border: var(--action) solid 1px;
 
 }
-

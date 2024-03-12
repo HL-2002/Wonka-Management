@@ -4,30 +4,29 @@ import client from './model.js';
 const ventasRouter = express.Router();
 
 ventasRouter.post('/orders', async (req, res) => {
-    const { name, customerId, email, shipping, products } = req.body;
+    const { name, customerId, email, phoneNumber,time, products ,totalPrice} = req.body;
    
     
 
-    if (!name || !customerId || !email || !shipping || !products || products.length === 0) {
+    if (!name || !customerId || !email || !phoneNumber || !time   || !products || products.length === 0) {
         return res.status(400).json({ error: 'Por favor complete todos los campos del formulario y agregue al menos un producto al ticket.' });
     }
 
     try {
         const clientInsertResult = await client.execute({
-            sql: 'INSERT INTO OrderTable (customerName, customerId, email, shipping) VALUES (?, ?, ?, ?)',
-            args: [name, customerId, email, shipping]
+            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
+            args: [name, customerId, email, phoneNumber, time, totalPrice ]
         });
 
         const result = await client.execute({
             sql: 'SELECT last_insert_rowid() AS orderId'
         });
-    
         const orderId = result.rows[0].orderId;
-
-        for (const { productName, quantity } of products) {
+        for (const { productName, quantity, price} of products) {
             await client.execute({
-                sql: 'INSERT INTO OrderProduct (orderId, productName, quantity) VALUES (?, ?, ?)',
-                args: [orderId, productName, quantity]
+                
+                sql: 'INSERT INTO OrderProduct (orderId, productName, quantity, price) VALUES (?, ?, ?, ?)',
+                args: [orderId, productName, quantity, price]
             });
         }
 
@@ -69,9 +68,11 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
             customerName: order.customerName,
             customerId: order.customerId,
             email: order.email,
-            shipping: order.shipping,
+            phoneNumber: order.phoneNumber,
             status: order.status,
-            products: products
+            time: order.time,
+            products: products,
+            totalPrice:order.totalPrice
         };
 
         res.status(200).json(orderWithProducts);
@@ -103,9 +104,11 @@ ventasRouter.get('/orders', async (req, res) => {
                 customerName: order.customerName,
                 customerId: order.customerId,
                 email: order.email,
-                shipping: order.shipping,
+                phoneNumber: order.phoneNumber,
                 status: order.status,
-                products: products
+                time: order.time,
+                products: products,
+                totalPrice:order.totalPrice
             };
         }));
 
@@ -115,6 +118,36 @@ ventasRouter.get('/orders', async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
     }
 });
+
+// Modificar el status de una orden
+ventasRouter.patch('/orders/:orderId/status', async (req, res) => {
+    const orderId = req.params.orderId;
+    const { status } = req.body;
+
+    try {
+        // Verificar si la orden existe
+        const orderExistenceResult = await client.execute({
+            sql: 'SELECT * FROM OrderTable WHERE id = ?',
+            args: [orderId]
+        });
+
+        if (orderExistenceResult.rows.length === 0) {
+            return res.status(404).json({ error: 'La orden especificada no fue encontrada.' });
+        }
+
+        // Actualizar el status de la orden
+        const updateStatusResult = await client.execute({
+            sql: 'UPDATE OrderTable SET status = ? WHERE id = ?',
+            args: [status, orderId]
+        });
+
+        res.status(200).json({ message: 'El estado de la orden ha sido actualizado correctamente.' });
+    } catch (error) {
+        console.error('Error al actualizar el estado de la orden:', error);
+        res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
+    }
+});
+
 
 
 export default ventasRouter;

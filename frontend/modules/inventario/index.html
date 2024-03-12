@@ -1,13 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Inventario</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../header.css">
+    <link rel="stylesheet" href="../../reset.css">
 </head>
-    <body>
-        <h1>INVENTARIO</h1>
-        <script src="index.js.js"></script>  
-    </body>
+
+<body>
+    <header class="header">
+        <nav>
+            <ul class="header-navbar">
+                <a href="../../index.html">
+                    <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
+                </a>
+
+                <li><a href="/index.html"><img src="../../public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                <li><a href="#"><img src="../../public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
+                <li><a href="/modules/inventario/"><img src="../../public/icono_3.webp"
+                            alt="icono de inventario">Inventario</a></li>
+                <li><a href="#"><img src="../../public/icono_4.webp" alt="icono Produccion">Producción</a></li>
+                <li><a href="/modules/mantenimiento"><img src="../../public/icono_5.webp"
+                            alt="icono de Mantenimiento">Mantenimiento</a>
+                </li>
+                <li><a href="#"><img src="../../public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1 class="main-title">Inventario</h1>
+        <section class="main-container">
+            <section class="inv-container">
+                <h2>Logistica</h2>
+                <div class="inv-row">
+                    <button onclick="fillModalCargo()" type="button" class="open-modal" data-open="modal4" >Cargo</button>
+                    <button onclick="fillModalDescargo()" type="button" class="open-modal" data-open="modal5">Descargo</button>
+                </div>
+                <h2 style="margin-top: 25px;">Tablas</h2>
+                <div class="inv-row">
+                    <button onclick="fillModal()"  type="button" class="open-modal" data-open="modal1">Productos</button>
+                    <button >Recetas</button>
+                </div>
+                <div class="inv-row">
+                    <button onclick="fillModalC()"  type="button" class="open-modal" data-open="modal3">Categorias</button>
+                    <button onclick="fillModalW()"  type="button" class="open-modal" data-open="modal2">Almacenes</button>
+                </div>
+            </section>
+
+            <!-- Modal para los productos -->
+            <div class="modal" id="modal1">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Productos</h2>
+                        <div id="actions" class="">                            
+                        </div>
+                    <button onclick="addItem()" class="close-modal"  style="margin: 10px;">Nuevo</button>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="products" id="products">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detail" class="modal-detail">
+                    </section>
+                </div>
+            </div>
+
+
+            <!-- Modal para el alamacenamiento -->
+            <div class="modal" id="modal2">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Almacenes</h2>
+                        <div id="actionW" class="">
+                            
+                        </div>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="store" id="store">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detailW" class="modal-detail">
+                        <article class="grid">
+                            <h2>Detalles</h2>
+                            <div class="article-wrapper">
+                                <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+                                </div>
+                            </div>
+                          </article>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Modal para las categorias -->
+            <div class="modal" id="modal3">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Categorias</h2>
+                        <div id="actionC" class="">>
+                        </div>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="category" id="category">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detailC" class="modal-detail">
+                        <article class="grid">
+                            <h2>Detalles</h2>
+                            <div class="article-wrapper">
+                                <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+                                </div>
+                            </div>
+                          </article>
+                    </section>
+                </div>
+            </div>
+             <!-- Modal para Carga -->
+             <div class="modal" id="modal4">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Cargo</h2>
+                        <div id="actionsCa" class="">                            
+                        </div>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="cargo" id="cargo">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detailCa" class="modal-detail">
+                    </section>
+                </div>
+            </div>
+             <!-- Modal para Descargo -->
+             <div class="modal" id="modal5">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Descargo</h2>
+                        <div id="actionsDe" class="">                            
+                        </div>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="descargo" id="descargo">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detailDe" class="modal-detail">
+                    </section>
+                </div>
+            </div>
+             <!-- Modal para Inventario -->
+             <div class="modal" id="modal6">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                        <h2>Inventario</h2>
+                        <div id="actions" class="">                            
+                        </div>
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                    </header>
+                    <section class="modal-content">Buscador
+                        <select name="products" id="products">
+                            
+                        </select>
+                    </section>
+                    <section id="modal-detail" class="modal-detail">
+                    </section>
+                </div>
+            </div>
+            <section class="ticket-container">
+                <div class="ticket-container__top">
+                    <h2>Reportes</h2>
+                    <table class="" id="">
+                        <ul style="display: flex; flex-direction:column;">
+                            <a>Listado de Productos</a>
+                            <a>Listado de Almacenes</a>
+                            <a>Listado de Categorias</a>
+                            <a>Listado de Recetas</a>
+                        </ul>
+                        <tbody id="productTable"></tbody>
+                    </table>
+                </div>
+                <button>General</button>
+            </section>
+        </section>
+    </main>
+    <script src="./index.js"></script>
+</body>
 </html>
