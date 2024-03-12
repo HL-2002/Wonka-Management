@@ -40,19 +40,22 @@ main{
     
 }
 
-.sales-container{  
-
-    background-color:#34005f;
-    width: 610px;
-    height: 480px;
-    border-radius: 10px;
-    padding:15px 30px;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B; 
-    box-shadow: 5px 5px 15px -3px #0B0B0B;
-
+.container {
+    display: inline-block;
+    width: 45%; /* Adjust the width as needed */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    vertical-align: top; /* Align containers at the top */
 }
+
+    .container .info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
 .sales-container label{
     font-weight: 500;
