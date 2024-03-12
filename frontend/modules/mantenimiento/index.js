@@ -540,7 +540,7 @@ corrForm.addEventListener('submit', async (e) => {
 const mPlanForm = document.getElementById('mPlan').children[0]
 let mPlanOption = ''
 
-// Evento al cliclar alguno de los submit
+// Evento al clicar alguno de los submit
 const mPlanSubmit = document.getElementById('mPlan-submit')
 const mPlanDelete = document.getElementById('mPlan-delete')
 
@@ -609,6 +609,7 @@ mPlanForm.addEventListener('submit', async (e) => {
   }
 
   if (mPlanOption === 'delete') {
+    // TODO: Debug
     // Borrar mantenimiento del servidor
     const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
       method: 'DELETE'
@@ -629,6 +630,7 @@ mPlanForm.addEventListener('submit', async (e) => {
     }
   }
   else if (mPlanOption === 'submit') {
+    // Obtener fecha de mantenimiento previa
     const mantPrev = strToDate(machineSelectedPlan.dateMaintenance)
     
     // Obtener los datos del formulario
@@ -648,6 +650,7 @@ mPlanForm.addEventListener('submit', async (e) => {
       return
     }
     else {
+      // TODO: Debug
       // Actualizar el mantenimiento
       // Formatear fechas
       dateMaintenance = dateMaintenance.toISOString().split('T')[0]
@@ -675,6 +678,107 @@ mPlanForm.addEventListener('submit', async (e) => {
     }
   }
 })
+
+// Modificar (o eliminar mantenimiento)
+// Obtener formulario de modificación
+const mManForm = document.getElementById('mMan').children[0]
+// Evento al clicar alguno de los submit
+let mManOption = ''
+
+const mManSubmit = document.getElementById('mMan-submit')
+const mManDelete = document.getElementById('mMan-delete')
+
+mManSubmit.addEventListener('click', async (e) => {
+  mManOption = 'submit'
+})
+
+mManDelete.addEventListener('click', async (e) => {
+  mManOption = 'delete'
+})
+
+// Guardar máquina seleccionada
+let machineSelectedMan = {}
+
+// Evento al seleccionar una máquina
+const mManSelect = document.getElementById('mMan-select')
+
+// Obtener máquina seleccionada
+mManSelect.addEventListener('change', async (e) => {
+  const id = parseInt(mManSelect.value)
+  const machines = await getMachines().then((json) => { return json.machines })
+
+  // Contenedores de las fechas
+  const dispPrev = document.getElementById("mMan-disp-previa")
+
+  // Limpiar contenedores antes de añadir los datos
+  dispPrev.innerHTML = 'Disponibilidad previa: '
+
+  // Obtener la máquina seleccionada
+  if (!isNaN(id)) {
+    for (const machine of machines) {
+      if (machine.id === id) {
+        // Mostrar datos de la máquina seleccionada
+        dispPrev.innerHTML += dateFormat(machine.dateAvailability)
+        machineSelectedMan = machine
+      }
+    }
+  }
+})
+
+// Evento al enviarlo
+mManForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener datos de máquina seleccionada
+  const id = machineSelectedMan.id
+
+  // Validar selección de máquina
+  if (id === undefined) {
+    alert('Por favor seleccione una máquina')
+    return
+  }
+
+  if (mManOption === 'delete') {
+    // TODO: Debug
+    // Borrar mantenimiento del servidor
+    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+      method: 'DELETE'
+    })
+
+    if(response.status !== 500) {
+      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado`)
+
+      // Clear form
+      document.getElementById('mMan-select').value = ''
+      document.getElementById('mMan-release').value = ''
+
+      // Actualizar las máquinas y mantenimientos visibles
+      updateDisplays()
+    }
+  }
+  else if (mManOption === 'submit') {
+    // Obtener los datos del formulario
+    let dateAvailability = strToDate(document.getElementById('mMan-release').value)
+
+    // Validar fechas
+    if (dateAvailability === '' || dateAvailability < date) {
+      alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+      return
+    }
+
+    // Actualizar el mantenimiento
+    // Formatear fechas
+    dateAvailability = dateAvailability.toISOString().split('T')[0]
+
+    // TODO
+
+  }
+ })
+
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
