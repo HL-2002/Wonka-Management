@@ -241,7 +241,7 @@ button:active {
     margin-left: 50;
 }
 
-#submit {
+input[type=submit] {
     background: #6f27ff;
     border: none;
     padding: 0.5rem 1rem;
@@ -253,6 +253,10 @@ button:active {
     cursor: pointer;
     box-shadow: black 2px 1px 10px;
     margin-top: 20px;
+}
+
+input[value="Listo"] {
+    margin-right: 10rem;
 }
 
 .state-container {
