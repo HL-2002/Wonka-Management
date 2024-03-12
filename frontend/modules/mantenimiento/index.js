@@ -1,15 +1,21 @@
 // Display de las máquinas y su mantenimiento al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
-  const machines = await getMachines().then((json) => { return json.machines })
-  console.log(machines)
-  displayMachines(machines)
-  displayMaintenance(machines)
+  updateDisplays()
 })
 
 // Obtener el array de las máquinas
 async function getMachines () {
   const response = await fetch('http://localhost:3000/api/mantenimiento/')
   return response.json()
+}
+
+// Actualizar todos los displays y formularios
+async function updateDisplays () {
+  const machines = await getMachines().then((json) => { return json.machines })
+  console.log(machines)
+  displayMachines(machines)
+  displayMaintenance(machines)
+  displayMaintenanceForms(machines)
 }
 
 // Actualizar el display de las máquinas
@@ -175,6 +181,42 @@ function displayMaintenance (machines) {
   })
 }
 
+function displayMaintenanceForms (machines) {
+  // Formulario de mantenimiento preventivo
+  const prevSelect = document.getElementById('prevent-select')
+  // Formulario de mantenimiento predictivo
+  const predSelect = document.getElementById('predict-select')
+  // Formulario de mantenimiento correctivo
+  const corSelect = document.getElementById('correct-select')
+  // Formulario de modificación de plan 
+  const mPlanSelect = document.getElementById('mPlan-select')
+  // Formulario de modificación de mantenimiento
+  const mManSelect = document.getElementById('mMan-select')
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  machines.forEach((machine) => {
+    if ((machine.state === 'uso' || machine.state === 'disponible') && 
+        machine.typeMaintenance === null){
+      prevSelect.innerHTML += `<option value="${machine.id}">Máquina ${machine.id}</option>`
+    }
+    else if (machine.state === "notificada" && machine.typeMaintenance !== "predictivo") {
+      predSelect.innerHTML += `<option value="${machine.id}">Máquina ${machine.id}</option>`
+    }
+    else if (machine.state === "defectuosa" && machine.typeMaintenance !== "correctivo") {
+      corSelect.innerHTML += `<option value="${machine.id}">Máquina ${machine.id}</option>`
+    }
+    else if ((machine.typeMaintenance === "preventivo" || machine.typeMaintenance === "predictivo") &&
+            machine.dateMaintenance > date) {
+      mPlanSelect.innerHTML += `<option value="${machine.id}">Máquina ${machine.id}</option>`
+    }
+    else if (machine.dateAvailability > date) {
+      mManSelect.innerHTML += `<option value="${machine.id}">Máquina ${machine.id}</option>`
+    }
+  })
+}
+
 // Añadir máquinas
 const addForm = document.getElementById('add').children[0]
 
@@ -189,11 +231,11 @@ idAddInput.onkeyup = async () => {
   // Validar id entre las máquinas
   for (let i = 0; i < machines.length; i++) {
     if (machines[i].id == id) {
-      idAddInput.style.border = '1.5px solid lightgreen'
+      idAddInput.style.border = '1.5px solid lightcoral'
       break
     }
     else {
-      idAddInput.style.border = '1.5px solid lightcoral'
+      idAddInput.style.border = '1.5px solid lightgreen'
     }
   }
 }
@@ -235,6 +277,7 @@ addForm.addEventListener('submit', async (e) => {
       // Actualizar las máquinas visibles
       let machines = await getMachines().then((json) => { return json.machines })
       displayMachines(machines)
+      displayMaintenanceForms(machines)
     } catch(error) {
       console.error(error)
       alert('Error al añadir máquina, revise la consola y/o servidor')
@@ -295,10 +338,8 @@ deleteForm.addEventListener('submit', async (e) => {
       idInput.style.border = '1.5px solid lightgray'
 
       // Actualizar las máquinas y mantenimientos visibles
-      let machines = await getMachines().then((json) => { return json.machines })
-      displayMachines(machines)
-      displayMaintenance(machines)
-
+      updateDisplays()
+      
     } catch (error) {
       console.error(error)
       alert('Error al eliminar máquina, revise la consola y/o servidor')
@@ -307,13 +348,16 @@ deleteForm.addEventListener('submit', async (e) => {
   else {
     alert('Id de máquina no encontrada, por favor ingrese un id diferente')
   }
-  
-
-  // Actualizar las máquinas visibles
-  displayMachines(await getMachines().then((json) => { return json.machines }))
-
 })
 
+// Planificar mantenimiento preventivo
+// Obtener formulario de planificación
+const prevForm = document.getElementById('prevent').children[0]
+// Evento al enviarlo
+prevForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+})
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
