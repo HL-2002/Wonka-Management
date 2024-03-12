@@ -59,6 +59,7 @@ function displayMachines (machines) {
   // Crear grid de números por tipo de máquina
   let grid = []
   const total = []
+  ids = []
 
   // Añadir máquinas según su tipo
   machines.forEach((machine) => {
@@ -356,8 +357,8 @@ prevForm.addEventListener('submit', async (e) => {
   // Obtener los datos del formulario
   const id = document.getElementById('prevent-select').value
   const typeMaintenance = 'preventivo'
-  const dateMaintenance = document.getElementById('preventivo-date').valueAsDate
-  const dateAvailability = document.getElementById('preventivo-release').valueAsDate
+  let dateMaintenance = document.getElementById('prevent-date').valueAsDate
+  let dateAvailability = document.getElementById('prevent-release').valueAsDate
 
   // Validar id
   if (id === '') {
@@ -375,6 +376,9 @@ prevForm.addEventListener('submit', async (e) => {
   }
 
   // Crear mantenimiento preventivo en la base de datos
+  dateMaintenance = dateMaintenance.toISOString().split('T')[0]
+  dateAvailability = dateAvailability.toISOString().split('T')[0]
+
   const response = await fetch('http://localhost:3000/api/mantenimiento/', {
     method: 'POST',
     headers: {
