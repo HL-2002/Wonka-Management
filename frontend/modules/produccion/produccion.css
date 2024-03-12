@@ -1,0 +1,92 @@
+:root{
+    --main-color: #6f27ff;
+    --sup: #9f70fd;
+    --interact: #fdbf60;
+    --action:#ff8911;
+    --backgroud: #ececec;
+}
+body{
+    background-color: #6f27ff;
+}
+main{
+    width: 100%;
+    padding-bottom: 50px;
+}
+.main-title{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: 900;
+    color: var(--backgroud);
+    font-size: 3rem;
+}
+.main-container{
+
+    color: #ececec;
+    width: 80%;
+    display: flex;
+    margin: 10px auto;
+    gap: 20px;
+    justify-content: center;
+ 
+}
+h4 {
+    color: white;
+    
+}
+h2 {
+    
+}
+table {
+    width: 85%;
+}
+th, td {
+    border: var(--action) solid 3px;
+    font-weight: 500;
+}
+th{
+    color: white;
+}
+table.center{
+    margin: auto;
+    margin-bottom: 20px
+}
+.linea-container{
+    background-color:#34005f;
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    padding:15px 25px;
+    margin: auto;
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B; 
+    box-shadow: 5px 5px 15px -3px #0B0B0B;
+}
+.linea-container button{
+    background: #6f27ff;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: #ececec;
+    border-radius: 5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: black 2px 1px 10px;
+    margin: 13px;
+}
+.linea-container button:hover {
+    transform: scale(1.03);
+    background: #731d9e;
+}
+.linea-container button:active {
+    transform: translateY(2px);
+    background: #6f27ff;
+}
+.ticket-container h2 {
+    font-size: 2rem;
+    color: var(--action);
+}

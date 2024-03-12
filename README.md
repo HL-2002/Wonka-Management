@@ -8,7 +8,7 @@ The documentation is included among the project's files at docs.md
 
 ## how to run the project
 
-firts you need to install the dependencies with the following command
+first you need to install the dependencies with the following command
 
 ```bash
 npm install

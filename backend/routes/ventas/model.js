@@ -4,15 +4,12 @@ const urlMan = process.env.mode === 'production' ? process.env.DB_MAN_URL : 'fil
 
 // Configuración de variables de entorno
 const Token = process.env.DB_MAN_TOKEN;
-
 // Crear cliente de base de datos
 const client = createClient({
     authToken: Token,
     url: urlMan
 });
-
 // Inicializar modelo de base de datos para ventas
-
 if (process.env.mode !== 'production') {
     await client.execute(`
     DROP TABLE IF EXISTS OrderProduct
@@ -30,13 +27,13 @@ await client.execute(`
         email TEXT NOT NULL,
         phoneNumber TEXT NOT NULL,
         time TEXT NOT NULL,
-        status TEXT DEFAULT 'pending'
+        status TEXT DEFAULT 'pending',
+        totalPrice REAL NOT NULL DEFAULT 0
     )
 `);
 
 await client.execute(`
     CREATE TABLE IF NOT EXISTS OrderProduct (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
         orderId INTEGER NOT NULL,
         productName TEXT NOT NULL,
         quantity INTEGER NOT NULL,

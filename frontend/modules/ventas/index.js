@@ -90,6 +90,27 @@ async function submitOrder() {
         return;
     }
 
+    if (customerId.length > 8){
+        alert ("Ingrese un rif valido")
+        document.getElementById("customerId").value = "";
+
+        return;
+    }
+
+    let  validEmailRegex = /\S+@\S+\.\S{2,}/;
+    if(!validEmailRegex.test(email)){
+         alert ('Correo electronico invalido');
+         return false;
+    }
+
+    let validNumber = ["0424","0242","0414","0412","0416"]
+
+    if (phoneNumber.length != 11 && validNumber.includes(phoneNumber.slice(0,4))){
+        alert("Ingresa un numero telefonico valido")
+        document.getElementById("phoneNumber").value = "";
+        return;
+    }
+
 
     let fechaHoraActual = new Date();
 
@@ -111,6 +132,18 @@ async function submitOrder() {
     // Formatear la fecha y hora en el formato deseado (YYYY-MM-DD HH:MM:SS)
     let fecha = año + "-" + mes + "-" + dia + " " + horas + ":" + minutos + ":" + segundos;
 
+    // Definir precio total
+     let totalPrice = 0
+
+    for (let product of productsArray){
+
+        totalPrice+= product.price
+
+    }
+
+    console.log(totalPrice);
+    alert(totalPrice)
+
 
     // Construir el objeto de pedido
     var order = {
@@ -119,7 +152,8 @@ async function submitOrder() {
         email: email,
         phoneNumber: phoneNumber,
         time:fecha,
-        products: productsArray
+        products: productsArray,
+        totalPrice : totalPrice
         
     };
 
@@ -150,5 +184,7 @@ async function submitOrder() {
         console.error("Error al enviar el pedido:", error);
         alert("Hubo un error al enviar el pedido. Por favor, revise la consola para más detalles.");
     }
+
+    
 }
 

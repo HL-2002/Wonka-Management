@@ -9,6 +9,9 @@ const client = createClient({
 
 // initialize model of the database for the maintenance and machine
 
+// enable foreign keys
+await client.execute('PRAGMA foreign_keys = ON')
+
 // create the tables
 
 if (process.env.mode !== 'production') {
@@ -37,7 +40,7 @@ await client.execute(`
     type TEXT,
     dateMaintenance  TEXT,
     dateAvailability TEXT,
-    FOREIGN KEY (machineId) REFERENCES MACHINE(id)
+    FOREIGN KEY (machineId) REFERENCES MACHINE(id) ON DELETE CASCADE
     )
   `)
 
@@ -83,5 +86,7 @@ if (process.env.mode !== 'production') {
 
   // add maintenance
   await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [1, 'preventivo', '2024-03-05', '2024-03-22'] })
+  await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [2, 'preventivo', '2024-03-13', '2024-03-22'] })
+  await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [3, 'correctivo', '2024-03-08', '2024-03-22'] })
 }
 export default client

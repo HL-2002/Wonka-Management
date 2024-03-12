@@ -18,6 +18,7 @@ Router.get('/', async (req, res) => {
   res.json({ machines })
 })
 
+// TODO: Entering into maintenance should set machine's line to null
 // create a new maintenance
 Router.post('/', async (req, res) => {
   // get the data from the request
@@ -79,14 +80,13 @@ Router.patch('/machine/:id', async (req, res) => {
   }
 })
 
-// TODO: Add id insertior with machine creation
 // create a new machine
 Router.post('/machine', async (req, res) => {
   // get the data from the request
   const { id, type } = req.body
   // insert the machine into the database
   try {
-    await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: [type, 'disponible', 1, 0] })
+    await client.execute({ sql: 'INSERT INTO MACHINE (id,type, state, availability, line) VALUES (?,?, ?, ?, ?)', args: [id, type, 'disponible', 1, 0] })
     res.status(201).end()
   } catch (error) {
     console.error(error)
@@ -94,12 +94,11 @@ Router.post('/machine', async (req, res) => {
   }
 })
 
-// TODO: Throws error when deleting a machine with a maintenance
 // delete the machine
 Router.delete('/machine/:id', async (req, res) => {
   // get the id from the request
   const { id } = req.params
-  // delete the machine from the database
+  // delete the machine from the database and delete a maintenance if exist in cascade
   try {
     await client.execute({ sql: 'DELETE FROM MACHINE WHERE id = ?', args: [id] })
     res.status(201).end()
