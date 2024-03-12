@@ -9,6 +9,9 @@ const client = createClient({
 
 // initialize model of the database for the maintenance and machine
 
+// enable foreign keys
+await client.execute('PRAGMA foreign_keys = ON')
+
 // create the tables
 
 if (process.env.mode !== 'production') {
@@ -37,7 +40,7 @@ await client.execute(`
     type TEXT,
     dateMaintenance  TEXT,
     dateAvailability TEXT,
-    FOREIGN KEY (machineId) REFERENCES MACHINE(id)
+    FOREIGN KEY (machineId) REFERENCES MACHINE(id) ON DELETE CASCADE
     )
   `)
 
