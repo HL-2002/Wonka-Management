@@ -18,6 +18,7 @@ Router.get('/', async (req, res) => {
   res.json({ machines })
 })
 
+// TODO: Entering into maintenance should set machine's line to null
 // create a new maintenance
 Router.post('/', async (req, res) => {
   // get the data from the request

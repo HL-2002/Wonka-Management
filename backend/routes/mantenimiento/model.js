@@ -86,5 +86,7 @@ if (process.env.mode !== 'production') {
 
   // add maintenance
   await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [1, 'preventivo', '2024-03-05', '2024-03-22'] })
+  await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateMaintenance, dateAvailability) VALUES (?, ?, ?, ?)', args: [2, 'preventivo', '2024-03-13', '2024-03-22'] })
+  await client.execute({ sql: 'INSERT INTO MAINTENANCE (machineId, type, dateAvailability) VALUES (?, ?, ?)', args: [3, 'correctivo', '2024-03-22'] })
 }
 export default client
