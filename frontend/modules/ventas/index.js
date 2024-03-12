@@ -56,6 +56,7 @@ function deleteRow(btn) {
 
 
 async function submitOrder() {
+
     var name = document.getElementById("name").value.trim();
     var customerId = document.getElementById("customerId").value.trim();
     var email = document.getElementById("email").value.trim();
@@ -68,10 +69,24 @@ async function submitOrder() {
         BluebirdsEggCandy:2,
         ThreeCourseDinnerGum:4,
         StainedGlassHardCandy:3,
-        WonkaWhippleScrumptiousFudgemallowDelight:6,
-        WonkaNuttyChoccolateSurprise:7,
+        WonkaWhippleScrumptiousFudgemallowDelight:3,
+        WonkaNuttyChoccolateSurprise:2,
         EdibleGrass:4,
         Eternaltoothbreaker:5
+    }
+
+    var idProducts = {
+        WonkaBar:1,
+        CandiedApples:2,
+        WonkaSwirlLollipops:3,
+        BluebirdsEggCandy:4,
+        ThreeCourseDinnerGum:5,
+        StainedGlassHardCandy:6,
+        WonkaWhippleScrumptiousFudgemallowDelight:7,
+        WonkaNuttyChoccolateSurprise:8,
+        EdibleGrass:9,
+        Eternaltoothbreaker:10
+
     }
 
     // Recopilar la información de los productos del ticket
@@ -81,7 +96,7 @@ async function submitOrder() {
         var productQuantity = row.cells[1];
         productQuantity = productQuantity.querySelector('input[type="number"]')
         productQuantity = productQuantity.value
-        productsArray.push({ productName: product, quantity: productQuantity, price: prices[product.replace(/ /g, "")] * parseInt(productQuantity)});
+        productsArray.push({productId:idProducts[product.replace(/ /g, "")] ,productName: product, quantity: productQuantity, price: prices[product.replace(/ /g, "")] * parseInt(productQuantity)});
     });
 
     // Verificar que se haya ingresado toda la información necesaria
@@ -141,7 +156,7 @@ async function submitOrder() {
 
     }
 
-    console.log(totalPrice);
+ 
     alert(totalPrice)
 
 
@@ -184,7 +199,37 @@ async function submitOrder() {
         console.error("Error al enviar el pedido:", error);
         alert("Hubo un error al enviar el pedido. Por favor, revise la consola para más detalles.");
     }
-
     
+    getLatestOrder()
+}
+
+
+async function getLatestOrder() {
+    try {
+        // Realizar la solicitud GET al servidor mediante la API
+        var response = await fetch('/api/ventas/latestOrder', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Obtener la respuesta en formato JSON
+            var latestOrder = await response.json();
+            console.log(latestOrder)
+            return latestOrder;
+            
+           
+            
+        } else {
+            // Error al obtener la última orden
+            console.error("Hubo un error al obtener la última orden. Código de estado:", response.status);
+            alert("Hubo un error al obtener la última orden. Por favor, inténtelo de nuevo más tarde.");
+        }
+    } catch (error) {
+        console.error("Error al obtener la última orden:", error);
+        alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
+    }
 }
 
