@@ -42,29 +42,28 @@ h1 {
     margin-bottom: 33px;
 }
 
-.search-bar {
+.container-search {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     width: 300px;
     margin-bottom: 10px;
 }
 
 .search-input {
     flex: 1;
+    height: 35px;
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 20px;
+    margin-right: 5px;
 }
 
-.search-button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    background-color: #6f27ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 h2 {
     flex-basis: 100%;

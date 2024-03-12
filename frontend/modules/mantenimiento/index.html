@@ -39,11 +39,11 @@
             <h1>Mantenimiento</h1>
 
             <section class="section">
-                <div class="container">
+                <div class="container-search">
                     <h2>
                         Máquinas
                     </h2>
-                    <div class="search-bar">
+                    <div class="search">
                         <input class="search-input" type="text" placeholder="Buscar máquina por Id">
                         <button value="search" class="btn-open">Buscar</button>
                     </div>
@@ -158,12 +158,15 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element" id="prevent-select">
+                            <select class="form-element">
+                                <option>maquina 1</option>
+                                <option>maquina 2</option>
+                                <option>maquina 3</option>
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element" id="preventivo-date"> <br>
-                            <label class="form-element">Disponibilidad</label>
-                            <input type="date" class="form-element" id="preventivo-release"> <br>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -181,12 +184,15 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element" id="predict-select">
+                            <select class="form-element">
+                                <option>notificada 1</option>
+                                <option>notificada 2</option>
+                                <option>notificada 3</option>
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element" id="predict-date"> <br>
-                            <label class="form-element">Disponibilidad</label>
-                            <input type="date" class="form-element" id="predict-release"> <br>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -205,10 +211,13 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element" id="correct-select">
+                            <select class="form-element">
+                                <option>Defectuosa 1</option>
+                                <option>Defectuosa 2</option>
+                                <option>Defectuosa 3</option>
                             </select> <br>
                             <label class="form-element">Finalización</label>
-                            <input type="date" class="form-element" id="correct-release"> <br>
+                            <input type="date" class="form-element"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -227,12 +236,15 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element" id="mPlan-select">
+                            <select class="form-element">
+                                <option>Mantenimiento 1</option>
+                                <option>Mantenimiento 2</option>
+                                <option>Mantenimiento 3</option>
                             </select> <br>
                             <label class="form-element">Fecha de mantenimiento</label>
-                            <input type="date" class="form-element" id="mPlan-date"> <br>
-                            <label class="form-element">Disponibilidad</label>
-                            <input type="date" class="form-element" id="mPlan-release"> <br>
+                            <input type="date" class="form-element"> <br>
+                            <label class="form-element">Duración</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
@@ -252,10 +264,13 @@
 
                         <div>
                             <label class="form-element">Selección</label>
-                            <select class="form-element" id="mMan-select">
+                            <select class="form-element">
+                                <option>Mantenimiento 1</option>
+                                <option>Mantenimiento 2</option>
+                                <option>Mantenimiento 3</option>
                             </select> <br>
-                            <label class="form-element">Disponibilidad</label>
-                            <input type="date" class="form-element" id="mMan-release"> <br>
+                            <label class="form-element">Finalización</label><br>
+                            <div class="form-element" id="duration">*calcular duracion*</div>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="submit">
