@@ -3,6 +3,8 @@ import client from './model.js'
 // create a new router to handle the mantenimiento routes
 const Router = express.Router()
 
+
+// TODO: Acabo de ingresar un mantenimiento de una máquina previamente defectuosa, y no se actualizó su estado
 // get the machines and the maintenance from the database
 Router.get('/', async (req, res) => {
 // get the machines and the maintenance from the database
