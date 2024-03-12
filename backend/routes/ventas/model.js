@@ -27,13 +27,13 @@ await client.execute(`
         email TEXT NOT NULL,
         phoneNumber TEXT NOT NULL,
         time TEXT NOT NULL,
-        status TEXT DEFAULT 'pending'
+        status TEXT DEFAULT 'pending',
+        totalPrice REAL NOT NULL DEFAULT 0
     )
 `);
 
 await client.execute(`
     CREATE TABLE IF NOT EXISTS OrderProduct (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
         orderId INTEGER NOT NULL,
         productName TEXT NOT NULL,
         quantity INTEGER NOT NULL,

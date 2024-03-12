@@ -4,7 +4,7 @@ import client from './model.js';
 const ventasRouter = express.Router();
 
 ventasRouter.post('/orders', async (req, res) => {
-    const { name, customerId, email, phoneNumber,time, products } = req.body;
+    const { name, customerId, email, phoneNumber,time, products ,totalPrice} = req.body;
    
     
 
@@ -14,8 +14,8 @@ ventasRouter.post('/orders', async (req, res) => {
 
     try {
         const clientInsertResult = await client.execute({
-            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time) VALUES (?, ?, ?, ?, ?)',
-            args: [name, customerId, email, phoneNumber, time ]
+            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
+            args: [name, customerId, email, phoneNumber, time, totalPrice ]
         });
 
         const result = await client.execute({
@@ -71,7 +71,8 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
             phoneNumber: order.phoneNumber,
             status: order.status,
             time: order.time,
-            products: products
+            products: products,
+            totalPrice:order.totalPrice
         };
 
         res.status(200).json(orderWithProducts);
@@ -106,7 +107,8 @@ ventasRouter.get('/orders', async (req, res) => {
                 phoneNumber: order.phoneNumber,
                 status: order.status,
                 time: order.time,
-                products: products
+                products: products,
+                totalPrice:order.totalPrice
             };
         }));
 
@@ -116,6 +118,36 @@ ventasRouter.get('/orders', async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
     }
 });
+
+// Modificar el status de una orden
+ventasRouter.patch('/orders/:orderId/status', async (req, res) => {
+    const orderId = req.params.orderId;
+    const { status } = req.body;
+
+    try {
+        // Verificar si la orden existe
+        const orderExistenceResult = await client.execute({
+            sql: 'SELECT * FROM OrderTable WHERE id = ?',
+            args: [orderId]
+        });
+
+        if (orderExistenceResult.rows.length === 0) {
+            return res.status(404).json({ error: 'La orden especificada no fue encontrada.' });
+        }
+
+        // Actualizar el status de la orden
+        const updateStatusResult = await client.execute({
+            sql: 'UPDATE OrderTable SET status = ? WHERE id = ?',
+            args: [status, orderId]
+        });
+
+        res.status(200).json({ message: 'El estado de la orden ha sido actualizado correctamente.' });
+    } catch (error) {
+        console.error('Error al actualizar el estado de la orden:', error);
+        res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
+    }
+});
+
 
 
 export default ventasRouter;
