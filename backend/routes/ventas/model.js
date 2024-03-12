@@ -34,6 +34,7 @@ await client.execute(`
 
 await client.execute(`
     CREATE TABLE IF NOT EXISTS OrderProduct (
+        productId Integer NOT NULL,
         orderId INTEGER NOT NULL,
         productName TEXT NOT NULL,
         quantity INTEGER NOT NULL,

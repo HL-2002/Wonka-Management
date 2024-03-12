@@ -22,11 +22,11 @@ ventasRouter.post('/orders', async (req, res) => {
             sql: 'SELECT last_insert_rowid() AS orderId'
         });
         const orderId = result.rows[0].orderId;
-        for (const { productName, quantity, price} of products) {
+        for (const { productId,productName, quantity, price} of products) {
             await client.execute({
                 
-                sql: 'INSERT INTO OrderProduct (orderId, productName, quantity, price) VALUES (?, ?, ?, ?)',
-                args: [orderId, productName, quantity, price]
+                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, quantity, price) VALUES (?, ?, ?, ?,?)',
+                args: [productId,orderId, productName, quantity, price]
             });
         }
 
@@ -119,6 +119,27 @@ ventasRouter.get('/orders', async (req, res) => {
     }
 });
 
+/*Esto devolvera una lista con todas las ordenes, el cual cada orden seguira la siguiente estructura
+
+                [{orderId:,
+                customerName: ,
+                customerId: ,
+                email: ,
+                phoneNumber: ,
+                status: ,
+                time: ,
+                products: [
+                    {productId: ,orderId:,  productName: , quantity: , price: },{...},{...}
+                ],
+                totalPrice: }
+
+                ,{...},{...}]
+
+
+
+
+*/
+
 // Modificar el status de una orden
 ventasRouter.patch('/orders/:orderId/status', async (req, res) => {
     const orderId = req.params.orderId;
@@ -147,6 +168,50 @@ ventasRouter.patch('/orders/:orderId/status', async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
     }
 });
+
+
+// Nuevo endpoint para obtener la última orden
+ventasRouter.get('/latestOrder', async (req, res) => {
+    try {
+        // Obtener la última orden
+        const latestOrderResult = await client.execute({
+            sql: 'SELECT * FROM OrderTable ORDER BY id DESC LIMIT 1'
+        });
+
+        if (latestOrderResult.rows.length === 0) {
+            return res.status(404).json({ error: 'No hay órdenes disponibles.' });
+        }
+
+        const latestOrder = latestOrderResult.rows[0];
+
+        // Obtener los productos asociados a la última orden
+        const productsResult = await client.execute({
+            sql: 'SELECT * FROM OrderProduct WHERE orderId = ?',
+            args: [latestOrder.id]
+        });
+
+        const products = productsResult.rows;
+
+        // Combinar la información de la última orden y los productos
+        const latestOrderWithProducts = {
+            orderId: latestOrder.id,
+            customerName: latestOrder.customerName,
+            customerId: latestOrder.customerId,
+            email: latestOrder.email,
+            phoneNumber: latestOrder.phoneNumber,
+            status: latestOrder.status,
+            time: latestOrder.time,
+            products: products,
+            totalPrice: latestOrder.totalPrice
+        };
+
+        res.status(200).json(latestOrderWithProducts);
+    } catch (error) {
+        console.error('Error al obtener la última orden y sus productos:', error);
+        res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
+    }
+});
+
 
 
 
