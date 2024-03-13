@@ -34,6 +34,7 @@ ventasRouter.post('/orders', async (req, res) => {
     } catch (error) {
         console.error('Error al crear la orden de pedido:', error);
         res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
+        alert("error, vuelva a ingresar la orden")
     }
 });
 
