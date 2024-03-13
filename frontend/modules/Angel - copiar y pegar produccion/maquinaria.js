@@ -231,7 +231,7 @@ releaseForm.addEventListener('submit', async (e) => {
         if (machinesSelected.length > 0) {
             // Liberar máquinas seleccionadas
             machinesSelected.forEach(async (machine) => {
-                const state = machine.state === "notificada" ?  "notificada" : "disponible" 
+                const state = machine.state === "notificada" ? "notificada" : "disponible"
                 console.log(state)
                 const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
@@ -302,7 +302,7 @@ assignForm.addEventListener('submit', async (e) => {
         if (machinesSelected.length > 0) {
             // Asignar máquinas seleccionadas
             machinesSelected.forEach(async (machine) => {
-                const state = machine.state === "notificada" ? "notificada" : "uso" 
+                const state = machine.state === "notificada" ? "notificada" : "uso"
                 const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
                     method: 'PATCH',
@@ -340,3 +340,26 @@ assignForm.addEventListener('submit', async (e) => {
 })
 
 
+
+// –––––––––––––––– FUNCIONALIDAD DE DIALOG PARA BOTONES ––––––––––––––––
+// obtener los botones de abrir y cerrar
+const btns = document.querySelectorAll('.btn-open')
+const btnsClose = document.querySelectorAll('.close-button')
+
+// recorrer los botones de abrir y agregar el evento click
+btns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const dialog = document.getElementById(btn.value)
+    dialog.classList.remove('close')
+    dialog.classList.add('open')
+    dialog.showModal()
+  })
+})
+
+const dialogs = document.querySelectorAll('.dialog')
+
+dialogs.forEach((dialog) => {
+  dialog.addEventListener('cancel', (e) => {
+    e.preventDefault()
+  })
+})
