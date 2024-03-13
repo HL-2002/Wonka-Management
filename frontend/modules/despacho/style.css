@@ -1,5 +1,6 @@
 body {
     background-color: #6f27ff;
+    margin-bottom: 10px;
 }
 main{
     padding: 0;
@@ -47,7 +48,53 @@ h1 {
 #facturaexistente #errornofactura{
     background-color: rgb(52, 0, 95);
     color: rgb(52, 0, 95);
+    margin-bottom: 80px;
+    padding-bottom: 80px;
 }
 .divfactura{
     background-color: rgb(52, 0, 95);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
+.labelNombre,
+.labelRif,
+.labelEmail,
+.labelDireccion{
+    margin-top: 10px;
+    margin-left: 10px;
+    border: none;
+}
+.labelNombre input{
+    width: 270px;
+    border: none;
+    border-radius: 4px;
+}
+/*label{
+    color: #ececec;
+}*/
+.labelRif {
+    width: 270px;
+    border-radius: 4px;
+}
+.infoEmpresa {
+    display: flex;
+    gap: 10px;
+}
+.labelEmail {
+    width: 550px;
+    border-radius: 4px;
+}
+.labelDireccion {
+    border-radius: 4px;
+    width: 550px;
+    padding-bottom: 40px;
+}
+.Formulario{
+    background-color: #6f27ff;
+    margin: 50px;
+    border-radius: 10px;
+}
+.Formulario label{
+    color: #ececec;
+}
+
