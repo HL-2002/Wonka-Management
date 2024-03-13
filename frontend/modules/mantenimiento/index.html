@@ -410,20 +410,21 @@
                 </dialog>
 
 
-                <dialog id=notify class="dialog">
-                    <form class="form">
+                <dialog id="notify" class="dialog">
+                    <form class="form" id="notify-form">
                         <div class="dialog-head">
                             <button class="close-button">x</button>
                             <h2 class="form-element" id="form-title">Notificar maquinaria</h2>
                         </div>
                         <div>
                             <label for="id-number">Número de Id</label>
-                            <input type="number" placeholder="inserte id" id="id-number"> <br>
+                            <input type="number" placeholder="inserte id" id="id-number" min="1"> <br>
                             <br>
                             <label for="machine-state">Estado</label>
                             <select id="machine-state">
-                                <option>irregularidad</option>
-                                <option>defectuosa</option>
+                                <option value=""> Seleccione el estado</option>
+                                <option value="irregularidad">irregularidad</option>
+                                <option value="defectuosa">defectuosa</option>
                             </select>
                         </div>
                         <input type="submit" value="Notificar" class="form-element">
@@ -442,6 +443,7 @@
         </main>
     </div>
     <script src="index.js"></script>
+    <script src="maquinaria.js"></script>
 </body>
 
 </html>
