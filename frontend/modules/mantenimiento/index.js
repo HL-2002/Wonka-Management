@@ -773,7 +773,9 @@ mManForm.addEventListener('submit', async (e) => {
     })
 
     if(response.status !== 500) {
-      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado`)
+      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` + 
+            "La máquina ahora se encuentra disponible. \n" + 
+            "Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.")
 
       // Clear form
       document.getElementById('mMan-select').value = ''
