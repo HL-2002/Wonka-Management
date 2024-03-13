@@ -394,11 +394,6 @@ async function fillModalDescargo (id) {
 /* //CONTROLERS
 -------------------- */
 
-async function getStore() {
-  const response = await fetch('/api/almacenes')
-  return await response.json()
-}
-
 async function insertStore (params) {
   try {
     const response = await fetch('/api/inventario/new/store', {
@@ -422,7 +417,8 @@ async function insertStore (params) {
 async function getProducts (params) {
   const response = await fetch('/api/inventario/products')
   return await response.json()
-}
+}// Devuelve array con todos los articulos creados
+
 async function getWarehouse (params) {
   const response = await fetch('/api/inventario/warehouse')
   return await response.json()
@@ -450,6 +446,7 @@ async function insertProducts (params) {
     console.error('Error de red:', error)
   }
 }
+
 async function insertCargo (params) {
   try {
     const response = await fetch('/api/inventario/set/product/stock', {
@@ -469,7 +466,6 @@ async function insertCargo (params) {
     console.error('Error de red:', error)
   }
 }
-
 
 async function updateProducts (params) {
   try {
