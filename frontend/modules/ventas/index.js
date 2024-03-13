@@ -61,7 +61,9 @@ async function submitOrder() {
     var customerId = document.getElementById("customerId").value.trim();
     var email = document.getElementById("email").value.trim();
     var phoneNumber = document.getElementById("phoneNumber").value.trim(); 
+
     var productsArray = [];
+    
     var prices = {
         WonkaBar:5,
         CandiedApples:4,
@@ -157,7 +159,7 @@ async function submitOrder() {
     }
 
  
-    alert(totalPrice)
+   
 
 
     // Construir el objeto de pedido
@@ -199,12 +201,12 @@ async function submitOrder() {
         console.error("Error al enviar el pedido:", error);
         alert("Hubo un error al enviar el pedido. Por favor, revise la consola para más detalles.");
     }
-    
-    getLatestOrder()
+
+   
 }
 
 
-async function getLatestOrder() {
+async function getLatestOrder(){
     try {
         // Realizar la solicitud GET al servidor mediante la API
         var response = await fetch('/api/ventas/latestOrder', {
@@ -217,8 +219,9 @@ async function getLatestOrder() {
         if (response.ok) {
             // Obtener la respuesta en formato JSON
             var latestOrder = await response.json();
+            console.log(typeof(latestOrder))
             console.log(latestOrder)
-            return latestOrder;
+            
             
            
             
@@ -231,5 +234,6 @@ async function getLatestOrder() {
         console.error("Error al obtener la última orden:", error);
         alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
     }
+
 }
 
