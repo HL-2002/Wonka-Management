@@ -103,9 +103,25 @@ h2 {
     list-style: none;
 }
 
+.id-grid {
+    display: grid;
+    padding: 1rem;
+    background-color: rgb(52, 0, 95);
+    border-radius: 10px;
+    grid-gap: 5px;
+    margin-top: 10px;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+    margin-top: 10px;
+}
+
+.id-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
     grid-gap: 5px;
     margin-top: 10px;
 }
@@ -215,7 +231,7 @@ button:active {
     background-color: #ececec;
     border-radius: 5px;
     border: none;
-    max-width: 500px;
+    max-width: 1000px;
 }
 
 .btn-dialogs {
