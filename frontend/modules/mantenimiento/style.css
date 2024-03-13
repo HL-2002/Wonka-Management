@@ -103,6 +103,15 @@ h2 {
     list-style: none;
 }
 
+.id-grid {
+    display: grid;
+    padding: 1rem;
+    background-color: rgb(52, 0, 95);
+    border-radius: 10px;
+    grid-gap: 5px;
+    margin-top: 10px;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -110,9 +119,22 @@ h2 {
     margin-top: 10px;
 }
 
+.id-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 5px;
+    margin-top: 10px;
+}
+
 .square {
     width: 20px;
     height: 20px;
+    border-radius: 4px;
+}
+
+.select-square {
+    width: 3rem;
+    height: 3rem;
     border-radius: 4px;
 }
 
@@ -215,7 +237,7 @@ button:active {
     background-color: #ececec;
     border-radius: 5px;
     border: none;
-    max-width: 500px;
+    max-width: 1000px;
 }
 
 .btn-dialogs {
@@ -321,8 +343,13 @@ input[value="Listo"]:hover {
     background-color: #e0444e;
 }
 
-div>h3 {
+div>h3,
+.mantenimiento-h3 {
     color: #ececec;
+}
+
+.mantenimiento-h3 {
+    margin-top: 1rem;
 }
 
 .state-info {

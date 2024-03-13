@@ -75,6 +75,9 @@ La visualización del estado de las máquinas de manera dinámica y la gestión 
     - predictivo
     - correctivo
     - null
+* availability: int
+    - 0 (no disponible)
+    - 1 (disponible)
 * line: int
 
 _Nota:_ Las fechas estarán en formato YYYY/MM/DD.

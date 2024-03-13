@@ -47,6 +47,11 @@ h1 {
   margin: auto;
 }
 
+.btn-open:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
+
 .menu button {
   background-color: rgb(52, 0, 95);
   border: none;
@@ -101,7 +106,7 @@ h1 {
   color: #ececec;
 }
 
-.registro {
+.registro-seccion {
   display: none;
   background-color: rgb(52, 0, 95);
 }
@@ -193,6 +198,21 @@ h1 {
 
 .tarjeta-proveedor h3{
   text-align: center;
+}
+
+.zona-calculos {
+  display: flex;
+  margin: auto;
+}
+
+.zona-calculos div{
+  padding: 2%;
+  margin-right: 8%;
+  text-align: center;
+}
+
+.zona-calculos h4{
+  font-size: 15px;
 }
 
 /* Estilos de la barra scroll*/
