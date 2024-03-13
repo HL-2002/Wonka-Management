@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       nombre: 'Titulo',
       categoria: 'Categoría A',
-      cantidad: '$100'
+      cantidad: '$105'
     },
     {
       nombre: 'Titulo',
