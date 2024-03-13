@@ -59,7 +59,7 @@ function updateMaintenance() {
             const dateMaintenance = strToDate(machine.dateMaintenance)
             const diferencia = dateMaintenance - today
 
-            if(diferencia <= 604800000) {
+            if(diferencia <= 604800000 && machine.line !== 0) {
                 // Notificar al usuario
                 maintainMachines.push(machine)
                 count +=1
@@ -69,7 +69,7 @@ function updateMaintenance() {
 
     if (count > 0) {
         // Notificar al usuario
-        alert(`Existen ${count} máquinas con mantenimientos próximos.`)
+        alert(`Alerta: Hay ${count} máquinas con mantenimientos próximos.`)
         // Sortear máquinas por fecha de mantenimiento
         maintainMachines.sort((a, b) => {
             return strToDate(a.dateMaintenance) - strToDate(b.dateMaintenance)
@@ -151,6 +151,7 @@ notifyForm.addEventListener('submit', async (e) => {
 
                 // Actualizar lista de máquinas
                 machines = await getMachines().then((json) => { return json.machines })
+                updateMaintenance()
             }
             else {
                 alert('Error al añadir máquina, revise la consola y/o servidor')
@@ -206,19 +207,68 @@ const releaseForm = document.getElementById("release-form")
 
 // Display de máquinas según la línea seleccionada
 lineasRelease.addEventListener('change', (e) => {
-    const line = lineasRelease.value
-    const machinesLine = machines.filter((machine) => machine.line == line)
     displayRelease.innerHTML = ""
-    machinesLine.forEach((machine) => {
-        displayRelease.innerHTML+= `<div class='select-square ${machine.state}'> 
-                                        <input type="checkbox" id=${machine.id}> 
-                                        <label for="${machine.id}">${machine.id}</label>
-                                    </div>`
-    })
+    const line = lineasRelease.value
+    if (line !== "") {
+        const machinesLine = machines.filter((machine) => machine.line == line)
+        machinesLine.forEach((machine) => {
+            displayRelease.innerHTML+= `<div class='select-square ${machine.state}'> 
+                                            <input type="checkbox" id=${machine.id} value=${machine.id}> 
+                                            <label for="${machine.id}">${machine.id}</label>
+                                        </div>`
+        })
+    }
 })
 
 // Añadir evento de liberación
-// Obtener id de máquinas seleccionadas
+releaseForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    
+    // Validar formulario
+    if (lineasRelease.value !== "") {
+        const machinesSelected = Array.from(displayRelease.querySelectorAll('input[type="checkbox"]:checked'))
+
+        if (machinesSelected.length > 0) {
+            // Liberar máquinas seleccionadas
+            machinesSelected.forEach(async (machine) => {
+                const state = machine.state === "notificada" ? "disponible" : "notificada" 
+                console.log(state)
+                const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${machine.id}`, 
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ state: state, line: 0, availability: 1})
+                })
+
+                // Respuesta según el estado de la petición
+                if (response.status !== 500) {
+                    // Limpiar formulario
+                    lineasRelease.value = ""
+                    displayRelease.innerHTML = ""
+                }
+                else {
+                    alert('Error al liberar máquina, revise la consola y/o servidor')
+                }
+            })
+            // Notificar al usuario
+            alert(`Máquinas liberadas de la línea ${lineasRelease.value}.`)
+
+            // Actualizar lista de máquinas
+            machines = await getMachines().then((json) => { return json.machines })
+            updateMaintenance()
+        }
+        else {
+            alert("Seleccione al menos una máquina")
+        }
+    }
+    else {
+        alert("Seleccione una línea")
+    }
+
+    
+})
 
 // ————————————————— ASIGNAR MÁQUINAS —————————————————
 // Obtener elementos del DOM
@@ -242,4 +292,50 @@ tipoAssign.addEventListener('change', (e) => {
 })
 
 // Añadir evento de asignación
+assignForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    
+    // Validar formulario
+    if (lineasAssign.value !== "" && tipoAssign.value !== "") {
+        const machinesSelected = Array.from(displayAssign.querySelectorAll('input[type="checkbox"]:checked'))
+
+        if (machinesSelected.length > 0) {
+            // Asignar máquinas seleccionadas
+            machinesSelected.forEach(async (machine) => {
+                const state = machine.state === "notificada" ? "uso" : "notificada"
+                const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${machine.id}`, 
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ state: state, line: lineasAssign.value, availability: 0})
+                })
+
+                // Respuesta según el estado de la petición
+                if (response.status !== 500) {
+                    // Limpiar formulario
+                    lineasAssign.value = ""
+                    tipoAssign.value = ""
+                    displayAssign.innerHTML = ""
+                }
+                else {
+                    alert('Error al asignar máquina, revise la consola y/o servidor')
+                }
+            })
+            // Notificar al usuario
+            alert(`Máquinas asignadas a la línea ${lineasAssign.value}.`)
+
+            // Actualizar lista de máquinas
+            machines = await getMachines().then((json) => { return json.machines })
+            updateMaintenance()
+        }
+        else {
+            alert("Seleccione al menos una máquina")
+        }
+    }
+    else {
+        alert("Seleccione una línea y un tipo de máquina")
+    }
+})
 // Obtener id de máquinas seleccionadas
