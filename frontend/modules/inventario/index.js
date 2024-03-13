@@ -66,7 +66,6 @@ async function fillSearch () {
 }
 async function fillSearchW () {
   const lstProducts = await getWarehouse()
-  console.log(lstProducts)
   const options = lstProducts.map((product, index) => `
         <option value="${product.id}">${product.description}</option>
     `)
@@ -75,8 +74,8 @@ async function fillSearchW () {
   selectElement.innerHTML = options.join('')
 }
 async function fillSearchC () {
-  const lstProducts = await getCategory()
-  const options = lstProducts.map((product, index) => `
+  const lstCategory = await getCategory()
+  const options = lstCategory.map((product, index) => `
         <option value="${product.id}">${product.description}</option>
     `)
 
@@ -107,7 +106,8 @@ async function fillSearchDescargo () {
 /* //Reutilizables
 -------------------- */
 
-function addItem(params) {
+// eslint-disable-next-line no-unused-vars
+async function addItem (params) {
   const codValue = document.getElementById('codigo')
   const desValue = document.getElementById('descripcion')
   const categorValue = document.getElementById('categoria')
@@ -116,6 +116,14 @@ function addItem(params) {
   const costoValue = document.getElementById('costo')
   const stock = document.getElementById('stock')
   save.style.backgroundColor = 'initial'
+  const lstCategory = await getCategory()
+  const options = lstCategory.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+  console.log(lstCategory)
+
+  const selectElement = document.getElementById('categoria')
+  selectElement.innerHTML = options.join('')
 
   codValue.value = ''
   desValue.value = ''
@@ -130,12 +138,14 @@ function addItem(params) {
   costoValue.readOnly = false
   save.disabled = false
 }
-async function deleteProduct(id) {
+// eslint-disable-next-line no-unused-vars
+async function deleteProduct (id) {
   await removeProducts(id)
   await fillModal()
 }
 
-async function saveProduct() {
+// eslint-disable-next-line no-unused-vars
+async function saveProduct () {
   const codValue = document.getElementById('codigo').value
   const desValue = document.getElementById('descripcion').value
   const categorValue = document.getElementById('categoria').value
@@ -158,32 +168,35 @@ async function saveProduct() {
   }
   await fillModal()
 }
-async function saveCargo() {
-  const codValue = document.getElementById('codigo').value
-  const cantidadValue = document.getElementById('cantidad').value
+// eslint-disable-next-line no-unused-vars
+async function saveCargo () {
+  const codValue = document.getElementById('codigoC').value
+  const cantidadValue = document.getElementById('cantidadC').value
 
   const product = {
     id: codValue,
     sum: 1,
     units: cantidadValue
   }
-  await insertCargo(product)
+  await insertStock(product)
   await fillModalCargo()
 }
-async function saveDescargo() {
-  const codValue = document.getElementById('codigo').value
-  const cantidadValue = document.getElementById('cantidad').value
+// eslint-disable-next-line no-unused-vars
+async function saveDescargo () {
+  const codValue = document.getElementById('codigoD').value
+  const cantidadValue = document.getElementById('cantidadD').value
 
   const product = {
     id: codValue,
-    sum: 0,
+    sum: '0',
     units: cantidadValue
   }
-  await insertCargo(product)
+  await insertStock(product)
   await fillModalDescargo()
 }
 
-async function modProduct(id, des, category) {
+// eslint-disable-next-line no-unused-vars
+async function modProduct (id, des, category) {
   const save = document.getElementById('saveButton')
   save.disabled = false
   save.style.backgroundColor = 'initial'
@@ -196,6 +209,14 @@ async function modProduct(id, des, category) {
   categorValue.readOnly = false
   precioValue.readOnly = false
   costoValue.readOnly = false
+
+  const lstCategory = await getCategory()
+  const options = lstCategory.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+
+  const selectElement = document.getElementById('categoria')
+  selectElement.innerHTML = options.join('')
 }
 
 /* //PRODUCTOS
@@ -239,7 +260,9 @@ async function fillModal (id) {
       </div>
       <div class="details-row">
           <strong>Categoria:</strong>
-          <input type="text" id="categoria" name="categoria" placeholder="Ingrese la categoría" value="${viewCategory}" ${status}>
+          <select id="categoria" name="categoria" ${status} text = "a">${viewCategory}"
+          <option >${viewCategory}</option>
+          </select>
       </div>
       <div class="details-row">
           <strong>Precio:</strong>
@@ -348,9 +371,9 @@ async function fillModalCargo (id) {
       <h2>Nuevo Movimiento</h2>
       <div class="article-wrapper">
         <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
-          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigoC" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
           <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" ></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidadC" name="cantidad" placeholder="Ingrese la cantidad" ></p>
         </div>
       </div>
     </article>
@@ -359,7 +382,7 @@ async function fillModalCargo (id) {
   document.getElementById('modal-detailCa').innerHTML = detalles
 }
 
-/* //Descargp
+/* //Descargo
 -------------------- */
 async function fillModalDescargo (id) {
   const lstProducts = await getProducts()
@@ -380,9 +403,9 @@ async function fillModalDescargo (id) {
       <h2>Nuevo Movimiento</h2>
       <div class="article-wrapper">
         <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
-          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigo" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigoD" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
           <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" ></p>
+          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidadD" name="cantidad" placeholder="Ingrese la cantidad" ></p>
         </div>
       </div>
     </article>
@@ -394,6 +417,7 @@ async function fillModalDescargo (id) {
 /* //CONTROLERS
 -------------------- */
 
+// eslint-disable-next-line no-unused-vars
 async function insertStore (params) {
   try {
     const response = await fetch('/api/inventario/new/store', {
@@ -405,7 +429,7 @@ async function insertStore (params) {
     })
 
     if (response.ok) {
-      const data = await response.json()
+      await response.json()
     } else {
       console.error('Error al insertar el Almacen:', response.status)
     }
@@ -447,7 +471,7 @@ async function insertProducts (params) {
   }
 }
 
-async function insertCargo (params) {
+async function insertStock (params) {
   try {
     const response = await fetch('/api/inventario/set/product/stock', {
       method: 'PATCH',
@@ -463,7 +487,7 @@ async function insertCargo (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
