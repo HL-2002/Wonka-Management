@@ -316,50 +316,29 @@
                 </h2>
 
                 <dialog id="asign" class="dialog">
-                    <form class="form">
+                    <form class="form" id="assign-form">
                         <div class="dialog-head">
                             <button class="close-button">x</button>
                             <h2 class="form-element" id="form-title">Asignar maquinaria</h2>
                         </div>
 
                         <div>
+                            <label class="form-element" for="production-line">Línea de producción:</label>
+                            <select id="assign-line">
+                                <option value=""> Seleccione la línea</option>
+                            </select> <br> <br>
                             <label class="form-element">Selecciona una máquina</label>
-                            <select class="form-element" id="tipo-select">
-                                <option>chocolatera</option>
-                                <option>caramelizadora</option>
-                                <option>caramelera</option>
-                                <option>chiclera</option>
-                            </select> <br>
-                            <label for="production-line">Línea de producción:</label>
-                            <select id="production-line">
-                                <option>Linea 1</option>
-                                <option>Linea 2</option>
-                                <option>Linea 3</option>
+                            <select class="form-element" id="assign-type">
+                                <option value=""> Seleccione un tipo</option>
+                                <option value="chocolatera">Chocolatera</option>
+                                <option value="caramelizadora">Caramelizadora</option>
+                                <option value="caramelera">Caramelera</option>
+                                <option value="chiclera">Chiclera</option>
                             </select>
                         </div>
                         <div class="id-grid">
-                            <ul>
-                                <li>
-                                    <h3>Chocolateras</h3>
-                                    <div class="id-container" id="chocolateras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Caramelizadoras</h3>
-                                    <div class="id-container" id="caramelizadoras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Carameleras</h3>
-                                    <div class="id-container" id="carameleras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Chicleras</h3>
-                                    <div class="id-container" id="chicleras">
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="id-container" id="assign-display">
+                            </div>
                         </div>
                         <input type="submit" value="Asignar" class="form-element">
                     </form>
@@ -367,43 +346,21 @@
 
 
                 <dialog id="release" class="dialog">
-                    <form class="form">
+                    <form class="form" id="release-form">
                         <div class="dialog-head">
                             <button class="close-button">x</button>
                             <h2 class="form-element" id="form-title">Liberar maquinaria</h2>
                         </div>
 
                         <div>
-                            <label for="production-line">Línea de producción:</label>
-                            <select id="production-line">
-                                <option>Linea 1</option>
-                                <option>Linea 2</option>
-                                <option>Linea 3</option>
+                            <label for="release-line" class="form-element">Línea de producción:</label>
+                            <select id="release-line">
+                                <option value=""> Seleccione la línea</option>
                             </select>
                         </div>
                         <div class="id-grid">
-                            <ul>
-                                <li>
-                                    <h3>Chocolateras</h3>
-                                    <div class="id-container" id="chocolateras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Caramelizadoras</h3>
-                                    <div class="id-container" id="caramelizadoras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Carameleras</h3>
-                                    <div class="id-container" id="carameleras">
-                                    </div>
-                                </li>
-                                <li>
-                                    <h3>Chicleras</h3>
-                                    <div class="id-container" id="chicleras">
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="id-container" id="release-display">
+                            </div>
                         </div>
                         <input type="submit" value="Liberar" class="form-element">
                     </form>
@@ -417,10 +374,10 @@
                             <h2 class="form-element" id="form-title">Notificar maquinaria</h2>
                         </div>
                         <div>
-                            <label for="id-number">Número de Id</label>
+                            <label for="id-number" class="form-element">Número de Id</label>
                             <input type="number" placeholder="inserte id" id="id-number" min="1"> <br>
                             <br>
-                            <label for="machine-state">Estado</label>
+                            <label for="machine-state" class="form-element">Estado</label>
                             <select id="machine-state">
                                 <option value=""> Seleccione el estado</option>
                                 <option value="irregularidad">irregularidad</option>
@@ -431,6 +388,11 @@
                     </form>
                 </dialog>
 
+                <h3 class="mantenimiento-h3"> Mantenimientos próximos </h3>
+                <div id="mantenimientos">
+                </div>
+
+                <h3 class="mantenimiento-h3"> Opciones</h3>
                 <div class="btn-dialogs">
                     <button value="asign" class="btn-open">Asignar</button>
                     <button value="release" class="btn-open">Liberar</button>

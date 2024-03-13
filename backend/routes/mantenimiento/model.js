@@ -77,12 +77,12 @@ if (process.env.mode !== 'production') {
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chocolatera', 'defectuosa', 0, 0] })
 
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'uso', 0, 1] })
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'disponible', 1, 1] })
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'disponible', 1, 3] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'uso', 1, 2] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'disponible', 1, 0] })
 
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'disponible', 1, 3] })
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'defectuosa', 0, 2] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'uso', 0, 3] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'defectuosa', 0, 0] })
 
-  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chiclera', 'notificada', 1, 0] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['chiclera', 'notificada', 1, 3] })
 }
 export default client

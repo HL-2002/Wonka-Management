@@ -132,6 +132,12 @@ h2 {
     border-radius: 4px;
 }
 
+.select-square {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 4px;
+}
+
 div.uso {
     background-color: #9f70fd;
 }
@@ -337,8 +343,13 @@ input[value="Listo"]:hover {
     background-color: #e0444e;
 }
 
-div>h3 {
+div>h3,
+.mantenimiento-h3 {
     color: #ececec;
+}
+
+.mantenimiento-h3 {
+    margin-top: 1rem;
 }
 
 .state-info {

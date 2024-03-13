@@ -1,15 +1,50 @@
-// –––––––––––––––– CARGAR MÁQUINAS DISPONIBLES ––––––––––––––––
+// –––––––––––––––– CARGAR MÁQUINAS, MANTENIMIENTOS Y LÍNEAS DISPONIBLES ––––––––––––––––
 let machines = []
+let lineas = []
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // Cargar máquinas
     machines = await getMachines().then((json) => { return json.machines })
     console.log('Maquinaria:', machines)
+
+    // Cargar mantenimientos
+    const mantenimientos = document.getElementById("mantenimientos")
+
+
+    // TODO ANGEL: Cargar líneas disponibles
+    // Cargar líneas disponibles
+    // lineas = await getLines().then((json) => { return json.lines })
+    // Esto es para las pruebas
+    lineas = [1, 2, 3]
+    // Actualizar las líneas disponibles en los formularios de asignación y liberación
+    const lineasRelease = document.getElementById("release-line")
+    const lineasAssign = document.getElementById("assign-line")
+    updateLines(lineas, lineasRelease, lineasAssign)
+
 })
 
+// Obtener máquinas del servidor
 async function getMachines () {
     const response = await fetch('http://localhost:3000/api/mantenimiento/')
     return response.json()
 }
+
+// Añadir líneas según las disponibles
+function updateLines(lineas, lineasRelease, lineasAssign) {
+    lineas.forEach((line) => {
+        const option = document.createElement("option")
+        option.value = line
+        option.textContent = `Línea ${line}`
+        lineasRelease.appendChild(option)
+        lineasAssign.appendChild(option.cloneNode(true))
+    })
+}
+
+// Revisar mantenimientos de máquinas
+
+// Validar proximidad de fecha de mantenimiento
+// Si la fecha de mantenimiento es menor o igual a 7 días, se notifica al usuario
+
 
 // –––––––––––––––– NOTIFICAR MÁQUINA ––––––––––––––––
 const notifyForm = document.getElementById("notify-form")
@@ -109,3 +144,50 @@ notifyForm.addEventListener('submit', async (e) => {
         alert("Ingrese una id válida. Recuerde que la máquina debe estar disponible o en uso.")
     }
 })
+
+
+// –––––––––––––––– LIBERAR MÁQUINAS ––––––––––––––––
+// Obtener elementos del DOM
+let lineasRelease = document.getElementById("release-line")
+const displayRelease = document.getElementById("release-display")
+const releaseForm = document.getElementById("release-form")
+
+// Display de máquinas según la línea seleccionada
+lineasRelease.addEventListener('change', (e) => {
+    const line = lineasRelease.value
+    const machinesLine = machines.filter((machine) => machine.line == line)
+    displayRelease.innerHTML = ""
+    machinesLine.forEach((machine) => {
+        displayRelease.innerHTML+= `<div class='select-square ${machine.state}'> 
+                                        <input type="checkbox" id=${machine.id}> 
+                                        <label for="${machine.id}">${machine.id}</label>
+                                    </div>`
+    })
+})
+
+// Añadir evento de liberación
+// Obtener id de máquinas seleccionadas
+
+// ————————————————— ASIGNAR MÁQUINAS —————————————————
+// Obtener elementos del DOM
+let lineasAssign = document.getElementById("assign-line")
+const tipoAssign = document.getElementById("assign-type")
+const displayAssign = document.getElementById("assign-display")
+const assignForm = document.getElementById("assign-form")
+
+// Display de máquinas según el tipo seleccionado
+tipoAssign.addEventListener('change', (e) => {
+    const type = tipoAssign.value
+    // Sólo aquellas máquinas disponibles o notificadas
+    const machinesType = machines.filter((machine) => machine.type == type && (machine.state === 'disponible' || machine.state === 'notificada'))
+    displayAssign.innerHTML = ""
+    machinesType.forEach((machine) => {
+        displayAssign.innerHTML+= `<div class='select-square ${machine.state}'> 
+                                        <input type="checkbox" id=${machine.id}> 
+                                        <label for="${machine.id}">${machine.id}</label>
+                                    </div>`
+    })
+})
+
+// Añadir evento de asignación
+// Obtener id de máquinas seleccionadas
