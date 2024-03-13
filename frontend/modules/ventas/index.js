@@ -56,22 +56,39 @@ function deleteRow(btn) {
 
 
 async function submitOrder() {
+
     var name = document.getElementById("name").value.trim();
     var customerId = document.getElementById("customerId").value.trim();
     var email = document.getElementById("email").value.trim();
     var phoneNumber = document.getElementById("phoneNumber").value.trim(); 
+
     var productsArray = [];
+    
     var prices = {
-        WonkaBar:5,
-        CandiedApples:4,
-        WonkaSwirlLollipops:1,
-        BluebirdsEggCandy:2,
-        ThreeCourseDinnerGum:4,
-        StainedGlassHardCandy:3,
-        WonkaWhippleScrumptiousFudgemallowDelight:6,
-        WonkaNuttyChoccolateSurprise:7,
-        EdibleGrass:4,
-        Eternaltoothbreaker:5
+        BarraWonka:3,
+        Manzanasacarameladas:2,
+        ChupetaespiralWonka:3,
+        Caramelodehuevodepajaroazul:4,
+        Rompemuelaseterno:5,
+        Chicledecenadetresplatos:1,
+        Caramelodurodevidriera:2,
+        "Barradeliciadecrema,malvaviscoyfudgeWonka":4,
+        BarrasorpresadechocolatedenuecesWonka:4,
+        Hierbacomestible:2
+    }
+
+    var idProducts = {
+        BarraWonka:1,
+        Manzanasacarameladas:2,
+        ChupetaespiralWonka:3,
+        Caramelodehuevodepajaroazul:4,
+        Rompemuelaseterno:5,
+        Chicledecenadetresplatos:6,
+        Caramelodurodevidriera:7,
+        "Barradeliciadecrema,malvaviscoyfudgeWonka":8,
+        BarrasorpresadechocolatedenuecesWonka:9,
+        Hierbacomestible:10
+
     }
 
     // Recopilar la información de los productos del ticket
@@ -81,7 +98,7 @@ async function submitOrder() {
         var productQuantity = row.cells[1];
         productQuantity = productQuantity.querySelector('input[type="number"]')
         productQuantity = productQuantity.value
-        productsArray.push({ productName: product, quantity: productQuantity, price: prices[product.replace(/ /g, "")] * parseInt(productQuantity)});
+        productsArray.push({productId:idProducts[product.replace(/ /g, "")] ,productName: product, quantity: productQuantity, price: prices[product.replace(/ /g, "")] * parseInt(productQuantity)});
     });
 
     // Verificar que se haya ingresado toda la información necesaria
@@ -141,8 +158,8 @@ async function submitOrder() {
 
     }
 
-    console.log(totalPrice);
-    alert(totalPrice)
+ 
+   
 
 
     // Construir el objeto de pedido
@@ -185,6 +202,38 @@ async function submitOrder() {
         alert("Hubo un error al enviar el pedido. Por favor, revise la consola para más detalles.");
     }
 
-    
+   
+}
+
+
+async function getLatestOrder(){
+    try {
+        // Realizar la solicitud GET al servidor mediante la API
+        var response = await fetch('/api/ventas/latestOrder', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Obtener la respuesta en formato JSON
+            var latestOrder = await response.json();
+            console.log(typeof(latestOrder))
+            console.log(latestOrder)
+            
+            
+           
+            
+        } else {
+            // Error al obtener la última orden
+            console.error("Hubo un error al obtener la última orden. Código de estado:", response.status);
+            alert("Hubo un error al obtener la última orden. Por favor, inténtelo de nuevo más tarde.");
+        }
+    } catch (error) {
+        console.error("Error al obtener la última orden:", error);
+        alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
+    }
+
 }
 

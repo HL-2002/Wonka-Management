@@ -23,13 +23,18 @@
                         <img width="160px" height="160px" src="/public/logotipo-blanco-op.webp" alt="logo de wonka's">
                     </a>
 
-                    <li><a href="#"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                    <li><a href="#"><img src="/public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
-                    <li><a href="#"><img src="/public/icono_3.webp" alt="icono de inventario">Inventario</a></li>
-                    <li><a href="#"><img src="/public/icono_4.webp" alt="icono Produccion">Producción</a></li>
-                    <li><a href="#"><img src="/public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento</a>
+                    <li><a href="/modules/ventas"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                    <li><a href="/modules/despacho"><img src="/public/icono_2.webp"
+                                alt="icono Distribucion">Distribución</a></li>
+                    <li><a href="/modules/inventario"><img src="/public/icono_3.webp"
+                                alt="icono de inventario">Inventario</a></li>
+                    <li><a href="/modules/produccion"><img src="/public/icono_4.webp"
+                                alt="icono Produccion">Producción</a></li>
+                    <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
+                                alt="icono de Mantenimiento">Mantenimiento</a>
                     </li>
-                    <li><a href="#"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+                    <li><a href="/modules/compras"><img src="/public/icono_6.webp"
+                                alt="icono de Ingredientes">Compra</a></li>
 
                 </ul>
             </nav>
@@ -44,17 +49,19 @@
                         Máquinas
                     </h2>
                     <div class="search">
-                        <input class="search-input" type="text" placeholder="Buscar máquina por Id">
-                        <button value="search" class="btn-open">Buscar</button>
+                        <input class="search-input" id="search-input" type="num" placeholder="Buscar máquina por Id"
+                            min="1">
+                        <button value="search" class="btn-open" id="search-button">Buscar</button>
                     </div>
 
                     <dialog id="search" class="dialog">
                         <div class="dialog-content">
                             <div class="dialog-head">
-                                <h2>Busqueda por Id</h2>
+                                <h2 class="form-element" id="form-title">Busqueda por Id</h2>
                                 <button class="close-button">x</button>
                             </div>
-                            <p>*insertar contenido*</p>
+                            <div id="search-display">
+                            </div>
                         </div>
                     </dialog>
                 </div>
@@ -98,8 +105,8 @@
                     <dialog id="add" class="dialog">
                         <form class="form">
                             <div class="dialog-head">
-                                <h2 class="form-element" id="form-title">Agregar máquina</h2>
                                 <button class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Agregar máquina</h2>
                             </div>
 
                             <div>
@@ -233,14 +240,16 @@
                             <select class="form-element" id="mPlan-select">
                                 <option value=""> Seleccionar máquina </option>
                             </select> <br>
+                            <p id="mPlan-mant-previa"> Mantenimiento previo: </p>
                             <label class="form-element">Fecha de mantenimiento</label>
                             <input type="date" class="form-element" id="mPlan-date"> <br>
+                            <p id="mPlan-disp-previa"> Disponibilidad previa: </p>
                             <label class="form-element">Fecha de disponibilidad</label>
                             <input type="date" class="form-element" id="mPlan-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="mPlan-submit">
-                        <input type="submit" value="Eliminar" class="form-element" id="elimPlan-submit">
+                        <input type="submit" value="Eliminar" class="form-element" id="mPlan-delete">
                     </form>
                 </dialog>
 
@@ -260,12 +269,13 @@
                             <select class="form-element" id="mMan-select">
                                 <option value=""> Seleccionar máquina</option>
                             </select> <br>
+                            <p id="mMan-disp-previa"> Disponibilidad previa: </p>
                             <label class="form-element">Fecha de disponibilidad</label>
                             <input type="date" class="form-element" id="mMan-release"> <br>
                         </div>
 
                         <input type="submit" value="Listo" class="form-element" id="mMan-submit">
-                        <input type="submit" value="Eliminar" class="form-element" id="elimMan-submit">
+                        <input type="submit" value="Eliminar" class="form-element" id="mMan-delete">
                     </form>
                 </dialog>
 

@@ -72,6 +72,21 @@ h2 {
     margin-bottom: 10px;
 }
 
+.search>input {
+    border-radius: 0;
+    border-top-left-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+    margin-right: 0;
+    height: 75%;
+}
+
+.search>button {
+    border-radius: 0;
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+    height: 75%;
+    line-height: 1rem;
+}
 
 .section>div {
     width: 100%;
@@ -254,8 +269,25 @@ input[type=submit] {
     margin-top: 20px;
 }
 
+input[value="Eliminar"] {
+    background: #FF8911;
+}
+
 input[value="Listo"] {
     margin-right: 16rem;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
+input[value="Eliminar"]:hover {
+    background: #e0444e;
+}
+
+input[value="Listo"]:hover {
+    background: #731d9e;
 }
 
 .state-container {
