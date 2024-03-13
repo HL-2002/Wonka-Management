@@ -8,8 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log('Maquinaria:', machines)
 
     // Cargar mantenimientos
-    const mantenimientos = document.getElementById("mantenimientos")
-
+    updateMaintenance()
 
     // TODO ANGEL: Cargar líneas disponibles
     // Cargar líneas disponibles
@@ -41,10 +40,63 @@ function updateLines(lineas, lineasRelease, lineasAssign) {
 }
 
 // Revisar mantenimientos de máquinas
+function updateMaintenance() {
+    // Obtener elemento del DOM
+    const mantenimientos = document.getElementById("mantenimientos")
 
-// Validar proximidad de fecha de mantenimiento
-// Si la fecha de mantenimiento es menor o igual a 7 días, se notifica al usuario
+    // 
+    let count = 0
+    let maintainMachines = []
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
+    // Limpiar mantenimientos
+    mantenimientos.innerHTML = ""
+
+    // Validar proximidad de fecha de mantenimiento
+    machines.forEach((machine) => {
+        if (machine.typeMaintenance !== null) {
+            const dateMaintenance = strToDate(machine.dateMaintenance)
+            const diferencia = dateMaintenance - today
+
+            if(diferencia <= 604800000) {
+                // Notificar al usuario
+                maintainMachines.push(machine)
+                count +=1
+            }
+        }
+    })
+
+    if (count > 0) {
+        // Notificar al usuario
+        alert(`Existen ${count} máquinas con mantenimientos próximos.`)
+        // Sortear máquinas por fecha de mantenimiento
+        maintainMachines.sort((a, b) => {
+            return strToDate(a.dateMaintenance) - strToDate(b.dateMaintenance)
+        })
+
+        // Agregar a lista de mantenimientos
+        maintainMachines.forEach((machine) => {
+            const dateMaintenance = strToDate(machine.dateMaintenance)
+            const diferencia = dateMaintenance - today
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24))
+            mantenimientos.innerHTML += `<li> Máquina ${machine.id}: Línea ${machine.line} - Mantenimiento ${machine.typeMaintenance} en ${dias} días. </li>`
+        })
+    }
+}
+
+// Formatear fechas de DB a formato local
+// Formatear fechas del HTML para evitar cosas locas del GMT
+function strToDate(dateString) {
+    return new Date(dateString.replaceAll('-', '/'))
+}
+
+
+// ————————————————— CARGAR CANTIDAD DE MÁQUINAS —————————————————
+function machineCount(line, type) {
+    const machinesLine = machines.filter((machine) => machine.line == line && machine.type == type)
+    return machinesLine.length
+}
 
 // –––––––––––––––– NOTIFICAR MÁQUINA ––––––––––––––––
 const notifyForm = document.getElementById("notify-form")

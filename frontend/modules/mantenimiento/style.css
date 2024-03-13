@@ -357,6 +357,10 @@ input[value="Listo"]:hover {
     font-weight: 800;
 }
 
+#mantenimientos {
+    color: #ececec;
+}
+
 .preventivo {
     background-color: #f2c43d;
 }
