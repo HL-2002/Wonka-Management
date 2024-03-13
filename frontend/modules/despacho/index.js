@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-document.addEventListener('DOMContentLoaded', (event) => {
-    const botonMostrarFactura = document.getElementById('mostrar-factura-btn');
-    botonMostrarFactura.textContent = 'Factura';
-});
-=======
-
-
 function Verificar() {
     var codigoIngresado = document.getElementById("factura").value;
 
@@ -17,4 +9,3 @@ function Verificar() {
     document.getElementById("errornofactura").style.display = "block";
   }
 }
->>>>>>> 3aa748de1ed38fb2d62ec3760bd36ba54bacafeb
