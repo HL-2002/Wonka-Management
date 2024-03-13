@@ -10,7 +10,8 @@
   "dependencies": {
     "@libsql/client": "0.5.1",
     "cross-env": "7.0.3",
-    "express": "4.18.2"
+    "express": "4.18.2",
+    "jspdf": "^2.5.1"
   },
   "keywords": [],
   "author": "",

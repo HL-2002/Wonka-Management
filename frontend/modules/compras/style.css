@@ -1,0 +1,233 @@
+*{
+  box-sizing:border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #6f27ff;
+}
+
+h1 {
+  color: #ececec;
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 5px;
+  align-self: self-start;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  background-color: rgb(52, 0, 95);
+  border-radius: 10px;
+  margin-bottom: 50px;
+
+  color: #ececec;
+}
+
+.contenedor-menu {
+  display: flex;
+  margin: 5px;
+}
+
+.menu{
+  display: flex;
+  margin: auto;
+}
+
+.menu button {
+  background-color: rgb(52, 0, 95);
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 5px;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu button.active {
+  background-color: #6f27ff;
+  box-shadow: none;
+}
+
+
+
+.solicitudes {
+  background-color: rgb(52, 0, 95);
+}
+
+.solicitud {
+  background-color: #6f27ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.solicitud p{
+  margin-bottom: 1rem;
+}
+
+.solicitudes a{
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background-color: green;
+  border: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  width: 10%;
+  margin-top: 1rem;
+  color: #ececec;
+}
+
+.registro {
+  display: none;
+  background-color: rgb(52, 0, 95);
+}
+
+.registros-hechos {
+  background-color: #6f27ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.registros-hechos p{
+  margin-bottom: 1rem;
+}
+
+.registros-hechos a{
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background-color: green;
+  border: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  width: 10%;
+  margin-top: 1rem;
+  color: #ececec;
+}
+
+.modal{
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.404);
+}
+
+.modal-show{
+  opacity: 1;
+  pointer-events: unset;
+}
+
+.salir {
+  display: block;
+  color: #ececec;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 5%;
+  height: 5%;
+  text-align: center;
+  background-color: red;
+  padding: 2px;
+}
+
+.efectuar-modal{
+  background-color: #6f27ff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 80%;
+  max-height: 70%;
+  margin: auto auto;
+
+  overflow-y: auto;
+
+}
+
+.efectuar-modal-header{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.seccion-provedores{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tarjeta-proveedor {
+  padding: 20px;
+  width: 30%;
+  border-radius: 20px;
+  background-color: rgb(52, 0, 95);
+  margin: 5px;
+}
+
+.tarjeta-proveedor h3{
+  text-align: center;
+}
+
+/* Estilos de la barra scroll*/
+
+.efectuar-modal::-webkit-scrollbar {
+  width: 8px;     /* Tamaño del scroll en vertical */
+  height: 8px;    /* Tamaño del scroll en horizontal */
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.efectuar-modal::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.efectuar-modal::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.efectuar-modal::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+.efectuar-modal::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+
+
+.ordenDeCompra {
+  background-color: #ececec;
+  color: black;
+}

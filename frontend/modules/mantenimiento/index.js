@@ -4,6 +4,7 @@ let ids = []
 // Display de las máquinas y su mantenimiento al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
   updateDisplays()
+  alertMachines()
 })
 
 // Obtener el array de las máquinas
@@ -228,6 +229,32 @@ function displayMaintenanceForms (machines) {
   })
 }
 
+// Alerta si hay máquinas notificadas o defectuosas
+async function alertMachines() {
+  const machines = await getMachines().then((json) => { return json.machines })
+  let notificadas = defectuosas = 0
+  let text = ''
+
+  machines.forEach((machine) => {
+    if (machine.state === 'notificada' && machine.typeMaintenance === null ) {
+      notificadas += 1
+    } else if (machine.state === 'defectuosa') {
+      defectuosas += 1
+    }
+  })
+
+  if (notificadas > 0 && defectuosas > 0) {
+    text += `Hay ${notificadas} máquina(s) notificada(s) y ${defectuosas} máquina(s) defectuosa(s).`
+  }
+  else if (notificadas > 0) {
+    text += `Hay ${notificadas} máquina(s) notificada(s).`
+  }
+  else if (defectuosas > 0) {
+    text += `Hay ${defectuosas} máquina(s) defectuosa(s).`
+  }
+  alert("Alerta: " + text)
+}
+
 // Añadir máquinas
 const addForm = document.getElementById('add').children[0]
 
@@ -343,6 +370,14 @@ deleteForm.addEventListener('submit', async (e) => {
   }
 })
 
+// Formatear fechas del HTML para evitar cosas locas del GMT
+function strToDate(dateString) {
+  if (dateString === "") {
+    return dateString
+  }
+  return new Date(dateString.replaceAll('-', '/'))
+}
+
 // Planificar mantenimiento preventivo
 // Obtener formulario de planificación
 const prevForm = document.getElementById('prevent').children[0]
@@ -357,8 +392,9 @@ prevForm.addEventListener('submit', async (e) => {
   // Obtener los datos del formulario
   const id = document.getElementById('prevent-select').value
   const typeMaintenance = 'preventivo'
-  let dateMaintenance = document.getElementById('prevent-date').valueAsDate
-  let dateAvailability = document.getElementById('prevent-release').valueAsDate
+  let dateMaintenance = strToDate(document.getElementById('prevent-date').value)
+  console.log(dateMaintenance)
+  let dateAvailability = strToDate(document.getElementById('prevent-release').value)
 
   // Validar id
   if (id === '') {
@@ -384,7 +420,7 @@ prevForm.addEventListener('submit', async (e) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateMaintenance: dateAvailability, machineId: id })
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
   })
 
   // Actualizar las máquinas visibles si la respuesta es exitosa
@@ -393,8 +429,8 @@ prevForm.addEventListener('submit', async (e) => {
 
     // Clear form
     document.getElementById('prevent-select').value = ''
-    document.getElementById('preventivo-date').value = ''
-    document.getElementById('preventivo-release').value = ''
+    document.getElementById('prevent-date').value = ''
+    document.getElementById('prevent-release').value = ''
 
     // Actualizar las máquinas y mantenimientos visibles
     updateDisplays()
@@ -403,6 +439,388 @@ prevForm.addEventListener('submit', async (e) => {
     alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
   }
 })
+
+// Planificar mantenimiento predictivo
+// Obtener formulario de planificación
+const predForm = document.getElementById('predict').children[0]
+
+// Evento al enviarlo
+predForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener los datos del formulario
+  const id = document.getElementById('predict-select').value
+  const typeMaintenance = 'predictivo'
+  let dateMaintenance = strToDate(document.getElementById('predict-date').value)
+  let dateAvailability = strToDate(document.getElementById('predict-release').value)
+
+  // Validar id
+  if (id === '') {
+    alert('Por favor seleccione una máquina')
+    return
+  }
+  // Validar fechas
+  if (dateMaintenance === '' || dateMaintenance < date) {
+    alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+    return
+  }
+  if (dateAvailability === '' || dateAvailability < dateMaintenance) {
+    alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento')
+    return
+  }
+
+  // Crear mantenimiento predictivo en la base de datos
+  dateMaintenance = dateMaintenance.toISOString().split('T')[0]
+  dateAvailability = dateAvailability.toISOString().split('T')[0]
+
+  const response = await fetch('http://localhost:3000/api/mantenimiento/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
+  })
+
+  // Actualizar las máquinas visibles si la respuesta es exitosa
+  if(response.status !== 500) {
+    alert('Mantenimiento predictivo planificado')
+
+    // Clear form
+    document.getElementById('predict-select').value = ''
+    document.getElementById('predict-date').value = ''
+    document.getElementById('predict-release').value = ''
+
+    // Actualizar las máquinas y mantenimientos visibles
+    updateDisplays()
+    
+  } else {
+    alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+  }
+})
+
+// Planificar mantenimiento correctivo
+
+// Obtener formulario de planificación
+const corrForm = document.getElementById('correct').children[0]
+
+// Evento al enviarlo
+
+corrForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener los datos del formulario
+  const id = document.getElementById('correct-select').value
+  const typeMaintenance = 'correctivo'
+  let dateMaintenance = date
+  let dateAvailability = strToDate(document.getElementById('correct-release').value)
+
+  // Validar id
+  if (id === '') {
+    alert('Por favor seleccione una máquina')
+    return
+  }
+
+  // Validar fecha
+  if (dateAvailability === '' || dateAvailability < date) {
+    alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+    return
+  }
+
+  // Crear mantenimiento correctivo en la base de datos
+  dateAvailability = dateAvailability.toISOString().split('T')[0]
+  dateMaintenance = dateMaintenance.toISOString().split('T')[0]
+
+  const response = await fetch('http://localhost:3000/api/mantenimiento/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
+  })
+
+  // Actualizar las máquinas visibles si la respuesta es exitosa
+  if(response.status !== 500) {
+    alert('Mantenimiento correctivo planificado')
+
+    // Clear form
+    document.getElementById('correct-select').value = ''
+    document.getElementById('correct-release').value = ''
+
+    // Actualizar las máquinas y mantenimientos visibles
+    updateDisplays()
+    
+  } else {
+    alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+  }
+})
+
+// Modificar (o eliminar) plan de mantenimiento
+// Obtener formulario de modificación
+const mPlanForm = document.getElementById('mPlan').children[0]
+let mPlanOption = ''
+
+// Evento al clicar alguno de los submit
+const mPlanSubmit = document.getElementById('mPlan-submit')
+const mPlanDelete = document.getElementById('mPlan-delete')
+
+mPlanSubmit.addEventListener('click', async (e) => {
+  mPlanOption = 'submit'
+})
+
+mPlanDelete.addEventListener('click', async (e) => {  
+  mPlanOption = 'delete'
+})
+
+// Guardar máquina seleccionada
+let machineSelectedPlan = {}
+
+// Evento al seleccionar una máquina
+const mPlanSelect = document.getElementById('mPlan-select')
+
+// Obtener máquina seleccionada
+mPlanSelect.addEventListener('change', async (e) => {
+  const id = parseInt(mPlanSelect.value)
+
+  // Contenedores de las fechas
+  const mantPrev = document.getElementById("mPlan-mant-previa")
+  const dispPrev = document.getElementById("mPlan-disp-previa")
+
+  // Limpiar contenedores antes de añadir los datos
+  mantPrev.innerHTML = 'Mantenimiento previo: '
+  dispPrev.innerHTML = 'Disponibilidad previa: '
+
+
+  // Obtener la máquina seleccionada
+  machineSelectedPlan = await getMachine(id)
+
+  // Mostrar datos de la máquina seleccionada
+  mantPrev.innerHTML += dateFormat(machineSelectedPlan.dateMaintenance)
+  dispPrev.innerHTML += dateFormat(machineSelectedPlan.dateAvailability)
+})
+
+// Function to formate date string from yyyy-mm-dd to dd/mm/yyyy
+function dateFormat(date) {
+  const arr = date.split('-')
+  return `${arr[2]}/${arr[1]}/${arr[0]}`
+}
+
+// Evento al enviarlo
+mPlanForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener datos de máquina seleccionada
+  const id = machineSelectedPlan.id
+
+  // Validar selección de máquina
+  if (id === undefined) {
+    alert('Por favor seleccione una máquina')
+    return
+  }
+
+  if (mPlanOption === 'delete') {
+    // Borrar mantenimiento del servidor
+    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+      method: 'DELETE'
+    })
+
+    if(response.status !== 500) {
+      alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} eliminado`)
+
+      // Clear form
+      document.getElementById('mPlan-select').value = ''
+      document.getElementById('mPlan-date').value = ''
+      document.getElementById('mPlan-release').value = ''
+
+      // Actualizar las máquinas y mantenimientos visibles
+      updateDisplays()
+    } else {
+      alert('Error al eliminar mantenimiento, revise la consola y/o el servidor')
+    }
+  }
+  else if (mPlanOption === 'submit') {
+    // Obtener fecha de mantenimiento previa
+    const mantPrev = strToDate(machineSelectedPlan.dateMaintenance)
+    
+    // Obtener los datos del formulario
+    let dateMaintenance = strToDate(document.getElementById('mPlan-date').value)
+    let dateAvailability = strToDate(document.getElementById('mPlan-release').value)
+
+    // Validar fechas
+    if (dateMaintenance < mantPrev) {
+      alert('Fechas de mantenimiento, asegúrese de que sea mayor a la fechas previa')
+    }
+    else if (dateMaintenance === '' || dateMaintenance < date) {
+      alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+      return
+    }
+    else if (dateAvailability === '' || dateAvailability < dateMaintenance) {
+      alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la nueva fecha de mantenimiento')
+      return
+    }
+    else {
+      // Actualizar el mantenimiento
+      // Formatear fechas
+      dateMaintenance = dateMaintenance.toISOString().split('T')[0]
+      dateAvailability = dateAvailability.toISOString().split('T')[0]
+
+      const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({dateMaintenance: dateMaintenance, dateAvailability: dateAvailability})
+      })
+
+      if (response.status !== 500) {
+        alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} modificado`)
+
+        // Clear form
+        document.getElementById('mPlan-select').value = ''
+        document.getElementById('mPlan-date').value = ''
+        document.getElementById('mPlan-release').value = ''
+
+        // Actualizar las máquinas y mantenimientos visibles
+        updateDisplays()
+      }
+    }
+  }
+})
+
+// Modificar (o eliminar mantenimiento)
+// Obtener formulario de modificación
+const mManForm = document.getElementById('mMan').children[0]
+// Evento al clicar alguno de los submit
+let mManOption = ''
+
+const mManSubmit = document.getElementById('mMan-submit')
+const mManDelete = document.getElementById('mMan-delete')
+
+mManSubmit.addEventListener('click', async (e) => {
+  mManOption = 'submit'
+})
+
+mManDelete.addEventListener('click', async (e) => {
+  mManOption = 'delete'
+})
+
+// Guardar máquina seleccionada
+let machineSelectedMan = {}
+
+// Evento al seleccionar una máquina
+const mManSelect = document.getElementById('mMan-select')
+
+// Obtener máquina seleccionada
+mManSelect.addEventListener('change', async (e) => {
+  const id = parseInt(mManSelect.value)
+
+  // Contenedores de las fechas
+  const dispPrev = document.getElementById("mMan-disp-previa")
+
+  // Limpiar contenedores antes de añadir los datos
+  dispPrev.innerHTML = 'Disponibilidad previa: '
+
+  // Obtener la máquina seleccionada
+  machineSelectedMan = await getMachine(id)
+  dispPrev.innerHTML += dateFormat(machineSelectedMan.dateAvailability)
+})
+
+
+// Obtener máquina por id
+async function getMachine(id) {
+  const machines = await getMachines().then((json) => { return json.machines })
+  if (!isNaN(id)) {
+    for (const machine of machines) {
+      if (machine.id === id) {
+        return machine
+      }
+    }
+  }
+}
+
+// Evento al enviarlo
+mManForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  // Fecha para validación
+  const date = new Date()
+  date.setHours(11, 59, 59, 999)
+
+  // Obtener datos de máquina seleccionada
+  const id = machineSelectedMan.id
+
+  // Validar selección de máquina
+  if (id === undefined) {
+    alert('Por favor seleccione una máquina')
+    return
+  }
+
+  if (mManOption === 'delete') {
+    // Borrar mantenimiento del servidor
+    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+      method: 'DELETE'
+    })
+
+    if(response.status !== 500) {
+      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` + 
+            "La máquina ahora se encuentra disponible. \n" + 
+            "Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.")
+
+      // Clear form
+      document.getElementById('mMan-select').value = ''
+      document.getElementById('mMan-release').value = ''
+
+      // Actualizar las máquinas y mantenimientos visibles
+      updateDisplays()
+    }
+  }
+  else if (mManOption === 'submit') {
+    // Obtener los datos del formulario
+    let dateAvailability = strToDate(document.getElementById('mMan-release').value)
+
+    // Validar fechas
+    if (dateAvailability === '' || dateAvailability < date) {
+      alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+      return
+    }
+
+    // Actualizar el mantenimiento
+    // Formatear fechas
+    dateAvailability = dateAvailability.toISOString().split('T')[0]
+
+    // Actualizar el mantenimiento en el servidor
+    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({dateAvailability: dateAvailability})
+    })
+
+    // Actualizar las máquinas visibles si la respuesta es exitosa
+    if(response.status !== 500) {
+      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} modificado`)
+
+      // Clear form
+      document.getElementById('mMan-select').value = ''
+      document.getElementById('mMan-release').value = ''
+
+      // Actualizar las máquinas y mantenimientos visibles
+      updateDisplays()
+    }
+  }
+ })
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
@@ -415,6 +833,11 @@ btns.forEach((btn) => {
     dialog.classList.remove('close')
     dialog.classList.add('open')
     dialog.showModal()
+
+    // Ejecutar la función de búsqueda si el botón es de búsqueda
+    if (btn.value === 'search') {
+      searchMachine()
+    }
   })
 })
 
@@ -435,3 +858,37 @@ btnsClose.forEach((btn) => {
   })
 }
 )
+
+// Buscar máquina por id
+async function searchMachine() {
+  // Obtener contenedor del display
+  const display = document.getElementById('search-display')
+
+  // Limpiar contenedor antes de añadir la máquina
+  display.innerHTML = ''
+
+  // Validar id de la máquina
+  const searchId = parseInt(document.getElementById('search-input').value)
+
+  if (ids.some((id) => id === searchId)) {
+    // Obtener máqina por id
+    const machine = await getMachine(searchId)
+    // Formatear datos para el display
+    const disponibilidad = machine.availability == 1 ? "Sí": "No"
+    const linea = machine.line == null ? "Ninguna" : machine.line
+    const mantenimiento = machine.typeMaintenance == null ? "Ninguno" : machine.typeMaintenance
+    const fechaMant = machine.dateMaintenance == null ? "N/A" : dateFormat(machine.dateMaintenance)
+    const fechaDisp = machine.dateAvailability == null ? "N/A": dateFormat(machine.dateAvailability)
+    // Añadir máquina al display
+    display.innerHTML = `<p>Id: ${machine.id}</p>
+                         <p>Tipo: ${machine.type}</p>
+                         <p>Estado: ${machine.state}</p>
+                         <p>Disponible: ${disponibilidad}</p>
+                         <p>Línea: ${linea}</p>
+                         <p>Mantenimiento: ${mantenimiento}</p>
+                         <p>Fecha de mantenimiento: ${fechaMant}</p>
+                         <p>Fecha de disponibilidad: ${fechaDisp}</p>`
+  } else {
+    display.innerHTML = '<p>Máquina no encontrada</p>'
+  }
+}
