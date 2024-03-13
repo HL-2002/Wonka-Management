@@ -37,8 +37,8 @@
         <div class="facturacion">
             <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura">
             <h3>Ingrese el numero de su factura</h3>
-            <label for=""><input type="number" placeholder="12345678" id="factura"></label>
-            <button onclick="Verificar()">Enviar</button>
+            <label for=""><input type="number" placeholder="12345678" id="factura"><button onclick="Verificar()">Enviar</button></label>
+            
         </div>
         <div>    
             <div id="errornofactura" style="display: none;">
@@ -53,29 +53,42 @@
                         <div class="Formulario">
                             <div class="infoEmpresa">
                                 <div class="labelNombre">
-                                    <Label> Empresa:  
+                                    <Label><strong> Empresa:  </strong>
                                         <label type="text" id="NombreEmpresa"></label>
                                     </Label>
                                 </div>
                                 <div class="labelRif">  
-                                    <label> Rif: 
+                                    <label><strong> Rif:  </strong>
                                         <label type="text" id="RifEmpresa"> </label>
                                     </label>
                                 </div>
                             </div><br>
                             <div class="labelEmail">
-                                <label> Email: 
+                                <label><strong> Email:  </strong>
                                     <label type="text" id="EmailEmpresa"></label>
+                                    
+                                </label>
+                                <label><strong> Numero de Telefono:   </strong>
+                                    <label type="number" id="numberEmpresa"></label>
                                 </label>
                             </div><br>
                             <div class="labelDireccion">
-                                <label> Direccion: 
-                                    <label type="text" id="DireccionEmpresa"></label>
+                                <label><strong> Hora de Compra:  </strong>
+                                    <label type="text" id="HoraEmpresa"></label>
+                                </label>
+                                <label><strong> Estado de la entrega:  </strong>
+                                    <label type="text" id="statusEmpresa"> </label>
+                                </label>
+                                
+                            </div><br>
+                            <div class="labelPrecioT">
+                                <label><Strong> Precio Total:  </Strong>
+                                    <label type="number" id="PrecioTEmpresa"></label>
                                 </label>
                             </div>
                         </div>
                     </form>
-                    <h2></h2>
+                    
                 </div>
             </div>
         </div>

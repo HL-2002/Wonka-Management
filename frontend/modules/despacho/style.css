@@ -48,51 +48,61 @@ h1 {
 #facturaexistente #errornofactura{
     background-color: rgb(52, 0, 95);
     color: rgb(52, 0, 95);
-    margin-bottom: 80px;
-    padding-bottom: 80px;
+    margin-bottom: 60px;
+    padding-bottom: 60px;
 }
 .divfactura{
     background-color: rgb(52, 0, 95);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-bottom: 20px;
 }
 .labelNombre,
 .labelRif,
 .labelEmail,
-.labelDireccion{
-    margin-top: 10px;
-    margin-left: 10px;
+.labelDireccion,
+.labelPrecioT {
+    margin-top: 8px;
+    margin-left: 8px;
     border: none;
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+   
+  
 }
-.labelNombre input{
-    width: 270px;
-    border: none;
-    border-radius: 4px;
-}
+
 /*label{
     color: #ececec;
 }*/
 .labelRif {
-    width: 270px;
+    margin-right: 10px;
     border-radius: 4px;
 }
 .infoEmpresa {
     display: flex;
     gap: 10px;
+
 }
 .labelEmail {
-    width: 550px;
+    margin-right: 10px;
+    
     border-radius: 4px;
+    gap: 10px;
 }
 .labelDireccion {
-    border-radius: 4px;
-    width: 550px;
-    padding-bottom: 40px;
+    margin-right: 10px;
+    gap: 10px;
+
+}
+.labelPrecioT{
+    gap: 10px;
+    margin-right: 10px;
 }
 .Formulario{
     background-color: #6f27ff;
-    margin: 50px;
+    margin: 20px;
     border-radius: 10px;
+    padding-bottom: 10px;
 }
 .Formulario label{
     color: #ececec;
