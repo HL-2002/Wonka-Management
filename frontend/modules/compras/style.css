@@ -195,6 +195,21 @@ h1 {
   text-align: center;
 }
 
+.zona-calculos {
+  display: flex;
+  margin: auto;
+}
+
+.zona-calculos div{
+  padding: 2%;
+  margin-right: 8%;
+  text-align: center;
+}
+
+.zona-calculos h4{
+  font-size: 15px;
+}
+
 /* Estilos de la barra scroll*/
 
 .efectuar-modal::-webkit-scrollbar {

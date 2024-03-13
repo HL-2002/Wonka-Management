@@ -106,19 +106,19 @@ document.addEventListener('DOMContentLoaded', function () {
     {
       nombre: 'Empresa 1',
       categoria: 'Categoría A',
-      costo: '$100',
+      costo: 100,
       tardanza: '2 días'
     },
     {
       nombre: 'Empresa 2',
       categoria: 'Categoría B',
-      costo: '$200',
+      costo: 200,
       tardanza: '3 días'
     },
     {
       nombre: 'Empresa 3',
       categoria: 'Categoría C',
-      costo: '$300',
+      costo: 300,
       tardanza: '4 días'
     }
   ]
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
     divTarjeta.appendChild(pCategoria)
 
     const pCosto = document.createElement('p')
-    pCosto.textContent = `Costo: ${tarjeta.costo}`
+    pCosto.textContent = `Costo: ${tarjeta.costo} $`
     divTarjeta.appendChild(pCosto)
 
     const pTardanza = document.createElement('p')
@@ -197,4 +197,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
     seccionRegistro.appendChild(divTarjeta)
   })
+
+  //  CREAR PARTE DE CALCULOS
+
+  //  DATOS DE LOS CALCULOS
+
+  const iva = 1200 * 0.16
+  const total = 1200 + iva
+
+  //  CREAR TABLA DINAMICA
+
+  const precioPorUnidad = document.querySelector('.precioPorUnidad')
+
+  const h4precioPorUnidad = document.createElement('h4')
+  h4precioPorUnidad.textContent = 'Precio por Unidad'
+  precioPorUnidad.appendChild(h4precioPorUnidad)
+
+  const ParrafoprecioPorUnidad = document.createElement('p')
+  ParrafoprecioPorUnidad.textContent = tarjetas[0].costo + '$'
+  precioPorUnidad.appendChild(ParrafoprecioPorUnidad)
+
+  const cantidadContenedor = document.querySelector('.cantidadContenedor')
+
+  const h4Cantidad = document.createElement('h4')
+  h4Cantidad.textContent = 'Cantidad'
+  cantidadContenedor.appendChild(h4Cantidad)
+
+  const Parrafocantidad = document.createElement('p')
+  Parrafocantidad.textContent = tarjetas[1].costo
+  cantidadContenedor.appendChild(Parrafocantidad)
+
+  const ivaContenedor = document.querySelector('.IvaContenedor')
+
+  const h4Iva = document.createElement('h4')
+  h4Iva.textContent = 'Iva'
+  ivaContenedor.appendChild(h4Iva)
+
+  const ParrafoIva = document.createElement('p')
+  ParrafoIva.textContent = iva + '$'
+  ivaContenedor.appendChild(ParrafoIva)
+
+  const totalContenedor = document.querySelector('.totalContenedor')
+
+  const h4Total = document.createElement('h4')
+  h4Total.textContent = 'Total'
+  totalContenedor.appendChild(h4Total)
+
+  const ParrafoTotal = document.createElement('p')
+  ParrafoTotal.textContent = total + '$'
+  totalContenedor.appendChild(ParrafoTotal)
 })
