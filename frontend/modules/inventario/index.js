@@ -203,11 +203,12 @@ async function modProduct(id, des, category) {
 async function fillModal (id) {
   const lstProducts = await getProducts()
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
-  console.log(lstProducts)
+  const lstCategory = await getCategory()
+  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.id)) : lstCategory[0]
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
-  const viewCategory = selected?.categoryId || ''
+  const viewCategory = selectedCategoty?.description || ''
   const viewPrice = selected?.price || ''
   const viewCost = selected?.cost || ''
   const viewStock = selected?.stock || 0
