@@ -34,15 +34,18 @@ h4 {
     color: white;
     
 }
-h2 {
-    
+h3 {
+    color: #dc570a;
+    font-weight: 900;
 }
 table {
     width: 85%;
 }
-th, td {
-    border: var(--action) solid 3px;
+table, th, td {
+    border: #fdbf60 solid 6px;
     font-weight: 500;
+    border-collapse: collapse;
+    border-style: inset;
 }
 th{
     color: white;
@@ -89,4 +92,8 @@ table.center{
 .ticket-container h2 {
     font-size: 2rem;
     color: var(--action);
+}
+h2 {
+    color: #fdbf60;
+    font-weight: 700;
 }

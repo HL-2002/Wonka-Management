@@ -1,7 +1,10 @@
 body {
     background-color: #6f27ff;
 }
-
+main{
+    padding: 0;
+    margin: 0;
+}
 .facturacion{
     position: relative;
     width: 100%;
@@ -11,8 +14,8 @@ body {
     flex-wrap: wrap;
     align-items: center;
     background-color: rgb(52, 0, 95);
-    border-radius: 10px;
-    margin-bottom: 50px;
+    border-radius: 0px;
+    margin: 0;
 }
 
 h1 {
@@ -40,4 +43,11 @@ h1 {
     padding: 0;
     width: 200px; /* Ajusta el ancho de la imagen según tus necesidades */
     height: auto; /* Ajusta la altura de la imagen según tus necesidades */
-  }
+}
+#facturaexistente #errornofactura{
+    background-color: rgb(52, 0, 95);
+    color: rgb(52, 0, 95);
+}
+.divfactura{
+    background-color: rgb(52, 0, 95);
+}

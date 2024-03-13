@@ -841,6 +841,14 @@ btns.forEach((btn) => {
   })
 })
 
+const dialogs = document.querySelectorAll('.dialog')
+
+dialogs.forEach((dialog) => {
+  dialog.addEventListener('cancel', (e) => {
+    e.preventDefault()
+  })
+})
+
 // recorrer los botones de cerrar y agregar el evento click
 btnsClose.forEach((btn) => {
   btn.addEventListener('click', (e) => {

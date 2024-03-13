@@ -17,64 +17,26 @@
     <div class="lading-container">
       <header class="header">
         <nav>
-          <ul class="header-navbar">
-            <a href="/">
-              <img
-                width="160px"
-                height="160px"
-                src="/public/logotipo-blanco-op.webp"
-                alt="logo de wonka's"
-              />
-            </a>
+            <ul class="header-navbar">
+                <a href="../../index.html">
+                    <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
+                </a>
 
-            <li>
-              <a href="#"
-                ><img src="/public/icono_1.webp" alt="icono  tienda" />Venta</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  src="/public/icono_2.webp"
-                  alt="icono Distribucion"
-                />Distribución</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  src="/public/icono_3.webp"
-                  alt="icono de inventario"
-                />Inventario</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  src="/public/icono_4.webp"
-                  alt="icono Produccion"
-                />Producción</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  src="/public/icono_5.webp"
-                  alt="icono de Mantenimiento"
-                />Mantenimiento</a
-              >
-            </li>
-            <li>
-              <a href="#"
-                ><img
-                  src="/public/icono_6.webp"
-                  alt="icono de Ingredientes"
-                />Compra</a
-              >
-            </li>
-          </ul>
+                <li><a href="/modules/ventas"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                <li><a href="/modules/despacho"><img src="/public/icono_2.webp"
+                            alt="icono Distribucion">Distribución</a></li>
+                <li><a href="/modules/inventario"><img src="/public/icono_3.webp"
+                            alt="icono de inventario">Inventario</a></li>
+                <li><a href="/modules/produccion"><img src="/public/icono_4.webp"
+                            alt="icono Produccion">Producción</a></li>
+                <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
+                            alt="icono de Mantenimiento">Mantenimiento</a></li>
+                <li><a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+
+
+            </ul>
         </nav>
-      </header>
+    </header>
 
       <main class="main">
         <h1>Compra</h1>
@@ -99,11 +61,11 @@
                 <h2>Titulo</h2>
                 <p>categoria</p>
                 <p>cantidad</p>
-                <a href="#" class="btn-open">Efectuar</a>
+                <a onclick="cargarProductos()" class="btn-open">Efectuar</a>
               </div>
             </div>
   
-            <div class="registro" id="requisicion">
+            <div class="registro-seccion">
               <h2>Registro</h2>
               <p>Tienes $ registradas:</p>
   
@@ -127,36 +89,41 @@
                 <a href="#" class="salir">X</a>
               </div>
 
-              <div class="seccion-provedores">
+              <div class="seccion-provedores"></div>
 
-                <div class="tarjeta-proveedor">
-                  <h3>Empresa 1</h3>
-                  <p>Categoria: $</p>
-                  <p>Costo: $</p>
-                  <p>Tardanza en despachar: $</p>
+              <div class="seccion-calculos">
+
+                <h2>Calculos</h2>
+
+                <div class="zona-calculos">
+
+                  <div class="codigoArticulo">
+                  </div>
+
+                  <div class="descripcionArticulo">
+                  </div>
+
+                  <div class="precioPorUnidad">
+                  </div>
+
+                  <div class="cantidadContenedor">
+                  </div>
+
+                  <div class="montoDeprecioPorUnidad">
+                    <h4>Monto</h4>
+                    <p>1200$</p>
+                  </div>
+
+                  <div class="IvaContenedor">
+
+                  </div>
+
+                  <div class="totalContenedor">
+
+                  </div>
+
+
                 </div>
-
-                <div class="tarjeta-proveedor">
-                  <h3>Empresa 1</h3>
-                  <p>Categoria: $</p>
-                  <p>Costo: $</p>
-                  <p>Tardanza en despachar: $</p>
-                </div>
-
-                <div class="tarjeta-proveedor">
-                  <h3>Empresa 1</h3>
-                  <p>Categoria: $</p>
-                  <p>Costo: $</p>
-                  <p>Tardanza en despachar: $</p>
-                </div>
-
-                <div class="tarjeta-proveedor">
-                  <h3>Empresa 1</h3>
-                  <p>Categoria: $</p>
-                  <p>Costo: $</p>
-                  <p>Tardanza en despachar: $</p>
-                </div>
-
 
               </div>
 
