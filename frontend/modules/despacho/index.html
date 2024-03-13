@@ -39,6 +39,8 @@
             <h3>Ingrese el numero de su factura</h3>
             <label for=""><input type="number" placeholder="12345678" id="factura"></label>
             <button onclick="Verificar()">Enviar</button>
+        </div>
+        <div>    
             <div id="errornofactura" style="display: none;">
                 <div class="divfactura">
                     <h1>Factura no existe</h1>
@@ -47,6 +49,33 @@
             <div id="facturaexistente" style="display: none;">
                 <div class="divfactura">
                     <h1>Factura existe</h1>
+                    <form action="/" method="post">
+                        <div class="Formulario">
+                            <div class="infoEmpresa">
+                                <div class="labelNombre">
+                                    <Label> Empresa:  
+                                        <label type="text" id="NombreEmpresa"></label>
+                                    </Label>
+                                </div>
+                                <div class="labelRif">  
+                                    <label> Rif: 
+                                        <label type="text" id="RifEmpresa"> </label>
+                                    </label>
+                                </div>
+                            </div><br>
+                            <div class="labelEmail">
+                                <label> Email: 
+                                    <label type="text" id="EmailEmpresa"></label>
+                                </label>
+                            </div><br>
+                            <div class="labelDireccion">
+                                <label> Direccion: 
+                                    <label type="text" id="DireccionEmpresa"></label>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <h2></h2>
                 </div>
             </div>
         </div>
