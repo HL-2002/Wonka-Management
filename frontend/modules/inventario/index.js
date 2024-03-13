@@ -107,7 +107,7 @@ async function fillSearchDescargo () {
 -------------------- */
 
 // eslint-disable-next-line no-unused-vars
-function addItem (params) {
+async function addItem (params) {
   const codValue = document.getElementById('codigo')
   const desValue = document.getElementById('descripcion')
   const categorValue = document.getElementById('categoria')
@@ -116,6 +116,14 @@ function addItem (params) {
   const costoValue = document.getElementById('costo')
   const stock = document.getElementById('stock')
   save.style.backgroundColor = 'initial'
+  const lstCategory = await getCategory()
+  const options = lstCategory.map((product, index) => `
+        <option value="${product.id}">${product.description}</option>
+    `)
+  console.log(lstCategory)
+
+  const selectElement = document.getElementById('categoria')
+  selectElement.innerHTML = options.join('')
 
   codValue.value = ''
   desValue.value = ''
