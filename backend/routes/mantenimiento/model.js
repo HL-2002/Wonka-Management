@@ -78,6 +78,7 @@ if (process.env.mode !== 'production') {
 
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'uso', 1, 1] })
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'notificada', 1, 1] })
+  await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelera', 'notificada', 1, 1] })
 
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'uso', 1, 2] })
   await client.execute({ sql: 'INSERT INTO MACHINE (type, state, availability, line) VALUES (?, ?, ?, ?)', args: ['caramelizadora', 'defectuosa', 0, 2] })

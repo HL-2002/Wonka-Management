@@ -61,31 +61,33 @@ async function submitOrder() {
     var customerId = document.getElementById("customerId").value.trim();
     var email = document.getElementById("email").value.trim();
     var phoneNumber = document.getElementById("phoneNumber").value.trim(); 
+
     var productsArray = [];
+    
     var prices = {
-        WonkaBar:5,
-        CandiedApples:4,
-        WonkaSwirlLollipops:1,
-        BluebirdsEggCandy:2,
-        ThreeCourseDinnerGum:4,
-        StainedGlassHardCandy:3,
-        WonkaWhippleScrumptiousFudgemallowDelight:3,
-        WonkaNuttyChoccolateSurprise:2,
-        EdibleGrass:4,
-        Eternaltoothbreaker:5
+        BarraWonka:3,
+        Manzanasacarameladas:2,
+        ChupetaespiralWonka:3,
+        Caramelodehuevodepajaroazul:4,
+        Rompemuelaseterno:5,
+        Chicledecenadetresplatos:1,
+        Caramelodurodevidriera:2,
+        "Barradeliciadecrema,malvaviscoyfudgeWonka":4,
+        BarrasorpresadechocolatedenuecesWonka:4,
+        Hierbacomestible:2
     }
 
     var idProducts = {
-        WonkaBar:1,
-        CandiedApples:2,
-        WonkaSwirlLollipops:3,
-        BluebirdsEggCandy:4,
-        ThreeCourseDinnerGum:5,
-        StainedGlassHardCandy:6,
-        WonkaWhippleScrumptiousFudgemallowDelight:7,
-        WonkaNuttyChoccolateSurprise:8,
-        EdibleGrass:9,
-        Eternaltoothbreaker:10
+        BarraWonka:1,
+        Manzanasacarameladas:2,
+        ChupetaespiralWonka:3,
+        Caramelodehuevodepajaroazul:4,
+        Rompemuelaseterno:5,
+        Chicledecenadetresplatos:6,
+        Caramelodurodevidriera:7,
+        "Barradeliciadecrema,malvaviscoyfudgeWonka":8,
+        BarrasorpresadechocolatedenuecesWonka:9,
+        Hierbacomestible:10
 
     }
 
@@ -157,7 +159,7 @@ async function submitOrder() {
     }
 
  
-    alert(totalPrice)
+   
 
 
     // Construir el objeto de pedido
@@ -199,12 +201,12 @@ async function submitOrder() {
         console.error("Error al enviar el pedido:", error);
         alert("Hubo un error al enviar el pedido. Por favor, revise la consola para más detalles.");
     }
-    
-    getLatestOrder()
+
+   
 }
 
 
-async function getLatestOrder() {
+async function getLatestOrder(){
     try {
         // Realizar la solicitud GET al servidor mediante la API
         var response = await fetch('/api/ventas/latestOrder', {
@@ -217,8 +219,9 @@ async function getLatestOrder() {
         if (response.ok) {
             // Obtener la respuesta en formato JSON
             var latestOrder = await response.json();
+            console.log(typeof(latestOrder))
             console.log(latestOrder)
-            return latestOrder;
+            
             
            
             
@@ -231,5 +234,6 @@ async function getLatestOrder() {
         console.error("Error al obtener la última orden:", error);
         alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
     }
+
 }
 
