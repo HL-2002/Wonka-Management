@@ -3,6 +3,7 @@ import client from './model.js'
 
 const router = express.Router()
 
+// Obtener todos los Almacenes
 router.get('/warehouse', async (req, res) => {
   try {
     const { rows: warehouse } = await client.execute({ sql: 'SELECT * FROM WAREHOUSE' })
@@ -13,6 +14,7 @@ router.get('/warehouse', async (req, res) => {
   }
 })
 
+// Obtener todos los productos
 router.get('/products', async (req, res) => {
   try {
     const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS' })
@@ -23,6 +25,7 @@ router.get('/products', async (req, res) => {
   }
 })
 
+// Obtener todas las categorías
 router.get('/category', async (req, res) => {
   try {
     const { rows: category } = await client.execute({ sql: 'SELECT * FROM CATEGORY' })
@@ -33,6 +36,7 @@ router.get('/category', async (req, res) => {
   }
 })
 
+// Crear un nuevo producto
 router.post('/new/product', async (req, res) => {
   const { description, categoryId, ref, cost, pre, stock } = req.body
 
@@ -51,6 +55,7 @@ router.post('/new/product', async (req, res) => {
   }
 })
 
+// Actualizar el stock de un producto
 router.patch('/set/product/stock', async (req, res) => {
   const { id, sum, units } = req.body
   let product
@@ -59,15 +64,17 @@ router.patch('/set/product/stock', async (req, res) => {
   try {
     const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE id = ?', args: [id] })
     product = products[0]
-    console.log(products[0],'aaa')
+    console.log(products[0], 'aaa')
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
   }
+
   if (sum == '1') {
     stock = parseInt(product.stock) + parseInt(units)
   } else {
     stock = parseInt(product.stock) - parseInt(units)
   }
+
   try {
     await client.execute({ sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?', args: [stock, id] })
     res.status(201).end()
@@ -77,6 +84,7 @@ router.patch('/set/product/stock', async (req, res) => {
   }
 })
 
+// Actualizar la información de un producto
 router.patch('/set/product/:id', async (req, res) => {
   const { id } = req.params
   const { description, categoryId, cost, pre } = req.body
@@ -93,6 +101,7 @@ router.patch('/set/product/:id', async (req, res) => {
   }
 })
 
+// Crear una nueva categoría
 router.post('/new/category', async (req, res) => {
   const description = req.body
   try {
@@ -104,6 +113,7 @@ router.post('/new/category', async (req, res) => {
   }
 })
 
+// Actualizar la información de una categoría
 router.patch('/set/category/:id', async (req, res) => {
   const { id } = req.params
   const { description } = req.body
@@ -116,6 +126,7 @@ router.patch('/set/category/:id', async (req, res) => {
   }
 })
 
+// Crear un nuevo almacén
 router.post('/new/warehouse', async (req, res) => {
   const description = req.body
   try {
@@ -127,6 +138,7 @@ router.post('/new/warehouse', async (req, res) => {
   }
 })
 
+// Actualizar la información de un almacén
 router.patch('/set/warehouse/:id', async (req, res) => {
   const { id } = req.params
   const { description } = req.body
@@ -139,6 +151,7 @@ router.patch('/set/warehouse/:id', async (req, res) => {
   }
 })
 
+// Obtener un producto por ID
 router.get('/products/:id', async (req, res) => {
   const { id } = req.params
   try {
@@ -150,6 +163,7 @@ router.get('/products/:id', async (req, res) => {
   }
 })
 
+// Eliminar un producto por ID
 router.delete('/products/delete/:id', async (req, res) => {
   const { id } = req.params
   try {
@@ -161,6 +175,7 @@ router.delete('/products/delete/:id', async (req, res) => {
   }
 })
 
+// Obtener un almacén por ID
 router.get('/warehouse/:id', async (req, res) => {
   const { id } = req.params
   try {
@@ -172,6 +187,7 @@ router.get('/warehouse/:id', async (req, res) => {
   }
 })
 
+// Obtener una categoría por ID
 router.get('/category/:id', async (req, res) => {
   const { id } = req.params
   try {

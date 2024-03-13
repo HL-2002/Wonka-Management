@@ -47,6 +47,11 @@ h1 {
   margin: auto;
 }
 
+.btn-open:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
+
 .menu button {
   background-color: rgb(52, 0, 95);
   border: none;
