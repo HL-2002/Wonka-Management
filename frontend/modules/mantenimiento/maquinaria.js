@@ -231,7 +231,7 @@ releaseForm.addEventListener('submit', async (e) => {
         if (machinesSelected.length > 0) {
             // Liberar máquinas seleccionadas
             machinesSelected.forEach(async (machine) => {
-                const state = machine.state === "notificada" ? "disponible" : "notificada" 
+                const state = machine.state === "notificada" ?  "notificada" : "disponible" 
                 console.log(state)
                 const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
@@ -302,7 +302,7 @@ assignForm.addEventListener('submit', async (e) => {
         if (machinesSelected.length > 0) {
             // Asignar máquinas seleccionadas
             machinesSelected.forEach(async (machine) => {
-                const state = machine.state === "notificada" ? "uso" : "notificada"
+                const state = machine.state === "notificada" ? "notificada" : "uso" 
                 const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
                     method: 'PATCH',
