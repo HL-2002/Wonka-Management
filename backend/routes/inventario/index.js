@@ -58,28 +58,22 @@ router.post('/new/product', async (req, res) => {
 // Actualizar el stock de un producto
 router.patch('/set/product/stock', async (req, res) => {
   const { id, sum, units } = req.body
-  let product
-  let stock
 
   try {
-    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE id = ?', args: [id] })
-    product = products[0]
-    console.log(products[0], 'aaa')
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
+    const { rows: products } = await client.execute({ sql: 'SELECT stock FROM PRODUCTS WHERE id = ?', args: [id] })
 
-  if (sum == '1') {
-    stock = parseInt(product.stock) + parseInt(units)
-  } else {
-    stock = parseInt(product.stock) - parseInt(units)
-  }
+    if (products.length === 0) {
+      return res.status(404).json({ error: 'Product not found' })
+    }
 
-  try {
-    await client.execute({ sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?', args: [stock, id] })
+    const currentStock = products[0].stock
+    const newStock = sum === 1 ? currentStock + parseInt(units) : currentStock - parseInt(units)
+    console.log(req.body, 'AQUI')
+
+    await client.execute({ sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?', args: [newStock, id] })
     res.status(201).end()
   } catch (error) {
-    console.log(error)
+    console.error(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
@@ -88,7 +82,7 @@ router.patch('/set/product/stock', async (req, res) => {
 router.patch('/set/product/:id', async (req, res) => {
   const { id } = req.params
   const { description, categoryId, cost, pre } = req.body
-  const category = parseInt(categoryId)
+  const category = categoryId
   const costo = cost || null
   const price = pre || null
 
