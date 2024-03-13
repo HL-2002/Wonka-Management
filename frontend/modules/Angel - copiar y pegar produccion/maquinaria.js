@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Obtener máquinas del servidor
 async function getMachines () {
-    const response = await fetch('http://localhost:3000/api/mantenimiento/')
+    const response = await fetch('/api/mantenimiento/')
     return response.json()
 }
 
@@ -130,7 +130,7 @@ notifyForm.addEventListener('submit', async (e) => {
     if (validId) {
         // Notificación de irregularidad
         if (state === "irregularidad") {
-            const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${idInput.value}`, 
+            const response = await fetch(`/api/mantenimiento/machine/${idInput.value}`, 
             {
                 method: 'PATCH',
                 headers: {
@@ -159,7 +159,7 @@ notifyForm.addEventListener('submit', async (e) => {
         }
         // Notificación de defecto
         else if (state === "defectuosa") {
-            const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${idInput.value}`,
+            const response = await fetch(`/api/mantenimiento/machine/${idInput.value}`,
             {
                 method: 'PATCH',
                 headers: {
@@ -233,7 +233,7 @@ releaseForm.addEventListener('submit', async (e) => {
             machinesSelected.forEach(async (machine) => {
                 const state = machine.state === "notificada" ? "disponible" : "notificada" 
                 console.log(state)
-                const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${machine.id}`, 
+                const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
                     method: 'PATCH',
                     headers: {
@@ -303,7 +303,7 @@ assignForm.addEventListener('submit', async (e) => {
             // Asignar máquinas seleccionadas
             machinesSelected.forEach(async (machine) => {
                 const state = machine.state === "notificada" ? "uso" : "notificada"
-                const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${machine.id}`, 
+                const response = await fetch(`/api/mantenimiento/machine/${machine.id}`, 
                 {
                     method: 'PATCH',
                     headers: {
@@ -340,3 +340,26 @@ assignForm.addEventListener('submit', async (e) => {
 })
 
 
+
+// –––––––––––––––– FUNCIONALIDAD DE DIALOG PARA BOTONES ––––––––––––––––
+// obtener los botones de abrir y cerrar
+const btns = document.querySelectorAll('.btn-open')
+const btnsClose = document.querySelectorAll('.close-button')
+
+// recorrer los botones de abrir y agregar el evento click
+btns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const dialog = document.getElementById(btn.value)
+    dialog.classList.remove('close')
+    dialog.classList.add('open')
+    dialog.showModal()
+  })
+})
+
+const dialogs = document.querySelectorAll('.dialog')
+
+dialogs.forEach((dialog) => {
+  dialog.addEventListener('cancel', (e) => {
+    e.preventDefault()
+  })
+})

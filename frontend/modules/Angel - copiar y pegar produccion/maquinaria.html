@@ -1,0 +1,95 @@
+<!-- Sección -->
+<section class="section">
+    <h2>
+        Gestión de Maquinaria
+    </h2>
+
+    <dialog id="asign" class="dialog">
+        <form class="form" id="assign-form">
+            <div class="dialog-head">
+                <button class="close-button">x</button>
+                <h2 class="form-element" id="form-title">Asignar maquinaria</h2>
+            </div>
+
+            <div>
+                <label class="form-element" for="production-line">Línea de producción:</label>
+                <select id="assign-line">
+                    <option value=""> Seleccione la línea</option>
+                </select> <br> <br>
+                <label class="form-element">Selecciona una máquina</label>
+                <select class="form-element" id="assign-type">
+                    <option value=""> Seleccione un tipo</option>
+                    <option value="chocolatera">Chocolatera</option>
+                    <option value="caramelizadora">Caramelizadora</option>
+                    <option value="caramelera">Caramelera</option>
+                    <option value="chiclera">Chiclera</option>
+                </select>
+            </div>
+            <div class="id-grid">
+                <div class="id-container" id="assign-display">
+                </div>
+            </div>
+            <input type="submit" value="Asignar" class="form-element">
+        </form>
+    </dialog>
+
+
+    <dialog id="release" class="dialog">
+        <form class="form" id="release-form">
+            <div class="dialog-head">
+                <button class="close-button">x</button>
+                <h2 class="form-element" id="form-title">Liberar maquinaria</h2>
+            </div>
+
+            <div>
+                <label for="release-line" class="form-element">Línea de producción:</label>
+                <select id="release-line">
+                    <option value=""> Seleccione la línea</option>
+                </select>
+            </div>
+            <div class="id-grid">
+                <div class="id-container" id="release-display">
+                </div>
+            </div>
+            <input type="submit" value="Liberar" class="form-element">
+        </form>
+    </dialog>
+
+
+    <dialog id="notify" class="dialog">
+        <form class="form" id="notify-form">
+            <div class="dialog-head">
+                <button class="close-button">x</button>
+                <h2 class="form-element" id="form-title">Notificar maquinaria</h2>
+            </div>
+            <div>
+                <label for="id-number" class="form-element">Número de Id</label>
+                <input type="number" placeholder="inserte id" id="id-number" min="1"> <br>
+                <br>
+                <label for="machine-state" class="form-element">Estado</label>
+                <select id="machine-state">
+                    <option value=""> Seleccione el estado</option>
+                    <option value="irregularidad">irregularidad</option>
+                    <option value="defectuosa">defectuosa</option>
+                </select>
+            </div>
+            <input type="submit" value="Notificar" class="form-element">
+        </form>
+    </dialog>
+
+    <h3 class="mantenimiento-h3"> Mantenimientos próximos </h3>
+    <div id="mantenimientos">
+    </div>
+
+    <h3 class="mantenimiento-h3"> Opciones</h3>
+    <div class="btn-dialogs">
+        <button value="asign" class="btn-open">Asignar</button>
+        <button value="release" class="btn-open">Liberar</button>
+        <button value="notify" class="btn-open">Notificar</button>
+
+    </div>
+
+</section>
+
+<!-- Scripts, DESPUES DEL BODY -->
+<script src="maquinaria.js"></script>

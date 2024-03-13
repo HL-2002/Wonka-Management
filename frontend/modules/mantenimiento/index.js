@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Obtener el array de las máquinas
 async function getMachines () {
-  const response = await fetch('http://localhost:3000/api/mantenimiento/')
+  const response = await fetch('/api/mantenimiento/')
   return response.json()
 }
 
@@ -291,7 +291,7 @@ addForm.addEventListener('submit', async (e) => {
 
   // Crear máquina con tipo dado en la base de datos
   if (!repeated) {
-    const response = await fetch('http://localhost:3000/api/mantenimiento/machine/', {
+    const response = await fetch('/api/mantenimiento/machine/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -347,7 +347,7 @@ deleteForm.addEventListener('submit', async (e) => {
 
   if (valid) {
     // Eliminar máquina con id dado en la base de datos
-    const response = await fetch(`http://localhost:3000/api/mantenimiento/machine/${id}`, {
+    const response = await fetch(`/api/mantenimiento/machine/${id}`, {
       method: 'DELETE'
     })
      
@@ -415,7 +415,7 @@ prevForm.addEventListener('submit', async (e) => {
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
   dateAvailability = dateAvailability.toISOString().split('T')[0]
 
-  const response = await fetch('http://localhost:3000/api/mantenimiento/', {
+  const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -477,7 +477,7 @@ predForm.addEventListener('submit', async (e) => {
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
   dateAvailability = dateAvailability.toISOString().split('T')[0]
 
-  const response = await fetch('http://localhost:3000/api/mantenimiento/', {
+  const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -538,7 +538,7 @@ corrForm.addEventListener('submit', async (e) => {
   dateAvailability = dateAvailability.toISOString().split('T')[0]
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
 
-  const response = await fetch('http://localhost:3000/api/mantenimiento/', {
+  const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -631,7 +631,7 @@ mPlanForm.addEventListener('submit', async (e) => {
 
   if (mPlanOption === 'delete') {
     // Borrar mantenimiento del servidor
-    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+    const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'DELETE'
     })
 
@@ -675,7 +675,7 @@ mPlanForm.addEventListener('submit', async (e) => {
       dateMaintenance = dateMaintenance.toISOString().split('T')[0]
       dateAvailability = dateAvailability.toISOString().split('T')[0]
 
-      const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+      const response = await fetch(`/api/mantenimiento/${id}`, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
@@ -768,7 +768,7 @@ mManForm.addEventListener('submit', async (e) => {
 
   if (mManOption === 'delete') {
     // Borrar mantenimiento del servidor
-    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+    const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'DELETE'
     })
 
@@ -800,7 +800,7 @@ mManForm.addEventListener('submit', async (e) => {
     dateAvailability = dateAvailability.toISOString().split('T')[0]
 
     // Actualizar el mantenimiento en el servidor
-    const response = await fetch(`http://localhost:3000/api/mantenimiento/${id}`, {
+    const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -838,14 +838,6 @@ btns.forEach((btn) => {
     if (btn.value === 'search') {
       searchMachine()
     }
-  })
-})
-
-const dialogs = document.querySelectorAll('.dialog')
-
-dialogs.forEach((dialog) => {
-  dialog.addEventListener('cancel', (e) => {
-    e.preventDefault()
   })
 })
 
