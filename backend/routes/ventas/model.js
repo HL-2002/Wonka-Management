@@ -28,7 +28,7 @@ await client.execute(`
         phoneNumber TEXT NOT NULL,
         time TEXT NOT NULL,
         status TEXT DEFAULT 'pending',
-        totalPrice REAL NOT NULL DEFAULT 0
+        totalPriceOrder REAL NOT NULL DEFAULT 0
     )
 `);
 
@@ -37,8 +37,9 @@ await client.execute(`
         productId Integer NOT NULL,
         orderId INTEGER NOT NULL,
         productName TEXT NOT NULL,
-        quantity INTEGER NOT NULL,
-        price  REAL NOT NULL,
+        productQuantity INTEGER NOT NULL,
+        productPrice  REAL NOT NULL,
+        totalPrice REAL NOT NULL,
         FOREIGN KEY (orderId) REFERENCES OrderTable(id)
     )
 `);
