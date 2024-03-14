@@ -108,14 +108,14 @@ h1 {
     color: #ececec;
 }
 .EnElMedio{
-    transform: translateX(400px);
+    transform: translateX(320px);
     
 }
 .EnElMedio2{
-    transform: translateX(418px);
+    transform: translateX(338px);
 }
 .EnElMedio3{
-    transform: translate(337px);
+    transform: translate(257px);
 }
 .Formulario input{
     background-color: transparent;
@@ -123,14 +123,15 @@ h1 {
     color:white;
     pointer-events: none;
     border: transparent;
+    width: 350px;
 }
 
 #RifEmpresa{
-    transform: translatex(410px);
+    transform: translatex(323px);
 }
 #NumberEmpresa{
-    transform: translateX(429px);
+    transform: translateX(340px);
 }
 #StatusEmpresa{
-    transform: translateX(345px);
+    transform: translateX(259px);
 }
