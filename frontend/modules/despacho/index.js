@@ -78,8 +78,8 @@ async function orderporId(id) {
           
         } else {
             // Error al obtener la �ltima orden
-            console.error("Hubo un error al obtener la orden. C�digo de estado:", response.status);
-            alert("Hubo un error al obtener la orden. Por favor, int�ntelo de nuevo m�s tarde.");
+            console.error("Hubo un error al obtener la orden. Código de estado:", response.status);
+            alert("Hubo un error al obtener la orden. Por favor, inténtelo de nuevo más tarde.");
             document.getElementById('facturaexistente').style.display = 'none'
             document.getElementById('errornofactura').style.display = 'block'
         }
@@ -87,7 +87,7 @@ async function orderporId(id) {
           
     } catch (error) {
         console.error("Error al obtener la orden:", error);
-        alert("Hubo un error al obtener la orden. Por favor, revise la consola para m�s detalles.");
+        alert("Hubo un error al obtener la orden. Por favor, revise la consola para más detalles.");
         document.getElementById('facturaexistente').style.display = 'none'
         document.getElementById('errornofactura').style.display = 'block'
     }

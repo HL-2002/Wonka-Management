@@ -135,3 +135,6 @@ h1 {
 #StatusEmpresa{
     transform: translateX(259px);
 }
+#labelprecio{
+    margin-right: -10px;
+}
