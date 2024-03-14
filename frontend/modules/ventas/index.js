@@ -1,3 +1,38 @@
+document.addEventListener('DOMContentLoaded', function() {
+    getProducts();
+});
+
+async function getProducts() {
+    try {
+        const response = await fetch('/api/inventario/products');
+        const products = await response.json();
+        
+        // Filtrar los productos según el atributo categoryId sea igual a 2
+        const filteredProducts = products.filter(product => product.categoryId === 1);
+        
+        // Llamar a la función que agrega los productos filtrados al select
+        populateSelect(filteredProducts);
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+    }
+}
+
+function populateSelect(products) {
+    const select = document.getElementById('why');
+    
+    // Limpiar cualquier opción previa
+    select.innerHTML = '';
+    
+    // Agregar las nuevas opciones
+    products.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product.id;
+        option.textContent = product.description; // Aquí se usa el atributo 'description'
+        select.appendChild(option);
+    });
+}
+
+
 function addProduct() {
     var select = document.getElementById("why");
     var productName = select.options[select.selectedIndex].text;
@@ -107,7 +142,7 @@ async function submitOrder() {
         return;
     }
 
-    if (customerId.length > 8){
+    if (customerId.length > 10){
         alert ("Ingrese un rif valido")
         document.getElementById("customerId").value = "";
 
@@ -120,7 +155,7 @@ async function submitOrder() {
          return false;
     }
 
-    let validNumber = ["0424","0242","0414","0412","0416"]
+    
 
     if (phoneNumber.length != 11 && validNumber.includes(phoneNumber.slice(0,4))){
         alert("Ingresa un numero telefonico valido")
