@@ -6,7 +6,7 @@ const router = express.Router()
 // Obtener todos los Almacenes
 router.get('/warehouse', async (req, res) => {
   try {
-    const { rows: warehouse } = await client.execute({ sql: 'SELECT * FROM WAREHOUSE' })
+    const { rows: warehouse } = await client.execute('SELECT * FROM WAREHOUSE')
     res.json(warehouse)
   } catch (error) {
     console.log(error)
@@ -17,16 +17,14 @@ router.get('/warehouse', async (req, res) => {
 // Obtener todos los productos
 router.get('/products', async (req, res) => {
   try {
-    // Consultar todos los productos desde la base de datos
-    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE categoryId = ? or categoryId = ?', args: [1, 2] })
-    // Enviar la lista de productos como respuesta
+    const { rows: products } = await client.execute('SELECT * FROM PRODUCTS')
     res.json(products)
   } catch (error) {
-    // Si ocurre un error, loguearlo y enviar una respuesta de error al cliente
-    console.error('Error al obtener productos:', error)
+    console.log(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
 
 // Crear un nuevo producto
 router.post('/new/product', async (req, res) => {
