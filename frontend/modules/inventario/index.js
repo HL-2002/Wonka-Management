@@ -225,7 +225,8 @@ async function fillModal (id) {
   const lstProducts = await getProducts()
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
   const lstCategory = await getCategory()
-  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.id)) : lstCategory[0]
+
+  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[0]
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
@@ -500,6 +501,7 @@ async function getCategory (params) {
   return await response.json()
 }
 async function insertProducts (params) {
+  console.log(params, 'AAAA')
   try {
     const response = await fetch('/api/inventario/new/product', {
       method: 'POST',
