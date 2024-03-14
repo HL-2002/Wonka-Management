@@ -6,7 +6,16 @@
 //id = mM# es maquinas en mantenimiento **preguntar a mantenimiento si tienen esto
 
 // # es el numero de la linea de produccion de 1-10
-
+/* ID DE MATERIA PRIMA
+    11 CACAO
+    12 CHOCOLATE NEGRO
+    13 CHOCOLATE CON LECHE
+    14 MANZANA
+    15 AZUCAR
+    16 JARABE DE MAIZ
+    17 CHOCOLATE NEGRO
+    18 TAZA de ALMENDRAS
+    */
 /* ID de los productos por numero 
    1 Wonka bar: Barra Wonka
    2 Candied apples: Manzanas acarameladas
@@ -22,7 +31,61 @@
 /* que hay que hacer?
     4) terminar de decir a mantenimineto de implementar su modulo en los botones (lo haran ellos)
 */
+const recetas = {
+    'Wonka Bar': [
+        { ingrediente: 'cacao', cantidad: 50, id: 11},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 }
+    ],
+    'Manzanas acarameladas': [
+        { ingrediente: 'manzana', cantidad: 1, id: 14},
+        { ingrediente: 'azucar', cantidad: 300, id: 15},
+        { ingrediente: 'mantequilla', cantidad: 100, id: 19}
+    ],
+    'Chupeta espiral Wonka': [
+        { ingrediente: 'jarabe de maiz', cantidad: 115, id: 16},
+        { ingrediente: 'azucar', cantidad: 340, id: 15 }
+    ],
+    'Barra sorpresa de chocolate de nueces Wonka': [
+        { ingrediente: 'cacao', cantidad: 50, id: 11},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12},
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13},
+        { ingrediente: 'taza de almendras', cantidad: 50, id: 18}
+    ]
+}
 
+// Función para calcular los ingredientes totales
+async function calcularIngredientesTotales(productos) {
+    const ingredientesTotales = {}
+
+    productos.forEach((producto) => {
+        const { productName, productQuantity } = producto
+        const receta = recetas[productName]
+
+        receta.forEach((ingrediente) => {
+            const { ingrediente: nombre, cantidad, id} = ingrediente
+            if (!ingredientesTotales[nombre]) {
+                ingredientesTotales[nombre] = 0
+            }
+            ingredientesTotales[nombre] += cantidad * productQuantity
+                const removeProduct = {
+                    id: id,
+                    sum: '0',
+                    units: ingredientesTotales[nombre]
+                };
+                console.log(removeProduct)
+                insertStock(removeProduct);
+        })
+    })
+
+    const resultado = Object.entries(ingredientesTotales).map(([nombre, cantidad, id]) => ({
+        ingrediente: nombre,
+        cantidad,
+        id
+    }))
+
+    return resultado
+}
 //LLAMANDO A LA API EL ORDERID CUANDO SE DA CLICK A BOTON "ENVIAR"
 async function Verificar() {
     const codigoIngresado = document.getElementById('factura').value
@@ -57,14 +120,7 @@ async function Verificar() {
         alert("Hubo un error al obtener la �ltima orden. Por favor, revise la consola para m�s detalles.");
     }
 }
-async function getProducts2() {
-    try {
-        
-        
-    } catch (error) {
-        console.error('Error al obtener productos:', error);
-    }
-}
+let m = 0
 async function crearHTML() {
     try {
         const orders = await Verificar() // Espera a que se resuelva la promesa
@@ -83,6 +139,7 @@ async function crearHTML() {
         total.innerHTML = 'Numero total'
         let total_productos = 0
         let n = 1
+        m = 0
         console.log(orders)
         filteredProducts.forEach(product => {
             seccionMantenimiento.innerHTML += `
@@ -98,14 +155,14 @@ async function crearHTML() {
                             </tr>
                     <tr>
                         <th id="pp${n}">Productos por producir: </th>
-                        <th id="mU1">Maquinas en uso: </th>
-                        <th id="mM1">Maquinas en mantenimiento: </th>
-                        <th id="pf1">Productos fabricados: 0</th>
+                        <th id="mU">Maquinas en uso: ${machineCount(n)}</th>
+                        <th id="pf${n}">Productos fabricados: 0</th>
                     </tr>
                         </thead>
                     </table>
         `
             n++
+            m++
         })
         n = 1
         orders.products.forEach(producto => {
@@ -133,16 +190,7 @@ async function getProducts() {
         // Llamar a la funci�n que agrega los productos filtrados al select
         console.log(filteredProducts)
         crearHTML(filteredProducts);
-        filteredProducts.forEach((producto) => {
-            const { productId, productQuantity } = producto
-            const removeProduct = {
-                id: productId,
-                sum: '0',
-                units: productQuantity
-            };
-            console.log(removeProduct)
-            insertStock(removeProduct);
-        });
+        
 
     } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -156,19 +204,14 @@ async function Producir() {
     orders = await Verificar()
     
     console.log('Maquinaria:', orders)
-    const productos = orders.products
-    productos.forEach((producto) => {
-        const { productId, productQuantity } = producto
-        const removeProduct = {
-            id: productId,
-            sum: 1,
-            units: productQuantity
-        };
-        console.log(removeProduct)
-        insertStock(removeProduct);
-    });
+    n = 1
+    orders.products.forEach(producto => {
+        const table = document.getElementById(`pf${producto.productId}`);
+        table.innerHTML += `${producto.productQuantity}`
 
-    
+        n++
+    })
+    calcularIngredientesTotales(orders.products)
 }
 async function insertStock(params) {
     try {
@@ -189,7 +232,13 @@ async function insertStock(params) {
         // console.error('Error de red:', error)
     }
 }
-
+function generateNumberList(m) {
+    let numberList = [];
+    for (let i = 1; i <= m; i++) {
+        numberList.push(i);
+    }
+    return numberList;
+}
 
 
 
@@ -198,7 +247,6 @@ async function insertStock(params) {
 // COMIENZO DE MAQUINAS ************************
 // ���������������� CARGAR M�QUINAS, MANTENIMIENTOS Y L�NEAS DISPONIBLES ����������������
 let machines = []
-let lineas = []
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Cargar m�quinas
@@ -207,13 +255,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Cargar mantenimientos
     updateMaintenance()
-
+    
+    let lineas = [1,2,3,4,5,6,7,8,9,10];
     // TODO ANGEL: Cargar l�neas disponibles
     // Cargar l�neas disponibles
     // lineas = await getLines().then((json) => { return json.lines })
     // Esto es para las pruebas
-    lineas = [1, 2, 3]
-    // Actualizar las l�neas disponibles en los formularios de asignaci�n y liberaci�n
+ 
+    // Actualizar las líneas disponibles en los formularios de asignación y liberación
     const lineasRelease = document.getElementById("release-line")
     const lineasAssign = document.getElementById("assign-line")
     updateLines(lineas, lineasRelease, lineasAssign)
@@ -290,9 +339,9 @@ function strToDate(dateString) {
 }
 
 
-// ����������������� CARGAR CANTIDAD DE M�QUINAS �����������������
-function machineCount(line, type) {
-    const machinesLine = machines.filter((machine) => machine.line == line && machine.type == type)
+// ————————————————— CARGAR CANTIDAD DE MÁQUINAS —————————————————
+function machineCount(line) {
+    const machinesLine = machines.filter((machine) => machine.line == line)
     return machinesLine.length
 }
 

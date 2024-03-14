@@ -6,7 +6,7 @@ const isVisible = 'is-visible'
 -------------------- */
 document.addEventListener('DOMContentLoaded', function () {
   // Lógica para acceder a productTable y llamar a obtenerDatosGenerales
-  obtenerDatosGenerales()
+  // obtenerDatosGenerales()
 })
 
 for (const el of openEls) {
@@ -125,7 +125,6 @@ async function addItem (params) {
   const options = lstCategory.map((product, index) => `
         <option value="${product.id}">${product.description}</option>
     `)
-  console.log(lstCategory)
 
   const selectElement = document.getElementById('categoria')
   selectElement.innerHTML = options.join('')
@@ -324,6 +323,7 @@ async function fillModalW (id) {
   document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
+// eslint-disable-next-line no-unused-vars
 async function addCategory (params) {
   const codValue = document.getElementById('codigo')
   const desValue = document.getElementById('descripcion')
@@ -331,13 +331,12 @@ async function addCategory (params) {
 
   codValue.value = ''
   desValue.value = ''
-  
   desValue.readOnly = false
   save.disabled = false
   save.style.backgroundColor = 'initial'
-
 }
 
+// eslint-disable-next-line no-unused-vars
 async function saveCategory () {
   const codValue = document.getElementById('codigo').value
   const desValue = document.getElementById('descripcion').value
@@ -346,7 +345,6 @@ async function saveCategory () {
     id: codValue,
     description: desValue
   }
-  console.log(category)
   if (codValue === '') {
     await insertCategory(category)
   } else {
@@ -355,21 +353,20 @@ async function saveCategory () {
   await fillModalC()
 }
 
+// eslint-disable-next-line no-unused-vars
 async function modCategory (id, des) {
-  
   const desValue = document.getElementById('descripcion')
   const save = document.getElementById('saveButtonC')
   save.disabled = false
   save.style.backgroundColor = 'initial'
-  
   desValue.readOnly = false
 }
 
+// eslint-disable-next-line no-unused-vars
 async function deleteCategory (id) {
   await removeCategory(id)
   await fillModalC()
 }
-
 
 /* //Category
 -------------------- */
@@ -506,7 +503,6 @@ async function getCategory (params) {
   return await response.json()
 }
 async function insertProducts (params) {
-  console.log(params, 'AAAA')
   try {
     const response = await fetch('/api/inventario/new/product', {
       method: 'POST',
@@ -582,7 +578,7 @@ async function removeProducts (id) {
   }
 }
 
-//Create category 
+// Create category
 async function insertCategory (params) {
   try {
     const response = await fetch('/api/inventario/new/category', {
@@ -603,7 +599,7 @@ async function insertCategory (params) {
   }
 }
 
-//Update category
+// Update category
 
 async function updateCategory (params) {
   try {
@@ -627,7 +623,6 @@ async function updateCategory (params) {
 
 async function removeCategory (id) {
   try {
-    console.log(id)
     const response = await fetch(`/api/inventario/category/delete/${id}`, {
       method: 'DELETE'
     })
@@ -635,6 +630,7 @@ async function removeCategory (id) {
     if (response.ok) {
       await response.json()
     } else {
+      // eslint-disable-next-line no-undef
       alert('Existen productos asociado a esta categoria')
       console.error('Error al insertar el categoria:', response.status)
     }
@@ -646,6 +642,7 @@ async function removeCategory (id) {
 // REPORTES
 
 // Nueva funcion para obtener los datos de productos, almacenes, categorias y recetas
+// eslint-disable-next-line no-unused-vars
 async function obtenerDatosGenerales () {
   const [productos, almacenes, categorias] = await Promise.all([
     fetch('/api/inventario/products'),
@@ -658,12 +655,11 @@ async function obtenerDatosGenerales () {
     almacenes.json(),
     categorias.json()
   ])
-  console.log(await datos)
   mostrarDatosGeneralesEnTabla(await datos)
 }
 function mostrarDatosGeneralesEnTabla(datos) {
   const tabla = document.getElementById('productTable')
-  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'
+  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'4
   let htmlGeneral = ''
 
   // Mostrar productos
@@ -671,7 +667,7 @@ function mostrarDatosGeneralesEnTabla(datos) {
   for (const producto of datos[0]) {
     htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
   }
-
+  tabla.innerHTML = ''
   table.innerHTML = htmlGeneral
   tabla.appendChild(table) // Corrección: Agregué la tabla al elemento tabla
 }
