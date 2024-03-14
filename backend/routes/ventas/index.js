@@ -16,14 +16,11 @@ ventasRouter.post('/orders', async (req, res) => {
       args: [name, customerId, email, phoneNumber, time, totalPriceOrder]
     })
 
-    const all = await client.execute('SELECT * FROM OrderTable')
-    console.log(all.rows)
     const result = await client.execute(
-      'SELECT max(id) FROM OrderTable'
+      'SELECT iid FROM OrderTable ORDER BY id DESC LIMIT 1'
     )
 
-    const maxId = result.rows[0]['max(id)']
-
+    const maxId = result.rows[0].id
     // Usar el valor de maxId como necesites
     console.log('El máximo ID en la tabla OrderTable es:', maxId)
 
