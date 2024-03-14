@@ -25,6 +25,17 @@ router.get('/products', async (req, res) => {
   }
 })
 
+// Obtener todos los productos
+router.get('/category', async (req, res) => {
+  try {
+    const { rows: products } = await client.execute('SELECT * FROM CATEGORY')
+    res.json(products)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 // Crear un nuevo producto
 router.post('/new/product', async (req, res) => {
