@@ -59,6 +59,7 @@ h1 {
     display: block; /* Cambiar de "flex" a "block" para que se alinee a la derecha */
     float: right;
     margin-right: 15%;
+    margin-bottom: 60px;
     padding: 0;
     width: 200px; /* Ajusta el ancho de la imagen según tus necesidades */
     height: auto; /* Ajusta la altura de la imagen según tus necesidades */
