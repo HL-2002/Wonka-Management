@@ -358,8 +358,27 @@ btns.forEach((btn) => {
 
 const dialogs = document.querySelectorAll('.dialog')
 
-dialogs.forEach((dialog) => {
-  dialog.addEventListener('cancel', (e) => {
-    e.preventDefault()
+
+btnsClose.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault()
+      const dialog = document.getElementById(e.target.parentElement.parentElement.parentElement.id)
+      dialog.classList.remove('open')
+      dialog.classList.add('close')
+  
+      const close = () => {
+        dialog.close()
+        dialog.removeEventListener('animationend', close)
+      }
+  
+      dialog.addEventListener('animationend', close)
+    })
+  }
+  )
+
+  dialogs.forEach((dialog) => {
+    dialog.addEventListener('cancel', (e) => {
+      e.preventDefault()
+    })
   })
-})
+  

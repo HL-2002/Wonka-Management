@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../header.css">
     <link rel="stylesheet" href="../../reset.css">
 </head>
+
 <body>
     <header class="header">
         <nav>
@@ -20,15 +21,13 @@
                 <li><a href="#"><img src="../../public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
                 <li>
                     <a href="/modules/inventario/">
-                        <img src="../../public/icono_3.webp"
-                             alt="icono de inventario">Inventario
+                        <img src="../../public/icono_3.webp" alt="icono de inventario">Inventario
                     </a>
                 </li>
                 <li><a href="#"><img src="../../public/icono_4.webp" alt="icono Produccion">Producción</a></li>
                 <li>
                     <a href="/modules/mantenimiento">
-                        <img src="../../public/icono_5.webp"
-                             alt="icono de Mantenimiento">Mantenimiento
+                        <img src="../../public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento
                     </a>
                 </li>
                 <li><a href="#"><img src="../../public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
@@ -42,176 +41,136 @@
             <table class="center">
                 <thead>
                     <tr>
-                        <th rowspan="2"><h3>N# 1</h3></th>
-                        <th colspan="4"><h2>Barra Wonka</h2></th>
-                        <th><button id="N1n">Notificar</button></th>
+                        <th>
+                            <h2>NUMERO DE FACTURA</h2>
+                        </th>
                     </tr>
                     <tr>
-                        <th id="mD1">Maquinas disponibles: </th>
-                        <th id="mU1">Maquinas en uso: </th>
-                        <th id="mM1">Maquinas en mantenimiento: </th>
-                        <th><button id="N1m">Manejo</button></th>
-                        <th><button>Prueba #1</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 2</h3></th>
-                        <th colspan="4"><h2>Manzanas acarameladas</h2></th>
-                        <th><button id="N2n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD2">Maquinas disponibles: </th>
-                        <th id="mU2">Maquinas en uso: </th>
-                        <th id="mM2">Maquinas en mantenimiento: </th>
-                        <th><button id="N2m">Manejo</button></th>
-                        <th><button>Prueba #2</button></th>
+                        <th colspan="2">
+                            <label for="">
+                                <input type="number" placeholder="12345678" id="factura"> <button onclick="crearHTML ()">
+                                    Enviar
+                                </button>
+                            </label>
+                        </th>
                     </tr>
                 </thead>
             </table>
+
+            <div id="tabla_productos">
+
+            </div>
+
             <table class="center">
                 <thead>
                     <tr>
-                        <th rowspan="2"><h3>N# 3</h3></th>
-                        <th colspan="4"><h2>Chupeta espiral Wonka</h2></th>
-                        <th><button id="N3n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD3">Maquinas disponibles: </th>
-                        <th id="mU3">Maquinas en uso: </th>
-                        <th id="mM3">Maquinas en mantenimiento: </th>
-                        <th><button id="N3m">Manejo</button></th>
-                        <th><button>Prueba #3</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 4</h3></th>
-                        <th colspan="4"><h2>Caramelo de huevo de pájaro azul</h2></th>
-                        <th><button id="N4n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD4">Maquinas disponibles: </th>
-                        <th id="mU4">Maquinas en uso: </th>
-                        <th id="mM4">Maquinas en mantenimiento: </th>
-                        <th><button id="N4m">Manejo</button></th>
-                        <th><button>Prueba #4</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 5</h3></th>
-                        <th colspan="4"><h2>Rompemuelas eterno</h2></th>
-                        <th><button>Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD5">Maquinas disponibles: </th>
-                        <th id="mU5">Maquinas en uso: </th>
-                        <th id="mM5">Maquinas en mantenimiento: </th>
-                        <th><button id="N5n">Manejo</button></th>
-                        <th><button>Prueba #5</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 6</h3></th>
-                        <th colspan="4"><h2>Chicle de cena de tres platos</h2></th>
-                        <th><button id="N6n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD6">Maquinas disponibles: </th>
-                        <th id="mU6">Maquinas en uso: </th>
-                        <th id="mM6">Maquinas en mantenimiento: </th>
-                        <th><button id="N6m">Manejo</button></th>
-                        <th><button>Prueba #6</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 7</h3></th>
-                        <th colspan="4"><h2>Caramelo duro de vidriera</h2></th>
-                        <th><button id="N7n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD7">Maquinas disponibles: </th>
-                        <th id="mU7">Maquinas en uso: </th>
-                        <th id="mM7">Maquinas en mantenimiento: </th>
-                        <th><button id="N7m">Manejo</button></th>
-                        <th><button>Prueba #7</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 8</h3></th>
-                        <th colspan="4"><h2>Barra delicia de crema, malvavisco y fudge Wonka</h2></th>
-                        <th><button id="N8n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD8">Maquinas disponibles: </th>
-                        <th id="mU8">Maquinas en uso: </th>
-                        <th id="mM8">Maquinas en mantenimiento: </th>
-                        <th><button id="N8m">Manejo</button></th>
-                        <th><button>Prueba #8</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 9</h3></th>
-                        <th colspan="4"><h2>Barra sorpresa de chocolate de nueces Wonka</h2></th>
-                        <th><button id="N9n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD9">Maquinas disponibles: </th>
-                        <th id="mU9">Maquinas en uso: </th>
-                        <th id="mM9">Maquinas en mantenimiento: </th>
-                        <th><button id="N9m">Manejo</button></th>
-                        <th><button>Prueba #9</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2"><h3>N# 10</h3></th>
-                        <th colspan="4"><h2>Hierba comestible</h2></th>
-                        <th><button id="N10n">Notificar</button></th>
-                    </tr>
-                    <tr>
-                        <th id="mD10">Maquinas disponibles: </th>
-                        <th id="mU10">Maquinas en uso: </th>
-                        <th id="mM10">Maquinas en mantenimiento: </th>
-                        <th><button id="N10m">Manejo</button></th>
-                        <th><button>Prueba #10</button></th>
-                    </tr>
-                </thead>
-            </table>
-            <table class="center">
-                <thead>
-                    <tr>
-                        <th rowspan="2" colspan="6"><h3>Numero de produccion total: </h3></th>
+                        <th rowspan="2" colspan="6">
+                            <h3>Numero de produccion total: </h3>
+                        </th>
                         <th colspan="4" id="NumeroTotal">Numero total</th>
-                        <th><button id="Prueba">Prueba</button></th>
+                        <th><button id="Producir" onclick="Producir()">Producir</button></th>
                     </tr>
                 </thead>
             </table>
     </main>
     </section>
-    <script src="./index.js"></script>
+    <!-- Esto se puede agregar si es posible -->
+
+    <section class="linea-container">
+        <h2>
+            Gestión de Maquinaria
+        </h2>
+
+        <dialog id="asign" class="dialog">
+            <form class="form" id="assign-form">
+                <div class="dialog-head">
+                    <button class="close-button">x</button>
+                    <h2 class="form-element" id="form-title">Asignar maquinaria</h2>
+                </div>
+
+                <div>
+                    <label class="form-element" for="production-line">Línea de producción:</label>
+                    <select id="assign-line">
+                        <option value=""> Seleccione la línea</option>
+                    </select> <br> <br>
+                    <label class="form-element">Selecciona una máquina</label>
+                    <select class="form-element" id="assign-type">
+                        <option value=""> Seleccione un tipo</option>
+                        <option value="chocolatera">Chocolatera</option>
+                        <option value="caramelizadora">Caramelizadora</option>
+                        <option value="caramelera">Caramelera</option>
+                        <option value="chiclera">Chiclera</option>
+                    </select>
+                </div>
+                <div class="id-grid">
+                    <div class="id-container" id="assign-display">
+                    </div>
+                </div>
+                <input type="submit" value="Asignar" class="form-element">
+            </form>
+        </dialog>
+
+
+        <dialog id="release" class="dialog">
+            <form class="form" id="release-form">
+                <div class="dialog-head">
+                    <button class="close-button">x</button>
+                    <h2 class="form-element" id="form-title">Liberar maquinaria</h2>
+                </div>
+
+                <div>
+                    <label for="release-line" class="form-element">Línea de producción:</label>
+                    <select id="release-line">
+                        <option value=""> Seleccione la línea</option>
+                    </select>
+                </div>
+                <div class="id-grid">
+                    <div class="id-container" id="release-display">
+                    </div>
+                </div>
+                <input type="submit" value="Liberar" class="form-element">
+            </form>
+        </dialog>
+
+
+        <dialog id="notify" class="dialog">
+            <form class="form" id="notify-form">
+                <div class="dialog-head">
+                    <button class="close-button">x</button>
+                    <h2 class="form-element" id="form-title">Notificar maquinaria</h2>
+                </div>
+                <div>
+                    <label for="id-number" class="form-element">Número de Id</label>
+                    <input type="number" placeholder="inserte id" id="id-number" min="1"> <br>
+                    <br>
+                    <label for="machine-state" class="form-element">Estado</label>
+                    <select id="machine-state">
+                        <option value=""> Seleccione el estado</option>
+                        <option value="irregularidad">irregularidad</option>
+                        <option value="defectuosa">defectuosa</option>
+                    </select>
+                </div>
+                <input type="submit" value="Notificar" class="form-element">
+            </form>
+        </dialog>
+
+        <h3 class="mantenimiento-h3"> Mantenimientos próximos </h3>
+        <div id="mantenimientos">
+        </div>
+
+        <h3 class="mantenimiento-h3"> Opciones</h3>
+        <div class="btn-dialogs">
+            <button value="asign" class="btn-open">Asignar</button>
+            <button value="release" class="btn-open">Liberar</button>
+            <button value="notify" class="btn-open">Notificar</button>
+
+        </div>
+
+    </section>
+
+    <!-- Scripts, DESPUES DEL BODY -->
 
 </body>
+<script src="produccion.js"></script>
 
 </html>

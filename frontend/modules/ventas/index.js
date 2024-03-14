@@ -151,7 +151,7 @@ async function submitOrder() {
 
     
 
-    if (phoneNumber.length != 11 && validNumber.includes(phoneNumber.slice(0,4))){
+    if (phoneNumber.length != 11){
         alert("Ingresa un numero telefonico valido")
         document.getElementById("phoneNumber").value = "";
         return;
