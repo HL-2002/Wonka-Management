@@ -477,6 +477,14 @@ predForm.addEventListener('submit', async (e) => {
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
   dateAvailability = dateAvailability.toISOString().split('T')[0]
 
+  // Borrar mantenimiento previo si lo había
+  if (getMachine(id).typeMaintenance !== null) {
+    const response = await fetch(`/api/mantenimiento/${id}`, {
+      method: 'DELETE'
+    })
+  }
+
+  // Crear mantenimiento 
   const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
@@ -538,6 +546,14 @@ corrForm.addEventListener('submit', async (e) => {
   dateAvailability = dateAvailability.toISOString().split('T')[0]
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
 
+  // Borrar mantenimiento previo si lo había
+  if (getMachine(id).typeMaintenance !== null) {
+    const response = await fetch(`/api/mantenimiento/${id}`, {
+      method: 'DELETE'
+    })
+  }
+
+  // Creación de mantenimiento
   const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
