@@ -17,21 +17,13 @@ router.get('/warehouse', async (req, res) => {
 // Obtener todos los productos
 router.get('/products', async (req, res) => {
   try {
-    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS' })
+    // Consultar todos los productos desde la base de datos
+    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS WHERE categoryId = ? or categoryId = ?', args: [1, 2] })
+    // Enviar la lista de productos como respuesta
     res.json(products)
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
-})
-
-// Obtener todas las categorías
-router.get('/category', async (req, res) => {
-  try {
-    const { rows: category } = await client.execute({ sql: 'SELECT * FROM CATEGORY' })
-    res.json(category)
-  } catch (error) {
-    console.log(error)
+    // Si ocurre un error, loguearlo y enviar una respuesta de error al cliente
+    console.error('Error al obtener productos:', error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
