@@ -9,6 +9,9 @@ const client = createClient({
     authToken: Token,
     url: urlMan
 });
+
+// enable foreign keys
+await client.execute('PRAGMA foreign_keys = ON')
 // Inicializar modelo de base de datos para ventas
 if (process.env.mode !== 'production') {
     await client.execute(`
