@@ -6,7 +6,7 @@ const isVisible = 'is-visible'
 -------------------- */
 document.addEventListener('DOMContentLoaded', function () {
   // Lógica para acceder a productTable y llamar a obtenerDatosGenerales
-  obtenerDatosGenerales()
+  // obtenerDatosGenerales()
 })
 
 for (const el of openEls) {
@@ -663,7 +663,7 @@ async function obtenerDatosGenerales () {
 }
 function mostrarDatosGeneralesEnTabla(datos) {
   const tabla = document.getElementById('productTable')
-  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'
+  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'4
   let htmlGeneral = ''
 
   // Mostrar productos
@@ -671,7 +671,7 @@ function mostrarDatosGeneralesEnTabla(datos) {
   for (const producto of datos[0]) {
     htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
   }
-
+  tabla.innerHTML = ''
   table.innerHTML = htmlGeneral
   tabla.appendChild(table) // Corrección: Agregué la tabla al elemento tabla
 }
