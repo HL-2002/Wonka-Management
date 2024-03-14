@@ -17,7 +17,7 @@ ventasRouter.post('/orders', async (req, res) => {
     })
 
     const result = await client.execute(
-      'SELECT iid FROM OrderTable ORDER BY id DESC LIMIT 1'
+      'SELECT id FROM OrderTable ORDER BY id DESC LIMIT 1'
     )
 
     const maxId = result.rows[0].id
