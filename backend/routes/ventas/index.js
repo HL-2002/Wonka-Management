@@ -21,6 +21,7 @@ ventasRouter.post('/orders', async (req, res) => {
         const result = await client.execute(
              'SELECT last_insert_rowid() AS orderId'
         );
+        console.log(result)
         const orderId = result.rows[0].orderId;
         for (const { productId,productName, productQuantity, productPrice, totalPrice} of products) {
             await client.execute({
