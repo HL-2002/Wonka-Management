@@ -37,7 +37,7 @@
         <div class="facturacion">
             <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style = "max-width: 100%; height: auto;">
             <h3>Ingrese el numero de su factura</h3>
-            <label for=""><input type="number" placeholder="12345678" id="factura"><button onclick="Verificar()">Enviar</button></label>
+            <label for=""><input type="number" placeholder="12345678" id="factura"> <button onclick="Verificar()">Enviar</button></label>
             
         </div>
         <div>    
@@ -53,38 +53,37 @@
                         <div class="Formulario">
                             <div class="infoEmpresa">
                                
-                                    <Label><strong> Empresa:  </strong>
-                                        <label type="text" id="NombreEmpresa"></label>
-                                    </Label>
+                                    <Label for="NombreEmpresa"><strong> Empresa:  </strong></Label>
+                                        <input type="text" id="NombreEmpresa" readonly>
+                                    
                                 
                                 
-                                    <label class="EnElMedio"><strong> Rif:  </strong>
-                                        <label type="text" id="RifEmpresa"> </label>
-                                    </label>
+                                    <label for="RifEmpresa" class="EnElMedio"><strong> Rif:  </strong></label>
+                                        <input type="text" id="RifEmpresa" readonly> 
+                                    
                                 
                             </div><br>
                             <div class="labelEmail">
-                                <label><strong> Email:  </strong>
-                                    <label type="text" id="EmailEmpresa"></label>
+                                <label for="EmailEmpresa"><strong> Email:  </strong></label>
+                                    <input type="text" id="EmailEmpresa" readonly>
                                     
-                                </label>
-                                <label class="EnElMedio2"><strong> Numero de Telefono:   </strong>
-                                    <label type="number" id="numberEmpresa"></label>
-                                </label>
+                                
+                                <label for="NumberEmpresa" class="EnElMedio2"><strong> Numero de Telefono:  </strong></label>
+                                    <input type="text" id="NumberEmpresa" readonly>
                             </div><br>
                             <div class="labelDireccion">
-                                <label><strong> Hora de Compra:  </strong>
-                                    <label type="text" id="HoraEmpresa"></label>
-                                </label>
-                                <label class="EnElMedio3"><strong> Estado de la entrega:  </strong>
-                                    <label type="text" id="statusEmpresa"> </label>
-                                </label>
+                                <label for="HoraEmpresa"><strong> Hora de Compra:  </strong></label>
+                                    <input type="text" id="HoraEmpresa" readonly>
+                                
+                                <label for="StatusEmpresa" class="EnElMedio3"><strong> Estado de la entrega:  </strong></label>
+                                    <input type="text" id="StatusEmpresa" readonly> 
+                                
                                 
                             </div><br>
                             <div class="labelPrecioT">
-                                <label><Strong> Precio Total:  </Strong>
-                                    <label type="number" id="PrecioTEmpresa"></label>
-                                </label>
+                                <label for="PrecioTEmpresa"><Strong> Precio Total:  </Strong></label>
+                                    <input type="text" id="PrecioTEmpresa" readonly>
+                                
                             </div>
                         </div>
                     </form>
