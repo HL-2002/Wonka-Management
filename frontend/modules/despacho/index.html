@@ -35,7 +35,7 @@
     </div>
     <main>
         <div class="facturacion">
-            <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura">
+            <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style = "max-width: 100%; height: auto;">
             <h3>Ingrese el numero de su factura</h3>
             <label for=""><input type="number" placeholder="12345678" id="factura"><button onclick="Verificar()">Enviar</button></label>
             
@@ -43,7 +43,7 @@
         <div>    
             <div id="errornofactura" style="display: none;">
                 <div class="divfactura">
-                    <h1>Factura no existe</h1>
+                    <h1 style="text-align: center;"><strong style="color: red">¡</strong> El número de factura no se encontro<strong style="color:red">!</strong></h1>
                 </div>
             </div>
             <div id="facturaexistente" style="display: none;">
@@ -52,23 +52,23 @@
                     <form action="/" method="post">
                         <div class="Formulario">
                             <div class="infoEmpresa">
-                                <div class="labelNombre">
+                               
                                     <Label><strong> Empresa:  </strong>
                                         <label type="text" id="NombreEmpresa"></label>
                                     </Label>
                                 
                                 
-                                    <label><strong> Rif:  </strong>
+                                    <label class="EnElMedio"><strong> Rif:  </strong>
                                         <label type="text" id="RifEmpresa"> </label>
                                     </label>
-                                </div>
+                                
                             </div><br>
                             <div class="labelEmail">
                                 <label><strong> Email:  </strong>
                                     <label type="text" id="EmailEmpresa"></label>
                                     
                                 </label>
-                                <label><strong> Numero de Telefono:   </strong>
+                                <label class="EnElMedio2"><strong> Numero de Telefono:   </strong>
                                     <label type="number" id="numberEmpresa"></label>
                                 </label>
                             </div><br>
@@ -76,7 +76,7 @@
                                 <label><strong> Hora de Compra:  </strong>
                                     <label type="text" id="HoraEmpresa"></label>
                                 </label>
-                                <label><strong> Estado de la entrega:  </strong>
+                                <label class="EnElMedio3"><strong> Estado de la entrega:  </strong>
                                     <label type="text" id="statusEmpresa"> </label>
                                 </label>
                                 

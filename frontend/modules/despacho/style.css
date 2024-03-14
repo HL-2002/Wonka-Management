@@ -56,44 +56,30 @@ h1 {
     margin-bottom: 10px;
     padding-bottom: 20px;
 }
-.labelNombre,
+.infoEmpresa,
 .labelRif,
 .labelEmail,
 .labelDireccion,
 .labelPrecioT {
-    margin-top: 8px;
+    margin-top: 10px;
     margin-left: 8px;
+    
     border: none;
     font-family: "Arial", sans-serif;
     font-size: 16px;
     font-weight: bold;
-   
+    display: flex;
   
 }
 
 /*label{
     color: #ececec;
 }*/
-.labelRif {
-    margin-right: 10px;
-    border-radius: 4px;
-}
-.infoEmpresa {
-    display: flex;
-    gap: 10px;
 
-}
-.labelEmail {
-    margin-right: 10px;
-    
-    border-radius: 4px;
-    gap: 10px;
-}
-.labelDireccion {
-    margin-right: 10px;
-    gap: 10px;
 
-}
+
+
+
 .labelPrecioT{
     gap: 10px;
     margin-right: 10px;
@@ -107,4 +93,12 @@ h1 {
 .Formulario label{
     color: #ececec;
 }
-
+.EnElMedio{
+    transform: translateX(500px);
+}
+.EnElMedio2{
+    transform: translateX(518px);
+}
+.EnElMedio3{
+    transform: translate(437px);
+}
