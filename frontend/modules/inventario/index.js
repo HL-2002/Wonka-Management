@@ -4,6 +4,11 @@ const isVisible = 'is-visible'
 
 /* //Modal animation
 -------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+  // Lógica para acceder a productTable y llamar a obtenerDatosGenerales
+  obtenerDatosGenerales()
+})
+
 for (const el of openEls) {
   el.addEventListener('click', function () {
     const modalId = this.dataset.open
@@ -483,7 +488,7 @@ async function insertStore (params) {
       console.error('Error al insertar el Almacen:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -517,7 +522,7 @@ async function insertProducts (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -537,7 +542,7 @@ async function insertStock (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    // console.error('Error de red:', error)
+    // // console.error('Error de red:', error)
   }
 }
 
@@ -557,7 +562,7 @@ async function updateProducts (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -573,7 +578,7 @@ async function removeProducts (id) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -594,7 +599,7 @@ async function insertCategory (params) {
       console.error('Error al insertar la categoria:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -616,7 +621,7 @@ async function updateCategory (params) {
       console.error('Error al insertar la categoria:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -634,6 +639,39 @@ async function removeCategory (id) {
       console.error('Error al insertar el categoria:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
+}
+
+// REPORTES
+
+// Nueva funcion para obtener los datos de productos, almacenes, categorias y recetas
+async function obtenerDatosGenerales () {
+  const [productos, almacenes, categorias] = await Promise.all([
+    fetch('/api/inventario/products'),
+    fetch('/api/inventario/warehouse'),
+    fetch('/api/inventario/category')
+  ])
+
+  const datos = Promise.all([
+    productos.json(),
+    almacenes.json(),
+    categorias.json()
+  ])
+  console.log(await datos)
+  mostrarDatosGeneralesEnTabla(await datos)
+}
+function mostrarDatosGeneralesEnTabla(datos) {
+  const tabla = document.getElementById('productTable')
+  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'
+  let htmlGeneral = ''
+
+  // Mostrar productos
+  htmlGeneral += '<p><strong>Productos:</strong></p>'
+  for (const producto of datos[0]) {
+    htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
+  }
+
+  table.innerHTML = htmlGeneral
+  tabla.appendChild(table) // Corrección: Agregué la tabla al elemento tabla
 }
