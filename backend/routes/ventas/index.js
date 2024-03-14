@@ -86,9 +86,9 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
 ventasRouter.get('/orders', async (req, res) => {
     try {
         // Obtener todas las órdenes
-        const ordersResult = await client.execute({
-            sql: 'SELECT * FROM OrderTable'
-        });
+        const ordersResult = await client.execute(
+              'SELECT * FROM OrderTable'
+        );
 
         const orders = ordersResult.rows;
 
@@ -174,9 +174,9 @@ ventasRouter.patch('/orders/:orderId/status', async (req, res) => {
 ventasRouter.get('/latestOrder', async (req, res) => {
     try {
         // Obtener la última orden
-        const latestOrderResult = await client.execute({
-            sql: 'SELECT * FROM OrderTable ORDER BY id DESC LIMIT 1'
-        });
+        const latestOrderResult = await client.execute(
+             'SELECT * FROM OrderTable ORDER BY id DESC LIMIT 1'
+        );
 
         if (latestOrderResult.rows.length === 0) {
             return res.status(404).json({ error: 'No hay órdenes disponibles.' });
