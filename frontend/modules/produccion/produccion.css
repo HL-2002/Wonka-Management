@@ -1,18 +1,21 @@
-:root{
+:root {
     --main-color: #6f27ff;
     --sup: #9f70fd;
     --interact: #fdbf60;
-    --action:#ff8911;
+    --action: #ff8911;
     --backgroud: #ececec;
 }
-body{
+
+body {
     background-color: #6f27ff;
 }
-main{
+
+main {
     width: 100%;
     padding-bottom: 50px;
 }
-.main-title{
+
+.main-title {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -20,7 +23,8 @@ main{
     color: var(--backgroud);
     font-size: 3rem;
 }
-.main-container{
+
+.main-container {
 
     color: #ececec;
     width: 80%;
@@ -28,47 +32,57 @@ main{
     margin: 10px auto;
     gap: 20px;
     justify-content: center;
- 
+
 }
+
 h4 {
     color: white;
-    
+
 }
+
 h3 {
     color: #dc570a;
     font-weight: 900;
 }
+
 table {
     width: 85%;
 }
-table, th, td {
+
+table,
+th,
+td {
     border: #fdbf60 solid 6px;
     font-weight: 500;
     border-collapse: collapse;
     border-style: inset;
 }
-th{
+
+th {
     color: white;
 }
-table.center{
+
+table.center {
     margin: auto;
     margin-bottom: 20px
 }
-.linea-container{
-    background-color:#34005f;
+
+.linea-container {
+    background-color: #34005f;
     width: 80%;
     height: auto;
     border-radius: 10px;
-    padding:15px 25px;
+    padding: 15px 25px;
     margin: auto;
-    overflow-y: auto; 
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B; 
+    -webkit-box-shadow: 5px 5px 15px -3px #0B0B0B;
     box-shadow: 5px 5px 15px -3px #0B0B0B;
 }
-.linea-container button{
+
+.linea-container button {
     background: #6f27ff;
     border: none;
     padding: 0.5rem 1rem;
@@ -81,19 +95,108 @@ table.center{
     box-shadow: black 2px 1px 10px;
     margin: 13px;
 }
+
 .linea-container button:hover {
     transform: scale(1.03);
     background: #731d9e;
 }
+
 .linea-container button:active {
     transform: translateY(2px);
     background: #6f27ff;
 }
+
 .ticket-container h2 {
     font-size: 2rem;
     color: var(--action);
 }
+
 h2 {
     color: #fdbf60;
     font-weight: 700;
+}
+
+.open {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+
+.dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog.open::backdrop {
+    animation: opacityOn 0.5s ease;
+}
+
+.dialog.close::backdrop {
+    animation: opacityOff 0.5s ease;
+}
+
+.btn-dialogs {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.close {
+    animation: fadeOut 0.5s ease;
+}
+
+.dialog {
+    margin: auto;
+    padding: 20px;
+    background-color: #ececec;
+    border-radius: 5px;
+    border: none;
+    max-width: 1000px;
+}
+
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+
+@keyframes opacityOn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes opacityOff {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

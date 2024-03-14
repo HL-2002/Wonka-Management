@@ -21,13 +21,17 @@
                         <img width="160px" height="160px" src="/public/logotipo-blanco-op.webp" alt="logo de wonka's">
                     </a>
 
-                    <li><a href="#"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                    <li><a href="#"><img src="/public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
-                    <li><a href="#"><img src="/public/icono_3.webp" alt="icono de inventario">Inventario</a></li>
-                    <li><a href="#"><img src="/public/icono_4.webp" alt="icono Produccion">Producción</a></li>
-                    <li><a href="#"><img src="/public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento</a>
-                    </li>
-                    <li><a href="#"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+                    <li><a href="/modules/ventas"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                    <li><a href="/modules/despacho"><img src="/public/icono_2.webp"
+                                alt="icono Distribucion">Distribución</a></li>
+                    <li><a href="/modules/inventario"><img src="/public/icono_3.webp"
+                                alt="icono de inventario">Inventario</a></li>
+                    <li><a href="/modules/produccion"><img src="/public/icono_4.webp"
+                                alt="icono Produccion">Producción</a></li>
+                    <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
+                                alt="icono de Mantenimiento">Mantenimiento</a></li>
+                    <li><a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+    
 
                 </ul>
             </nav>
@@ -37,13 +41,13 @@
         <div class="facturacion">
             <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style = "max-width: 100%; height: auto;">
             <h3>Ingrese el numero de su factura</h3>
-            <label for=""><input type="number" placeholder="12345678" id="factura"> <button onclick="Verificar()">Enviar</button></label>
+            <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit" >Enviar</button></label>
             
         </div>
         <div>    
             <div id="errornofactura" style="display: none;">
                 <div class="divfactura">
-                    <h1 style="text-align: center;"><strong style="color: red">¡</strong> El número de factura no se encontro<strong style="color:red">!</strong></h1>
+                    <h1 style="text-align: center;"><strong style="color: red">¡</strong> El número de factura no se encontró <strong style="color:red">!</strong></h1>
                 </div>
             </div>
             <div id="facturaexistente" style="display: none;">

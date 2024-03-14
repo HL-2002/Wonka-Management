@@ -4,6 +4,11 @@ const isVisible = 'is-visible'
 
 /* //Modal animation
 -------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+  // Lógica para acceder a productTable y llamar a obtenerDatosGenerales
+  // obtenerDatosGenerales()
+})
+
 for (const el of openEls) {
   el.addEventListener('click', function () {
     const modalId = this.dataset.open
@@ -120,7 +125,6 @@ async function addItem (params) {
   const options = lstCategory.map((product, index) => `
         <option value="${product.id}">${product.description}</option>
     `)
-  console.log(lstCategory)
 
   const selectElement = document.getElementById('categoria')
   selectElement.innerHTML = options.join('')
@@ -225,9 +229,8 @@ async function fillModal (id) {
   const lstProducts = await getProducts()
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
   const lstCategory = await getCategory()
-  const selectedCategoty = selected.id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[0]
 
-  console.log(parseInt(selected.id))
+  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[0]
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
@@ -320,6 +323,51 @@ async function fillModalW (id) {
   document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
+// eslint-disable-next-line no-unused-vars
+async function addCategory (params) {
+  const codValue = document.getElementById('codigo')
+  const desValue = document.getElementById('descripcion')
+  const save = document.getElementById('saveButtonC')
+
+  codValue.value = ''
+  desValue.value = ''
+  desValue.readOnly = false
+  save.disabled = false
+  save.style.backgroundColor = 'initial'
+}
+
+// eslint-disable-next-line no-unused-vars
+async function saveCategory () {
+  const codValue = document.getElementById('codigo').value
+  const desValue = document.getElementById('descripcion').value
+
+  const category = {
+    id: codValue,
+    description: desValue
+  }
+  if (codValue === '') {
+    await insertCategory(category)
+  } else {
+    await updateCategory(category)
+  }
+  await fillModalC()
+}
+
+// eslint-disable-next-line no-unused-vars
+async function modCategory (id, des) {
+  const desValue = document.getElementById('descripcion')
+  const save = document.getElementById('saveButtonC')
+  save.disabled = false
+  save.style.backgroundColor = 'initial'
+  desValue.readOnly = false
+}
+
+// eslint-disable-next-line no-unused-vars
+async function deleteCategory (id) {
+  await removeCategory(id)
+  await fillModalC()
+}
+
 /* //Category
 -------------------- */
 async function fillModalC (id) {
@@ -330,9 +378,10 @@ async function fillModalC (id) {
   const status = 'readonly'
 
   const actions = `
-    <button id="dW" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
-    <button id="mW" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
-    <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button id="dW" onclick="deleteCategory(${viewID})" class="close-modal" >Eliminar</button>
+    <button id="mW" onclick="modCategory(${viewID})" class="close-modal" >Modificar</button>
+    <button id="saveButtonC" onclick="saveCategory()" class="close-modal" disabled >Guardar</button>
+    <button onclick="addCategory()" class="close-modal" >Nuevo</button>
   `
   if (!id) {
     await fillSearchC()
@@ -350,7 +399,7 @@ async function fillModalC (id) {
   `
   document.getElementById('actionC').innerHTML = actions
   document.getElementById('modal-detailC').innerHTML = detalles
-  document.getElementById('saveButton').style.backgroundColor = 'grey'
+  document.getElementById('saveButtonC').style.backgroundColor = 'grey'
 }
 /* //Cargo
 -------------------- */
@@ -436,7 +485,7 @@ async function insertStore (params) {
       console.error('Error al insertar el Almacen:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -469,7 +518,7 @@ async function insertProducts (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -489,7 +538,7 @@ async function insertStock (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    // console.error('Error de red:', error)
+    // // console.error('Error de red:', error)
   }
 }
 
@@ -509,7 +558,7 @@ async function updateProducts (params) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
 }
 
@@ -525,6 +574,100 @@ async function removeProducts (id) {
       console.error('Error al insertar el producto:', response.status)
     }
   } catch (error) {
-    console.error('Error de red:', error)
+    // console.error('Error de red:', error)
   }
+}
+
+// Create category
+async function insertCategory (params) {
+  try {
+    const response = await fetch('/api/inventario/new/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar la categoria:', response.status)
+    }
+  } catch (error) {
+    // console.error('Error de red:', error)
+  }
+}
+
+// Update category
+
+async function updateCategory (params) {
+  try {
+    const response = await fetch(`/api/inventario/set/category/${params.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar la categoria:', response.status)
+    }
+  } catch (error) {
+    // console.error('Error de red:', error)
+  }
+}
+
+async function removeCategory (id) {
+  try {
+    const response = await fetch(`/api/inventario/category/delete/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      // eslint-disable-next-line no-undef
+      alert('Existen productos asociado a esta categoria')
+      console.error('Error al insertar el categoria:', response.status)
+    }
+  } catch (error) {
+    // console.error('Error de red:', error)
+  }
+}
+
+// REPORTES
+
+// Nueva funcion para obtener los datos de productos, almacenes, categorias y recetas
+// eslint-disable-next-line no-unused-vars
+async function obtenerDatosGenerales () {
+  const [productos, almacenes, categorias] = await Promise.all([
+    fetch('/api/inventario/products'),
+    fetch('/api/inventario/warehouse'),
+    fetch('/api/inventario/category')
+  ])
+
+  const datos = Promise.all([
+    productos.json(),
+    almacenes.json(),
+    categorias.json()
+  ])
+  mostrarDatosGeneralesEnTabla(await datos)
+}
+function mostrarDatosGeneralesEnTabla(datos) {
+  const tabla = document.getElementById('productTable')
+  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'4
+  let htmlGeneral = ''
+
+  // Mostrar productos
+  htmlGeneral += '<p><strong>Productos:</strong></p>'
+  for (const producto of datos[0]) {
+    htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
+  }
+  tabla.innerHTML = ''
+  table.innerHTML = htmlGeneral
+  tabla.appendChild(table) // Corrección: Agregué la tabla al elemento tabla
 }

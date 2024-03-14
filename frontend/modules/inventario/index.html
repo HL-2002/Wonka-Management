@@ -45,11 +45,10 @@
                 <h2 style="margin-top: 25px;">Tablas</h2>
                 <div class="inv-row">
                     <button onclick="fillModal()"  type="button" class="open-modal" data-open="modal1">Productos</button>
-                    <button >Recetas</button>
+                    <button onclick="fillModalC()"  type="button" class="open-modal" data-open="modal3">Categorias</button>
+
                 </div>
                 <div class="inv-row">
-                    <button onclick="fillModalC()"  type="button" class="open-modal" data-open="modal3">Categorias</button>
-                    <button onclick="fillModalW()"  type="button" class="open-modal" data-open="modal2">Almacenes</button>
                 </div>
             </section>
 
@@ -133,7 +132,7 @@
                     <header class="modal-header">
                     <button class="close-modal" aria-label="close modal" data-close>✕</button>
 
-                        <h2>Cargo</h2>
+                        <h2>Cargo manual de Stock a un Producto</h2>
                         <div style="padding: 5px;" id="actionsCa" class="">                            
                         </div>
                     </header>
@@ -152,7 +151,7 @@
                     <header class="modal-header">
                     <button class="close-modal" aria-label="close modal" data-close>✕</button>
 
-                        <h2>Descargo</h2>
+                        <h2>Descargo Manual de Stock a un Producto</h2>
                         <div style="padding: 5px;" id="actionsDe" class="">                            
                         </div>
                     </header>
@@ -184,20 +183,26 @@
                     </section>
                 </div>
             </div>
+
+             <!-- Modal para Reportes -->
+             <div class="modal" id="modal7">
+                <div class="modal-dialog">
+                    <header class="modal-header">
+                    <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                        <h2>Productos con su Stock</h2>
+                        <div id="productTable"></div>
+                </div>
+            </div>
             <section class="ticket-container">
                 <div class="ticket-container__top">
                     <h2>Reportes</h2>
                     <table class="" id="">
                         <ul style="display: flex; flex-direction:column;">
                             <a>Listado de Productos</a>
-                            <a>Listado de Almacenes</a>
-                            <a>Listado de Categorias</a>
-                            <a>Listado de Recetas</a>
                         </ul>
-                        <tbody id="productTable"></tbody>
                     </table>
                 </div>
-                <button>General</button>
+                <button onclick="obtenerDatosGenerales()" id="generar-button" type="button" class="open-modal" data-open="modal7">Generar</button>
             </section>
         </section>
     </main>
