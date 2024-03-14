@@ -98,7 +98,7 @@ router.patch('/set/product/:id', async (req, res) => {
 
 // Crear una nueva categoría
 router.post('/new/category', async (req, res) => {
-  const description = req.body
+  const { description } = req.body
   try {
     await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: [description] })
     res.status(201).end()
@@ -182,6 +182,7 @@ router.get('/warehouse/:id', async (req, res) => {
   }
 })
 
+
 // Obtener una categoría por ID
 router.get('/category/:id', async (req, res) => {
   const { id } = req.params
@@ -193,5 +194,18 @@ router.get('/category/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
+//Borrar categoria por id
+router.delete('/category/delete/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const { rows: category } = await client.execute({ sql: 'delete FROM CATEGORY WHERE id = ?', args: [id] })
+    res.json(category)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 export default router

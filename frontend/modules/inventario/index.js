@@ -225,9 +225,7 @@ async function fillModal (id) {
   const lstProducts = await getProducts()
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
   const lstCategory = await getCategory()
-  const selectedCategoty = selected.id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[0]
-
-  console.log(parseInt(selected.id))
+  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.id)) : lstCategory[0]
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
@@ -320,6 +318,53 @@ async function fillModalW (id) {
   document.getElementById('saveButton').style.backgroundColor = 'grey'
 }
 
+async function addCategory (params) {
+  const codValue = document.getElementById('codigo')
+  const desValue = document.getElementById('descripcion')
+  const save = document.getElementById('saveButtonC')
+
+  codValue.value = ''
+  desValue.value = ''
+  
+  desValue.readOnly = false
+  save.disabled = false
+  save.style.backgroundColor = 'initial'
+
+}
+
+async function saveCategory () {
+  const codValue = document.getElementById('codigo').value
+  const desValue = document.getElementById('descripcion').value
+
+  const category = {
+    id: codValue,
+    description: desValue
+  }
+  console.log(category)
+  if (codValue === '') {
+    await insertCategory(category)
+  } else {
+    await updateCategory(category)
+  }
+  await fillModalC()
+}
+
+async function modCategory (id, des) {
+  
+  const desValue = document.getElementById('descripcion')
+  const save = document.getElementById('saveButtonC')
+  save.disabled = false
+  save.style.backgroundColor = 'initial'
+  
+  desValue.readOnly = false
+}
+
+async function deleteCategory (id) {
+  await removeCategory(id)
+  await fillModalC()
+}
+
+
 /* //Category
 -------------------- */
 async function fillModalC (id) {
@@ -330,9 +375,10 @@ async function fillModalC (id) {
   const status = 'readonly'
 
   const actions = `
-    <button id="dW" onclick="deleteProduct(${viewID})" class="close-modal" >Eliminar</button>
-    <button id="mW" onclick="modProduct(${viewID})" class="close-modal" >Modificar</button>
-    <button id="saveButton" onclick="saveProduct()" class="close-modal" disabled >Guardar</button>
+    <button id="dW" onclick="deleteCategory(${viewID})" class="close-modal" >Eliminar</button>
+    <button id="mW" onclick="modCategory(${viewID})" class="close-modal" >Modificar</button>
+    <button id="saveButtonC" onclick="saveCategory()" class="close-modal" disabled >Guardar</button>
+    <button onclick="addCategory()" class="close-modal" >Nuevo</button>
   `
   if (!id) {
     await fillSearchC()
@@ -350,7 +396,7 @@ async function fillModalC (id) {
   `
   document.getElementById('actionC').innerHTML = actions
   document.getElementById('modal-detailC').innerHTML = detalles
-  document.getElementById('saveButton').style.backgroundColor = 'grey'
+  document.getElementById('saveButtonC').style.backgroundColor = 'grey'
 }
 /* //Cargo
 -------------------- */
@@ -523,6 +569,67 @@ async function removeProducts (id) {
       await response.json()
     } else {
       console.error('Error al insertar el producto:', response.status)
+    }
+  } catch (error) {
+    console.error('Error de red:', error)
+  }
+}
+
+//Create category 
+async function insertCategory (params) {
+  try {
+    const response = await fetch('/api/inventario/new/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar la categoria:', response.status)
+    }
+  } catch (error) {
+    console.error('Error de red:', error)
+  }
+}
+
+//Update category
+
+async function updateCategory (params) {
+  try {
+    const response = await fetch(`/api/inventario/set/category/${params.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar la categoria:', response.status)
+    }
+  } catch (error) {
+    console.error('Error de red:', error)
+  }
+}
+
+async function removeCategory (id) {
+  try {
+    console.log(id)
+    const response = await fetch(`/api/inventario/category/delete/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      alert('Existen productos asociado a esta categoria')
+      console.error('Error al insertar el categoria:', response.status)
     }
   } catch (error) {
     console.error('Error de red:', error)
