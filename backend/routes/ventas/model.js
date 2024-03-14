@@ -9,6 +9,9 @@ const client = createClient({
     authToken: Token,
     url: urlMan
 });
+
+// enable foreign keys
+
 // Inicializar modelo de base de datos para ventas
 if (process.env.mode !== 'production') {
     await client.execute(`
@@ -41,6 +44,7 @@ await client.execute(`
         productPrice  REAL NOT NULL,
         totalPrice REAL NOT NULL,
         FOREIGN KEY (orderId) REFERENCES OrderTable(id)
+        
     )
 `);
 
