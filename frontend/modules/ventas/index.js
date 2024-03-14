@@ -9,7 +9,7 @@ async function getProducts() {
         const products = await response.json();
         
         // Filtrar los productos según el atributo categoryId sea igual a 2
-        filteredProducts = products.filter(product => product.categoryId === 2);
+        filteredProducts = products.filter(product => product.categoryId === 1);
         
         // Llamar a la función que agrega los productos filtrados al select
         console.log(filteredProducts)
@@ -151,7 +151,7 @@ async function submitOrder() {
 
     
 
-    if (phoneNumber.length != 11 && validNumber.includes(phoneNumber.slice(0,4))){
+    if (phoneNumber.length != 11){
         alert("Ingresa un numero telefonico valido")
         document.getElementById("phoneNumber").value = "";
         return;
