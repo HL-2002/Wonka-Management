@@ -74,7 +74,7 @@ async function orderporId(id) {
             document.getElementById('StatusEmpresa').value = data ? data.status : ""
             document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
             resProducts(id)
-
+            //Desglosar factura
           
         } else {
             // Error al obtener la �ltima orden
@@ -100,3 +100,18 @@ submit.addEventListener('click', () => {
   orderporId(codigoIngresado)
 
 })
+
+/*const data //OrderbyId
+
+//{products} = data
+
+const factura = document.createElement('ul')
+const frag = document.createDocumentFragment()
+products.foreach(producto => { 
+    const {productName, productQuantity, productPrice} = producto
+    const li = document.createElement('li')
+    li.textContent = `${productName} - ${productQuantity} - ${productPrice} = ${productQuantity * productPrice}`
+    frag.appendChild(li)
+
+})
+factura.appendChild(frag)*/

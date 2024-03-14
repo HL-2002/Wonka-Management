@@ -208,7 +208,13 @@ async function Producir() {
     orders.products.forEach(producto => {
         const table = document.getElementById(`pf${producto.productId}`);
         table.innerHTML += `${producto.productQuantity}`
-
+        const addProduct = {
+            id: producto.productId,
+            sum: 1,
+            units: producto.productQuantity
+        };
+        console.log(addProduct)
+        insertStock(addProduct);
         n++
     })
     calcularIngredientesTotales(orders.products)
