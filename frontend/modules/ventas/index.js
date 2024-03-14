@@ -1,3 +1,41 @@
+var filteredProducts = []
+document.addEventListener('DOMContentLoaded', async function() {
+    await getProducts();
+});
+
+async function getProducts() {
+    try {
+        const response = await fetch('/api/inventario/products');
+        const products = await response.json();
+        
+        // Filtrar los productos según el atributo categoryId sea igual a 2
+        filteredProducts = products.filter(product => product.categoryId === 2);
+        
+        // Llamar a la función que agrega los productos filtrados al select
+        console.log(filteredProducts)
+        populateSelect(filteredProducts);
+     
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+    }
+}
+
+function populateSelect(products) {
+    const select = document.getElementById('why');
+    
+    // Limpiar cualquier opción previa
+    select.innerHTML = '';
+    
+    // Agregar las nuevas opciones
+    products.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product.id;
+        option.textContent = product.description; // Aquí se usa el atributo 'description'
+        select.appendChild(option);
+    });
+}
+
+
 function addProduct() {
     var select = document.getElementById("why");
     var productName = select.options[select.selectedIndex].text;
@@ -53,8 +91,6 @@ function deleteRow(btn) {
     row.parentNode.removeChild(row);
 }
 
-
-
 async function submitOrder() {
 
     var name = document.getElementById("name").value.trim();
@@ -63,43 +99,36 @@ async function submitOrder() {
     var phoneNumber = document.getElementById("phoneNumber").value.trim(); 
 
     var productsArray = [];
-    
-    var prices = {
-        BarraWonka:3,
-        Manzanasacarameladas:2,
-        ChupetaespiralWonka:3,
-        Caramelodehuevodepajaroazul:4,
-        Rompemuelaseterno:5,
-        Chicledecenadetresplatos:1,
-        Caramelodurodevidriera:2,
-        "Barradeliciadecrema,malvaviscoyfudgeWonka":4,
-        BarrasorpresadechocolatedenuecesWonka:4,
-        Hierbacomestible:2
-    }
-
-    var idProducts = {
-        BarraWonka:1,
-        Manzanasacarameladas:2,
-        ChupetaespiralWonka:3,
-        Caramelodehuevodepajaroazul:4,
-        Rompemuelaseterno:5,
-        Chicledecenadetresplatos:6,
-        Caramelodurodevidriera:7,
-        "Barradeliciadecrema,malvaviscoyfudgeWonka":8,
-        BarrasorpresadechocolatedenuecesWonka:9,
-        Hierbacomestible:10
-
-    }
 
     // Recopilar la información de los productos del ticket
     var tableRows = document.querySelectorAll("#productTable tr");
     tableRows.forEach(function(row) {
-        var product = row.cells[0].textContent;
-        var productQuantity = row.cells[1];
-        productQuantity = productQuantity.querySelector('input[type="number"]')
-        productQuantity = productQuantity.value
-        productsArray.push({productId:idProducts[product.replace(/ /g, "")] ,productName: product, quantity: productQuantity, price: prices[product.replace(/ /g, "")] * parseInt(productQuantity)});
+        var productName = row.cells[0].textContent; // Obtener el nombre del producto de la primera celda
+        var productQuantityInput = row.cells[1].querySelector('input[type="number"]'); // Obtener el input de cantidad de la segunda celda
+        var productQuantity = parseInt(productQuantityInput.value); // Obtener la cantidad del input
+    
+        // Buscar el producto correspondiente en el array filtrado según el nombre
+        var filteredProduct = filteredProducts.find(product => product.description === productName);
+    
+        if (filteredProduct) { // Si se encuentra el producto en el array filtrado
+            // Crear un objeto product con los datos del producto y la cantidad
+            var product = {
+                productId: filteredProduct.id, // Obtener el ID del producto del array filtrado
+                productName: productName,
+                productQuantity: productQuantity,
+                productPrice: filteredProduct.price,
+                totalPrice: productQuantity * filteredProduct.price
+                // Aquí puedes agregar más atributos como 'productPrice' si están disponibles en el array filtrado
+            };
+            console.log(product)
+    
+            // Agregar el objeto product al array de productos
+            productsArray.push(product);
+        } else {
+            console.error('No se encontró el producto en el array filtrado:', productName);
+        }
     });
+    
 
     // Verificar que se haya ingresado toda la información necesaria
     if (name === "" || customerId === "" || email === "" || phoneNumber === "" || productsArray.length === 0) {
@@ -107,7 +136,7 @@ async function submitOrder() {
         return;
     }
 
-    if (customerId.length > 8){
+    if (customerId.length > 10){
         alert ("Ingrese un rif valido")
         document.getElementById("customerId").value = "";
 
@@ -120,7 +149,7 @@ async function submitOrder() {
          return false;
     }
 
-    let validNumber = ["0424","0242","0414","0412","0416"]
+    
 
     if (phoneNumber.length != 11 && validNumber.includes(phoneNumber.slice(0,4))){
         alert("Ingresa un numero telefonico valido")
@@ -154,7 +183,7 @@ async function submitOrder() {
 
     for (let product of productsArray){
 
-        totalPrice+= product.price
+        totalPrice+= product.totalPrice
 
     }
 
@@ -170,7 +199,7 @@ async function submitOrder() {
         phoneNumber: phoneNumber,
         time:fecha,
         products: productsArray,
-        totalPrice : totalPrice
+        totalPriceOrder : totalPrice
         
     };
 
@@ -204,36 +233,3 @@ async function submitOrder() {
 
    
 }
-
-
-async function getLatestOrder(){
-    try {
-        // Realizar la solicitud GET al servidor mediante la API
-        var response = await fetch('/api/ventas/latestOrder', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            // Obtener la respuesta en formato JSON
-            var latestOrder = await response.json();
-            console.log(typeof(latestOrder))
-            console.log(latestOrder)
-            
-            
-           
-            
-        } else {
-            // Error al obtener la última orden
-            console.error("Hubo un error al obtener la última orden. Código de estado:", response.status);
-            alert("Hubo un error al obtener la última orden. Por favor, inténtelo de nuevo más tarde.");
-        }
-    } catch (error) {
-        console.error("Error al obtener la última orden:", error);
-        alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
-    }
-
-}
-
