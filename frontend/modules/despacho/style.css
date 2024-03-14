@@ -6,8 +6,8 @@ main{
     padding: 0;
     margin: 0;
 }
-button{
-    background-color: #ececec;
+.sumit{
+    background-color: #080000;
     border: 3px solid #fdbf60;
     border-radius: 5px;
     margin-left: 10px;
@@ -82,11 +82,6 @@ h1 {
     display: flex;
   
 }
-
-/*label{
-    color: #ececec;
-}*/
-
 
 
 

@@ -34,4 +34,5 @@ fetch(`/api/ventas/orders/${codigoIngresado}`)
     console.error('Error:', error)
   })
 console.log(products)
+console.log(orden)
 
