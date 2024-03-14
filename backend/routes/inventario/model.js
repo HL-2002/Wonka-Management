@@ -8,17 +8,15 @@ const client = createClient({
 })
 // create the tables
 
-if (process.env.mode !== 'production') {
-  await client.execute(`
+await client.execute(`
     DROP TABLE IF EXISTS PRODUCTS
   `)
-  await client.execute(`
+await client.execute(`
     DROP TABLE IF EXISTS WAREHOUSE
   `)
-  await client.execute(`
+await client.execute(`
     DROP TABLE IF EXISTS CATEGORY
   `)
-}
 
 await client.execute(`
   CREATE TABLE IF NOT EXISTS WAREHOUSE (
