@@ -72,7 +72,7 @@ Router.patch('/machine/:id', async (req, res) => {
   const { state, line, availability } = req.body
   // update the machine in the database
 
-  const { rows: machines } = await client.execute('SELECT * FROM MACHINE WHERE id = ?', [id])
+  const { rows: machines } = await client.execute({ sql: 'SELECT * FROM MACHINE WHERE id = ?', args: [id] })
 
   const machine = machines[0]
   const stateDB = state ?? machine.state
