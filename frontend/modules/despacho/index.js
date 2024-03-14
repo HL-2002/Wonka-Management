@@ -55,36 +55,43 @@ async function orderporId(id) {
             }
         });
         
-        console.log(data)
-
-        if (response.ok) {
+        
+        if (id == '') {
+            document.getElementById('facturaexistente').style.display = 'none'
+            document.getElementById('errornofactura').style.display = 'block'
+        }
+        else if (response.ok) {
             // Obtener la respuesta en formato JSON
-          var data = await response.json();
-          console.log(data)
-          document.getElementById('facturaexistente').style.display = 'block'
-          document.getElementById('errornofactura').style.display = 'none'
-          document.getElementById('NombreEmpresa').value = data.customerName
-          document.getElementById('RifEmpresa').value = data.customerId
-          document.getElementById('EmailEmpresa').value = data.email
-          document.getElementById('NumberEmpresa').value = data.phoneNumber
-          document.getElementById('HoraEmpresa').value = data.time
-          document.getElementById('StatusEmpresa').value = data.status
-          document.getElementById('PrecioTEmpresa').value = data.totalPriceOrder
-          resProducts(id)
+            var data = await response.json();
+            console.log(data)
+            document.getElementById('facturaexistente').style.display = 'block'
+            document.getElementById('errornofactura').style.display = 'none'
+            document.getElementById('NombreEmpresa').value = data ? data.customerName : ""
+            document.getElementById('RifEmpresa').value = data ? data.customerId : ""
+            document.getElementById('EmailEmpresa').value = data ? data.email : ""
+            document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
+            document.getElementById('HoraEmpresa').value = data ? data.time : ""
+            document.getElementById('StatusEmpresa').value = data ? data.status : ""
+            document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+            resProducts(id)
 
+          
         } else {
             // Error al obtener la �ltima orden
-          console.error("Hubo un error al obtener la orden. C�digo de estado:", response.status);
-          alert("Hubo un error al obtener la orden. Por favor, int�ntelo de nuevo m�s tarde.");
-          document.getElementById('facturaexistente').style.display = 'none'
-          document.getElementById('errornofactura').style.display = 'block'
+            console.error("Hubo un error al obtener la orden. C�digo de estado:", response.status);
+            alert("Hubo un error al obtener la orden. Por favor, int�ntelo de nuevo m�s tarde.");
+            document.getElementById('facturaexistente').style.display = 'none'
+            document.getElementById('errornofactura').style.display = 'block'
         }
+        console.log(response.ok)
+          
     } catch (error) {
         console.error("Error al obtener la orden:", error);
         alert("Hubo un error al obtener la orden. Por favor, revise la consola para m�s detalles.");
+        document.getElementById('facturaexistente').style.display = 'none'
+        document.getElementById('errornofactura').style.display = 'block'
     }
 }
-
 
 
 const submit = document.getElementById('sumit')
