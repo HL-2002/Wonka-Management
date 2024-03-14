@@ -202,7 +202,7 @@ ventasRouter.get('/latestOrder', async (req, res) => {
             status: latestOrder.status,
             time: latestOrder.time,
             products: products,
-            totalPrice: latestOrder.totalPrice
+            totalPrice: latestOrder.totalPriceOrder
         };
 
         res.status(200).json(latestOrderWithProducts);
