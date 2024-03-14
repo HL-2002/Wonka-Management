@@ -47,6 +47,7 @@ h1 {
     margin: -15px 0px 0px 20px;
 }
 
+
 .facturacion img {
     display: block; /* Cambiar de "flex" a "block" para que se alinee a la derecha */
     float: right;
@@ -116,7 +117,10 @@ h1 {
 .Formulario input{
     background-color: transparent;
     border: none;
+    color:white;
+    pointer-events: none;
 }
+
 #RifEmpresa{
     transform: translatex(410px);
 }
