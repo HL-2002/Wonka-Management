@@ -19,15 +19,21 @@ ventasRouter.post('/orders', async (req, res) => {
         });
 
         const result = await client.execute(
-             'SELECT last_insert_rowid() AS orderId'
+             'SELECT max(id) FROM OrderTable'
         );
-        console.log(result)
-        const orderId = result.rows[0].orderId;
-        for (const { productId,productName, productQuantity, productPrice, totalPrice} of products) {
+
+        const maxId = result.rows[0]['max(id)'];
+
+        // Usar el valor de maxId como necesites
+        console.log('El máximo ID en la tabla OrderTable es:', maxId);
+        
+        
+
+        for (const { productId, productName, productQuantity, productPrice, totalPrice} of products) {
             await client.execute({
                 
-                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, productQuantity, productPrice, totalPrice) VALUES (?, ?, ?, ?,?,?)',
-                args: [productId,orderId, productName, productQuantity, productPrice,totalPrice]
+                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, productQuantity, productPrice, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
+                args: [productId, maxId, productName, productQuantity, productPrice,totalPrice]
             });
         }
 
