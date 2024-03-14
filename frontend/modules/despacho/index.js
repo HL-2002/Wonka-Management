@@ -10,7 +10,7 @@ function Verificar () {
   }
 }
 const codigoIngresado = document.getElementById('factura').value
-fetch(`http://localhost:3000/api/ventas/orders/${codigoIngresado}`)
+fetch(`/api/ventas/orders/${codigoIngresado}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Error en la solicitud')
@@ -20,13 +20,14 @@ fetch(`http://localhost:3000/api/ventas/orders/${codigoIngresado}`)
   .then(data => {
     // Hacer algo con los datos obtenidos
     console.log(data)
-    document.getElementById('NombreEmpresa').value = data.customerName
-    document.getElementById('RifEmpresa').value = data.customerId
-    document.getElementById('EmailEmpresa').value = data.email
-    document.getElementById('NumberEmpresa').value = data.phoneNumber
-    document.getElementById('HoraEmpresa').value = data.time
-    document.getElementById('StatusEmpresa').value = data.status
-    document.getElementById('PrecioTEmpresa').value = data.totalPrice
+    let orden = data.orderId
+    document.getElementById('NombreEmpresa').value = data[0].customerName
+    document.getElementById('RifEmpresa').value = data[0].customerId
+    document.getElementById('EmailEmpresa').value = data[0].email
+    document.getElementById('NumberEmpresa').value = data[0].phoneNumber
+    document.getElementById('HoraEmpresa').value = data[0].time
+    document.getElementById('StatusEmpresa').value = data[0].status
+    document.getElementById('PrecioTEmpresa').value = data[0].totalPriceOrder
     const { products } = data
   })
   .catch(error => {
