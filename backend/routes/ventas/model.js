@@ -11,7 +11,7 @@ const client = createClient({
 });
 
 // enable foreign keys
-await client.execute('PRAGMA foreign_keys = ON')
+
 // Inicializar modelo de base de datos para ventas
 if (process.env.mode !== 'production') {
     await client.execute(`
@@ -42,8 +42,8 @@ await client.execute(`
         productName TEXT NOT NULL,
         productQuantity INTEGER NOT NULL,
         productPrice  REAL NOT NULL,
-        totalPrice REAL NOT NULL,
-        FOREIGN KEY (orderId) REFERENCES OrderTable(id)
+        totalPrice REAL NOT NULL
+        
     )
 `);
 
