@@ -42,7 +42,8 @@ await client.execute(`
         productName TEXT NOT NULL,
         productQuantity INTEGER NOT NULL,
         productPrice  REAL NOT NULL,
-        totalPrice REAL NOT NULL
+        totalPrice REAL NOT NULL,
+        FOREIGN KEY (orderId) REFERENCES OrderTable(id)
         
     )
 `);
