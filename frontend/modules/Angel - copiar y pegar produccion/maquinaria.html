@@ -93,3 +93,82 @@
 
 <!-- Scripts, DESPUES DEL BODY -->
 <script src="maquinaria.js"></script>
+
+
+
+<!-- sacar esto al archivo css -->
+<style>
+    /* necesario para el funcionamiento de los dialogs */
+    .open {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+
+    .dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .dialog.open::backdrop {
+        animation: opacityOn 0.5s ease;
+    }
+
+    .dialog.close::backdrop {
+        animation: opacityOff 0.5s ease;
+    }
+
+
+    .close {
+        animation: fadeOut 0.5s ease;
+    }
+
+
+
+
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        to {
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+    }
+
+
+    @keyframes opacityOn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+    }
+
+    @keyframes opacityOff {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+</style>

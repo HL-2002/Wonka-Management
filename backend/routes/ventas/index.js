@@ -4,7 +4,7 @@ import client from './model.js';
 const ventasRouter = express.Router();
 
 ventasRouter.post('/orders', async (req, res) => {
-    const { name, customerId, email, phoneNumber,time, products ,totalPrice} = req.body;
+    const { name, customerId, email, phoneNumber,time, products ,totalPriceOrder} = req.body;
    
     
 
@@ -14,19 +14,19 @@ ventasRouter.post('/orders', async (req, res) => {
 
     try {
         const clientInsertResult = await client.execute({
-            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
-            args: [name, customerId, email, phoneNumber, time, totalPrice ]
+            sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time, totalPriceOrder) VALUES (?, ?, ?, ?, ?, ?)',
+            args: [name, customerId, email, phoneNumber, time, totalPriceOrder ]
         });
 
         const result = await client.execute({
             sql: 'SELECT last_insert_rowid() AS orderId'
         });
         const orderId = result.rows[0].orderId;
-        for (const { productId,productName, quantity, price} of products) {
+        for (const { productId,productName, productQuantity, productPrice, totalPrice} of products) {
             await client.execute({
                 
-                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, quantity, price) VALUES (?, ?, ?, ?,?)',
-                args: [productId,orderId, productName, quantity, price]
+                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, productQuantity, productPrice, totalPrice) VALUES (?, ?, ?, ?,?,?)',
+                args: [productId,orderId, productName, productQuantity, productPrice,totalPrice]
             });
         }
 
@@ -72,7 +72,7 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
             status: order.status,
             time: order.time,
             products: products,
-            totalPrice:order.totalPrice
+            totalPriceOrder:order.totalPriceOrder
         };
 
         res.status(200).json(orderWithProducts);
@@ -108,7 +108,7 @@ ventasRouter.get('/orders', async (req, res) => {
                 status: order.status,
                 time: order.time,
                 products: products,
-                totalPrice:order.totalPrice
+                totalPriceOrder:order.totalPriceOrder
             };
         }));
 
@@ -202,7 +202,7 @@ ventasRouter.get('/latestOrder', async (req, res) => {
             status: latestOrder.status,
             time: latestOrder.time,
             products: products,
-            totalPrice: latestOrder.totalPrice
+            totalPrice: latestOrder.totalPriceOrder
         };
 
         res.status(200).json(latestOrderWithProducts);
