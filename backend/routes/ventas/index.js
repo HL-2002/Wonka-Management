@@ -16,24 +16,21 @@ ventasRouter.post('/orders', async (req, res) => {
       args: [name, customerId, email, phoneNumber, time, totalPriceOrder]
     })
 
-        const result = await client.execute(
-             'SELECT max(id) FROM OrderTable'
-        );
+    const result = await client.execute(
+      'SELECT id FROM OrderTable ORDER BY id DESC LIMIT 1'
+    )
 
-        const maxId = result.rows[0]['max(id)'];
+    const maxId = result.rows[0].id
+    // Usar el valor de maxId como necesites
+    console.log('El máximo ID en la tabla OrderTable es:', maxId)
 
-        // Usar el valor de maxId como necesites
-        console.log('El máximo ID en la tabla OrderTable es:', maxId);
-        
-        
+    for (const { productId, productName, productQuantity, productPrice, totalPrice } of products) {
+      await client.execute({
 
-        for (const { productId, productName, productQuantity, productPrice, totalPrice} of products) {
-            await client.execute({
-                
-                sql: 'INSERT INTO OrderProduct (productId,orderId, productName, productQuantity, productPrice, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
-                args: [productId, maxId, productName, productQuantity, productPrice,totalPrice]
-            });
-        }
+        sql: 'INSERT INTO OrderProduct (productId,orderId, productName, productQuantity, productPrice, totalPrice) VALUES (?, ?, ?, ?, ?, ?)',
+        args: [productId, maxId, productName, productQuantity, productPrice, totalPrice]
+      })
+    }
 
     res.status(201).json({ message: 'La orden de pedido se creó correctamente.' })
   } catch (error) {
