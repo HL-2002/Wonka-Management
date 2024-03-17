@@ -1,3 +1,4 @@
+import { toast } from 'https://cdn.skypack.dev/wc-toast'
 // Keep track of ids of machines
 let ids = []
 
@@ -230,13 +231,14 @@ function displayMaintenanceForms (machines) {
 }
 
 // Alerta si hay máquinas notificadas o defectuosas
-async function alertMachines() {
+async function alertMachines () {
   const machines = await getMachines().then((json) => { return json.machines })
-  let notificadas = defectuosas = 0
+  let notificadas = 0
+  let defectuosas = 0
   let text = ''
 
   machines.forEach((machine) => {
-    if (machine.state === 'notificada' && machine.typeMaintenance === null ) {
+    if (machine.state === 'notificada' && machine.typeMaintenance === null) {
       notificadas += 1
     } else if (machine.state === 'defectuosa') {
       defectuosas += 1
@@ -245,14 +247,15 @@ async function alertMachines() {
 
   if (notificadas > 0 && defectuosas > 0) {
     text += `Hay ${notificadas} máquina(s) notificada(s) y ${defectuosas} máquina(s) defectuosa(s).`
-  }
-  else if (notificadas > 0) {
+  } else if (notificadas > 0) {
     text += `Hay ${notificadas} máquina(s) notificada(s).`
-  }
-  else if (defectuosas > 0) {
+  } else if (defectuosas > 0) {
     text += `Hay ${defectuosas} máquina(s) defectuosa(s).`
   }
-  alert("Alerta: " + text)
+  // alert("Alerta: " + text)
+  toast(text, {
+    duration: 5000
+  })
 }
 
 // Añadir máquinas
@@ -281,11 +284,17 @@ addForm.addEventListener('submit', async (e) => {
   const tipo = document.getElementById('tipo-select').value.toLowerCase()
   const idInput = document.getElementById('id-maquina')
   const id = idInput.valueAsNumber
-  let repeated = ids.some((id) => id === idInput.valueAsNumber)
+  const repeated = ids.some((id) => id === idInput.valueAsNumber)
 
   // Validar que input no esté vacío o sea menor que 0
   if (isNaN(id) || id < 1) {
-    alert("Por favor ingrese un id válido")
+    // alert('Por favor ingrese un id válido')
+    toast('Por favor ingrese un id válido', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
@@ -300,8 +309,14 @@ addForm.addEventListener('submit', async (e) => {
     })
 
     // Actualizar las máquinas visibles si la respuesta es exitosa
-    if(response.status !== 500) {
-      alert(`Máquina ${id} tipo ${tipo} añadida`)
+    if (response.status !== 500) {
+      // alert(`Máquina ${id} tipo ${tipo} añadida`)
+      toast(`Máquina ${id} tipo ${tipo} añadida`, {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
 
       // Clear form
       idInput.value = ''
@@ -309,12 +324,23 @@ addForm.addEventListener('submit', async (e) => {
       const machines = await getMachines().then((json) => { return json.machines })
       displayMachines(machines)
       displayMaintenanceForms(machines)
-
     } else {
-      alert('Error al añadir máquina, revise la consola y/o servidor')
+      // alert('Error al añadir máquina, revise la consola y/o servidor')
+      toast('Error al añadir máquina, revise la consola y/o servidor', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
     }
   } else {
-    alert('Id de máquina ya asignada, por favor ingrese un id diferente')
+    // alert('Id de máquina ya asignada, por favor ingrese un id diferente')
+    toast('Id de máquina ya asignada, por favor ingrese un id diferente', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
   }
 })
 
@@ -327,7 +353,7 @@ const idDeleteInput = document.getElementById('id-delete')
 idDeleteInput.onkeyup = async () => {
   // Validar id entre las máquinas
   const repeated = ids.some((id) => id === idDeleteInput.valueAsNumber)
-  
+
   if (repeated) {
     idDeleteInput.style.border = '1.5px solid lightgreen'
   } else {
@@ -350,29 +376,47 @@ deleteForm.addEventListener('submit', async (e) => {
     const response = await fetch(`/api/mantenimiento/machine/${id}`, {
       method: 'DELETE'
     })
-     
+
     // Actualizar las máquinas visibles si la respuesta es exitosa
-    if(response.status !== 500) {
-      alert(`Máquina ${id} eliminada`)
+    if (response.status !== 500) {
+      // alert(`Máquina ${id} eliminada`)
+      toast(`Máquina ${id} eliminada`, {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
 
       // Clear form
       idInput.value = ''
       idInput.style.border = '1.5px solid lightgray'
 
       updateDisplays()
-
     } else {
       console.error(error)
-      alert('Error al eliminar máquina, revise la consola y/o servidor')
+      // alert('Error al eliminar máquina, revise la consola y/o servidor')
+      toast('Error al eliminar máquina, revise la consola y/o servidor', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
     }
   } else {
-    alert('Id de máquina no encontrada, por favor ingrese un id diferente')
+    // alert('Id de máquina no encontrada, por favor ingrese un id diferente')
+
+    toast('Id de máquina no encontrada, por favor ingrese un id diferente', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
   }
 })
 
 // Formatear fechas del HTML para evitar cosas locas del GMT
-function strToDate(dateString) {
-  if (dateString === "") {
+function strToDate (dateString) {
+  if (dateString === '') {
     return dateString
   }
   return new Date(dateString.replaceAll('-', '/'))
@@ -420,12 +464,18 @@ prevForm.addEventListener('submit', async (e) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance, dateAvailability, machineId: id })
   })
 
   // Actualizar las máquinas visibles si la respuesta es exitosa
-  if(response.status !== 500) { 
-    alert('Mantenimiento preventivo planificado')
+  if (response.status !== 500) {
+    // alert('Mantenimiento preventivo planificado')
+    toast('Mantenimiento preventivo planificado', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
 
     // Clear form
     document.getElementById('prevent-select').value = ''
@@ -434,9 +484,14 @@ prevForm.addEventListener('submit', async (e) => {
 
     // Actualizar las máquinas y mantenimientos visibles
     updateDisplays()
-    
   } else {
-    alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+    // alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+    toast('Error al planificar mantenimiento, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
   }
 })
 
@@ -460,16 +515,35 @@ predForm.addEventListener('submit', async (e) => {
 
   // Validar id
   if (id === '') {
-    alert('Por favor seleccione una máquina')
+    // alert('Por favor seleccione una máquina')
+    toast('Por favor seleccione una máquina', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
   // Validar fechas
   if (dateMaintenance === '' || dateMaintenance < date) {
-    alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+    // alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+    toast('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
   if (dateAvailability === '' || dateAvailability < dateMaintenance) {
-    alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento')
+    // alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento')
+
+    toast('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
@@ -484,18 +558,24 @@ predForm.addEventListener('submit', async (e) => {
     })
   }
 
-  // Crear mantenimiento 
+  // Crear mantenimiento
   const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance, dateAvailability, machineId: id })
   })
 
   // Actualizar las máquinas visibles si la respuesta es exitosa
-  if(response.status !== 500) {
-    alert('Mantenimiento predictivo planificado')
+  if (response.status !== 500) {
+    // alert('Mantenimiento predictivo planificado')
+    toast('Mantenimiento predictivo planificado', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
 
     // Clear form
     document.getElementById('predict-select').value = ''
@@ -504,9 +584,15 @@ predForm.addEventListener('submit', async (e) => {
 
     // Actualizar las máquinas y mantenimientos visibles
     updateDisplays()
-    
   } else {
-    alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+    // alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+
+    toast('Error al planificar mantenimiento, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
   }
 })
 
@@ -532,13 +618,25 @@ corrForm.addEventListener('submit', async (e) => {
 
   // Validar id
   if (id === '') {
-    alert('Por favor seleccione una máquina')
+    // alert('Por favor seleccione una máquina')
+    toast('Por favor seleccione una máquina', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
   // Validar fecha
   if (dateAvailability === '' || dateAvailability < date) {
-    alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+    // alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+    toast('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
@@ -559,12 +657,18 @@ corrForm.addEventListener('submit', async (e) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ type: typeMaintenance, dateMaintenance: dateMaintenance, dateAvailability: dateAvailability, machineId: id })
+    body: JSON.stringify({ type: typeMaintenance, dateMaintenance, dateAvailability, machineId: id })
   })
 
   // Actualizar las máquinas visibles si la respuesta es exitosa
-  if(response.status !== 500) {
-    alert('Mantenimiento correctivo planificado')
+  if (response.status !== 500) {
+    // alert('Mantenimiento correctivo planificado')
+    toast('Mantenimiento correctivo planificado', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
 
     // Clear form
     document.getElementById('correct-select').value = ''
@@ -572,9 +676,15 @@ corrForm.addEventListener('submit', async (e) => {
 
     // Actualizar las máquinas y mantenimientos visibles
     updateDisplays()
-    
   } else {
-    alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+    // alert('Error al planificar mantenimiento, revise la consola y/o el servidor')
+
+    toast('Error al planificar mantenimiento, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
   }
 })
 
@@ -591,7 +701,7 @@ mPlanSubmit.addEventListener('click', async (e) => {
   mPlanOption = 'submit'
 })
 
-mPlanDelete.addEventListener('click', async (e) => {  
+mPlanDelete.addEventListener('click', async (e) => {
   mPlanOption = 'delete'
 })
 
@@ -606,13 +716,12 @@ mPlanSelect.addEventListener('change', async (e) => {
   const id = parseInt(mPlanSelect.value)
 
   // Contenedores de las fechas
-  const mantPrev = document.getElementById("mPlan-mant-previa")
-  const dispPrev = document.getElementById("mPlan-disp-previa")
+  const mantPrev = document.getElementById('mPlan-mant-previa')
+  const dispPrev = document.getElementById('mPlan-disp-previa')
 
   // Limpiar contenedores antes de añadir los datos
   mantPrev.innerHTML = 'Mantenimiento previo: '
   dispPrev.innerHTML = 'Disponibilidad previa: '
-
 
   // Obtener la máquina seleccionada
   machineSelectedPlan = await getMachine(id)
@@ -623,7 +732,7 @@ mPlanSelect.addEventListener('change', async (e) => {
 })
 
 // Function to formate date string from yyyy-mm-dd to dd/mm/yyyy
-function dateFormat(date) {
+function dateFormat (date) {
   const arr = date.split('-')
   return `${arr[2]}/${arr[1]}/${arr[0]}`
 }
@@ -641,7 +750,13 @@ mPlanForm.addEventListener('submit', async (e) => {
 
   // Validar selección de máquina
   if (id === undefined) {
-    alert('Por favor seleccione una máquina')
+    // alert('Por favor seleccione una máquina')
+    toast('Por favor seleccione una máquina', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
@@ -651,8 +766,14 @@ mPlanForm.addEventListener('submit', async (e) => {
       method: 'DELETE'
     })
 
-    if(response.status !== 500) {
-      alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} eliminado`)
+    if (response.status !== 500) {
+      // alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} eliminado`)
+      toast(`Mantenimiento de la máquina ${machineSelectedPlan.id} eliminado`, {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
 
       // Clear form
       document.getElementById('mPlan-select').value = ''
@@ -662,30 +783,48 @@ mPlanForm.addEventListener('submit', async (e) => {
       // Actualizar las máquinas y mantenimientos visibles
       updateDisplays()
     } else {
-      alert('Error al eliminar mantenimiento, revise la consola y/o el servidor')
+      // alert('Error al eliminar mantenimiento, revise la consola y/o el servidor')
+      toast('Error al eliminar mantenimiento, revise la consola y/o el servidor', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
     }
-  }
-  else if (mPlanOption === 'submit') {
+  } else if (mPlanOption === 'submit') {
     // Obtener fecha de mantenimiento previa
     const mantPrev = strToDate(machineSelectedPlan.dateMaintenance)
-    
+
     // Obtener los datos del formulario
     let dateMaintenance = strToDate(document.getElementById('mPlan-date').value)
     let dateAvailability = strToDate(document.getElementById('mPlan-release').value)
 
     // Validar fechas
     if (dateMaintenance < mantPrev) {
-      alert('Fechas de mantenimiento, asegúrese de que sea mayor a la fechas previa')
-    }
-    else if (dateMaintenance === '' || dateMaintenance < date) {
-      alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
-      return
-    }
-    else if (dateAvailability === '' || dateAvailability < dateMaintenance) {
-      alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la nueva fecha de mantenimiento')
-      return
-    }
-    else {
+      // alert('Fechas de mantenimiento, asegúrese de que sea mayor a la fechas previa')
+      toast('Fechas de mantenimiento, asegúrese de que sea mayor a la fechas previa', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
+    } else if (dateMaintenance === '' || dateMaintenance < date) {
+      // alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+      toast('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
+    } else if (dateAvailability === '' || dateAvailability < dateMaintenance) {
+      // alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la nueva fecha de mantenimiento')
+      toast('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la nueva fecha de mantenimiento', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
+    } else {
       // Actualizar el mantenimiento
       // Formatear fechas
       dateMaintenance = dateMaintenance.toISOString().split('T')[0]
@@ -694,13 +833,19 @@ mPlanForm.addEventListener('submit', async (e) => {
       const response = await fetch(`/api/mantenimiento/${id}`, {
         method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({dateMaintenance: dateMaintenance, dateAvailability: dateAvailability})
+        body: JSON.stringify({ dateMaintenance, dateAvailability })
       })
 
       if (response.status !== 500) {
-        alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} modificado`)
+        // alert(`Mantenimiento de la máquina ${machineSelectedPlan.id} modificado`)
+        toast(`Mantenimiento de la máquina ${machineSelectedPlan.id} modificado`, {
+          duration: 5000,
+          icon: {
+            type: 'success'
+          }
+        })
 
         // Clear form
         document.getElementById('mPlan-select').value = ''
@@ -742,7 +887,7 @@ mManSelect.addEventListener('change', async (e) => {
   const id = parseInt(mManSelect.value)
 
   // Contenedores de las fechas
-  const dispPrev = document.getElementById("mMan-disp-previa")
+  const dispPrev = document.getElementById('mMan-disp-previa')
 
   // Limpiar contenedores antes de añadir los datos
   dispPrev.innerHTML = 'Disponibilidad previa: '
@@ -752,9 +897,8 @@ mManSelect.addEventListener('change', async (e) => {
   dispPrev.innerHTML += dateFormat(machineSelectedMan.dateAvailability)
 })
 
-
 // Obtener máquina por id
-async function getMachine(id) {
+async function getMachine (id) {
   const machines = await getMachines().then((json) => { return json.machines })
   if (!isNaN(id)) {
     for (const machine of machines) {
@@ -778,7 +922,13 @@ mManForm.addEventListener('submit', async (e) => {
 
   // Validar selección de máquina
   if (id === undefined) {
-    alert('Por favor seleccione una máquina')
+    // alert('Por favor seleccione una máquina')
+    toast('Por favor seleccione una máquina', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 
@@ -788,11 +938,19 @@ mManForm.addEventListener('submit', async (e) => {
       method: 'DELETE'
     })
 
-    if(response.status !== 500) {
-      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` + 
-            "La máquina ahora se encuentra disponible. \n" + 
-            "Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.")
+    if (response.status !== 500) {
+      // alert(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` +
+      //       'La máquina ahora se encuentra disponible. \n' +
+      //       'Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.')
 
+      toast(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` +
+            'La máquina ahora se encuentra disponible. \n' +
+            'Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.', {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
       // Clear form
       document.getElementById('mMan-select').value = ''
       document.getElementById('mMan-release').value = ''
@@ -800,14 +958,19 @@ mManForm.addEventListener('submit', async (e) => {
       // Actualizar las máquinas y mantenimientos visibles
       updateDisplays()
     }
-  }
-  else if (mManOption === 'submit') {
+  } else if (mManOption === 'submit') {
     // Obtener los datos del formulario
     let dateAvailability = strToDate(document.getElementById('mMan-release').value)
 
     // Validar fechas
     if (dateAvailability === '' || dateAvailability < date) {
-      alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+      // alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual')
+      toast('Fecha de disponibilidad no válida, asegúrese de que sea mayor que la fecha actual', {
+        duration: 5000,
+        icon: {
+          type: 'error'
+        }
+      })
       return
     }
 
@@ -819,14 +982,20 @@ mManForm.addEventListener('submit', async (e) => {
     const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({dateAvailability: dateAvailability})
+      body: JSON.stringify({ dateAvailability })
     })
 
     // Actualizar las máquinas visibles si la respuesta es exitosa
-    if(response.status !== 500) {
-      alert(`Mantenimiento de la máquina ${machineSelectedMan.id} modificado`)
+    if (response.status !== 500) {
+      // alert(`Mantenimiento de la máquina ${machineSelectedMan.id} modificado`)
+      toast(`Mantenimiento de la máquina ${machineSelectedMan.id} modificado`, {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
 
       // Clear form
       document.getElementById('mMan-select').value = ''
@@ -836,7 +1005,7 @@ mManForm.addEventListener('submit', async (e) => {
       updateDisplays()
     }
   }
- })
+})
 
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
@@ -876,7 +1045,7 @@ btnsClose.forEach((btn) => {
 )
 
 // Buscar máquina por id
-async function searchMachine() {
+async function searchMachine () {
   // Obtener contenedor del display
   const display = document.getElementById('search-display')
 
@@ -890,11 +1059,11 @@ async function searchMachine() {
     // Obtener máqina por id
     const machine = await getMachine(searchId)
     // Formatear datos para el display
-    const disponibilidad = machine.availability == 1 ? "Sí": "No"
-    const linea = machine.line == null ? "Ninguna" : machine.line
-    const mantenimiento = machine.typeMaintenance == null ? "Ninguno" : machine.typeMaintenance
-    const fechaMant = machine.dateMaintenance == null ? "N/A" : dateFormat(machine.dateMaintenance)
-    const fechaDisp = machine.dateAvailability == null ? "N/A": dateFormat(machine.dateAvailability)
+    const disponibilidad = machine.availability == 1 ? 'Sí' : 'No'
+    const linea = machine.line == null ? 'Ninguna' : machine.line
+    const mantenimiento = machine.typeMaintenance == null ? 'Ninguno' : machine.typeMaintenance
+    const fechaMant = machine.dateMaintenance == null ? 'N/A' : dateFormat(machine.dateMaintenance)
+    const fechaDisp = machine.dateAvailability == null ? 'N/A' : dateFormat(machine.dateAvailability)
     // Añadir máquina al display
     display.innerHTML = `<p>Id: ${machine.id}</p>
                          <p>Tipo: ${machine.type}</p>
