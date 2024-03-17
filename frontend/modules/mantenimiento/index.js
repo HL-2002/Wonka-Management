@@ -253,9 +253,11 @@ async function alertMachines () {
     text += `Hay ${defectuosas} máquina(s) defectuosa(s).`
   }
   // alert("Alerta: " + text)
-  toast(text, {
-    duration: 5000
-  })
+  if (text !== '') {
+    toast(text, {
+      duration: 5000
+    })
+  }
 }
 
 // Añadir máquinas
