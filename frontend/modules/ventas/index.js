@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { toast } from 'https://cdn.skypack.dev/wc-toast'
+import { toast } from 'wc-toast'
 let filteredProducts = []
 document.addEventListener('DOMContentLoaded', async function () {
   await getProducts()

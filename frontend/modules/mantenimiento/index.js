@@ -1,4 +1,5 @@
-import { toast } from 'https://cdn.skypack.dev/wc-toast'
+import { toast } from 'wc-toast'
+
 // Keep track of ids of machines
 let ids = []
 
@@ -395,7 +396,7 @@ deleteForm.addEventListener('submit', async (e) => {
 
       updateDisplays()
     } else {
-      console.error(error)
+      // console.error(error)
       // alert('Error al eliminar máquina, revise la consola y/o servidor')
       toast('Error al eliminar máquina, revise la consola y/o servidor', {
         duration: 5000,
@@ -444,16 +445,34 @@ prevForm.addEventListener('submit', async (e) => {
 
   // Validar id
   if (id === '') {
-    alert('Por favor seleccione una máquina')
+    // alert('Por favor seleccione una máquina')
+    toast('Por favor seleccione una máquina', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
   // Validar fechas
   if (dateMaintenance === '' || dateMaintenance < date) {
-    alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+    // alert('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual')
+    toast('Fecha de mantenimiento no válida, asegúrese de que sea mayor que la fecha actual', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
   if (dateAvailability === '' || dateAvailability < dateMaintenance) {
-    alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento')
+    // alert('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento')
+    toast('Fecha de disponibilidad no válida, asegúrese de que sea mayor o igual que la fecha de mantenimiento', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
     return
   }
 

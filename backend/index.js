@@ -23,6 +23,7 @@ ApiRouter.use('/distribucion', distribucionRouter)
 
 // add the frontend to the app
 app.use(express.static('frontend'))
+app.use(express.static('node_modules'))
 
 //  start the server
 app.listen(port, () => {
