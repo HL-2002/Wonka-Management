@@ -115,6 +115,11 @@ label{
     padding: 10px;
 }
 
-
-
-
+ /* Esto es lo del mapa */
+#mapContainer {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: #323232;
+}
+ /* Hasta llega lo del mapa  */
