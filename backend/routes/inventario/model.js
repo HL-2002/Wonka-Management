@@ -3,8 +3,8 @@ const Token = process.env.DB_MAN_TOKEN
 const urlMan = process.env.mode === 'production' ? process.env.DB_MAN_URL : 'file:./backend/local.db'
 
 const client = createClient({
-  authToken: Token,
-  url: urlMan
+  authToken: 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0NTc1OTAsImlkIjoiZTc4ZjIyY2YtZDAyNS0xMWVlLTg0Y2MtY2E4ODQ5YzIwMGFhIn0.d1LfMhWIwFy-wJm5C28xxcHBEAfjKLvCsbUHjXJC2BtmssaEndu93sKAPmWaRoRJl5KFKzBGKR8xa-l-K22iBw',
+  url: 'libsql://maintenance-time9683.turso.io'
 })
 // create the tables
 
