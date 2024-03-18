@@ -18,19 +18,22 @@
 
         <nav>
             <ul class="header-navbar">
-                <a href="../../index.html">
+                <a href="/">
                     <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
                 </a>
 
                 <li><a href="/index.html"><img src="../../public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                <li><a href="/modules/despacho"><img src="../../public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
+                <li><a href="/modules/despacho"><img src="../../public/icono_2.webp"
+                            alt="icono Distribucion">Distribución</a></li>
                 <li><a href="/modules/inventario/"><img src="../../public/icono_3.webp"
                             alt="icono de inventario">Inventario</a></li>
-                <li><a href="/modules/produccion"><img src="../../public/icono_4.webp" alt="icono Produccion">Producción</a></li>
+                <li><a href="/modules/produccion"><img src="../../public/icono_4.webp"
+                            alt="icono Produccion">Producción</a></li>
                 <li><a href="/modules/mantenimiento"><img src="../../public/icono_5.webp"
                             alt="icono de Mantenimiento">Mantenimiento</a>
                 </li>
-                <li><a href="/modules/compras"><img src="../../public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+                <li><a href="/modules/compras"><img src="../../public/icono_6.webp"
+                            alt="icono de Ingredientes">Compra</a></li>
 
             </ul>
         </nav>
@@ -39,21 +42,25 @@
     </header>
 
     <main>
+        <wc-toast></wc-toast>
 
-        <h1 class="main-title">Crea Orden de Pedido</h1>
+        <div>
+            <div class="btn-nav">
 
+                <button data-action="create" class="selected">Crear orden</button>
+                <button data-action="view">ver ordenes</button>
 
-        <section class="main-container">
+            </div>
+            <h1 class="main-title">Crea Orden de Pedido</h1>
+        </div>
+        <section class="main-container" id="creater" style="display: none;">
 
             <section class="sales-container">
-
-
-
                 <div class="">
                     <h2>Orden</h2>
                     <p>Crea orden para nuestro distribuidor en Carabobo</p>
 
-                    <form action="/" method="post">
+                    <form>
 
                         <div class="info-container">
 
@@ -64,8 +71,22 @@
                             </div>
                             <div class="sales-container__id">
                                 <label>Rif
-                                    <input type="number" name="customerId" id="customerId"
-                                        placeholder="Ingresa rif de la empresa" required>
+
+                                    <div class="rif-container">
+                                        <select name="" id="rif-prefix">
+                                            <option value="V">V</option>
+                                            <option value="J">J</option>
+                                            <option value="E">E</option>
+                                            <option value="P">P</option>
+                                            <option value="G">G</option>
+                                        </select>
+                                        <input type="number" name="customerId" id="customerId" placeholder="RIF"
+                                            required>
+
+
+
+                                    </div>
+
                                 </label>
                             </div>
 
@@ -109,7 +130,7 @@
                 </div>
 
                 </form>
-                <button onclick="addProduct()">Agregar Producto</button>
+                <button id="add">Agregar Producto</button>
             </section>
 
 
@@ -132,20 +153,79 @@
                     </table>
                 </div>
 
-                <button onclick="submitOrder()">Enviar Pedido</button>
+                <button type="submit" id="send">Enviar Pedido</button>
             </section>
 
 
+
+
+
+
+
+
+        </section>
+
+        <section id="viewer" style="display: none;">
+
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Buscar ordenes">
+                <!-- add checkbox for filter for state -->
+
+                <label for="state">Estado</label>
+                <select name="state" id="state">
+                    <option value="all">Todos</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="entregado">Entregado</option>
+                </select>
+            </div>
+
+            <table class="table" id="table">
+
+                <tr>
+                    <th>id</th>
+                    <th>Empresa</th>
+                    <th>Rif</th>
+                    <th>Correo</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Creada</th>
+                    <th>
+                        costo
+                    </th>
+                    <th>accion</th>
+                </tr>
+
+                <tbody id="orderTable">
+
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+        </section>
+
+        <dialog class="dialog" id="dialog">
+            <button id="close">Cerrar</button>
+            <h2>Orden de Pedido</h2>
+            <p>id: <span id="order-id"></span></p>
+            <p>Empresa: <span id="customer-name"></span></p>
+            <p>Rif: <span id="customer-id"></span></p>
+            <p>Correo: <span id="email"></span></p>
+            <p>Telefono: <span id="phone-number"></span></p>
+            <p>Estado: <span id="status"></span></p>
+            <p>Creada: <span id="time"></span></p>
+            <p>Costo: <span id="total-price-order"></span></p>
+
+            <div id="order-items"></div>
+        </dialog>
     </main>
 
-
-
-    </section>
-
-
-    </main>
-
-    <script src="./index.js"></script>
+    <script type="module" src="./index.js"></script>
+    <script type="module" src="./nav.js"></script>
 
 </body>
 

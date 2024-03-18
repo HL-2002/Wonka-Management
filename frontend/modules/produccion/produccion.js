@@ -112,12 +112,12 @@ async function Verificar() {
 
         } else {
             // Error al obtener la �ltima orden
-            console.error("Hubo un error al obtener la �ltima orden. C�digo de estado:", response.status);
-            alert("Hubo un error al obtener la �ltima orden. Por favor, int�ntelo de nuevo m�s tarde.");
+            console.error("Hubo un error al obtener la ultima orden. Codigo de estado:", response.status);
+            alert("Hubo un error al obtener la ultima orden. Por favor, intentelo de nuevo mas tarde.");
         }
     } catch (error) {
-        console.error("Error al obtener la �ltima orden:", error);
-        alert("Hubo un error al obtener la �ltima orden. Por favor, revise la consola para m�s detalles.");
+        console.error("Error al obtener la ultima orden:", error);
+        alert("Hubo un error al obtener la ultima orden. Por favor, revise la consola para mas detalles.");
     }
 }
 let m = 0
@@ -175,7 +175,7 @@ async function crearHTML() {
         total.innerHTML = `${total_productos}`
     } catch (error) {
         console.error('Error al crear el HTML:', error)
-        alert('Hubo un error al crear el HTML. Por favor, revise la consola para m�s detalles.')
+        alert('Hubo un error al crear el HTML. Por favor, revise la consola para mas detalles.')
     }
 }
 
@@ -208,7 +208,13 @@ async function Producir() {
     orders.products.forEach(producto => {
         const table = document.getElementById(`pf${producto.productId}`);
         table.innerHTML += `${producto.productQuantity}`
-
+        const addProduct = {
+            id: producto.productId,
+            sum: 1,
+            units: producto.productQuantity
+        };
+        console.log(addProduct)
+        insertStock(addProduct);
         n++
     })
     calcularIngredientesTotales(orders.products)
@@ -316,7 +322,7 @@ function updateMaintenance() {
 
     if (count > 0) {
         // Notificar al usuario
-        alert(`Alerta: Hay ${count} m�quinas con mantenimientos pr�ximos.`)
+        alert(`Alerta: Hay ${count} maquinas con mantenimientos proximos.`)
         // Sortear m�quinas por fecha de mantenimiento
         maintainMachines.sort((a, b) => {
             return strToDate(a.dateMaintenance) - strToDate(b.dateMaintenance)
@@ -327,7 +333,7 @@ function updateMaintenance() {
             const dateMaintenance = strToDate(machine.dateMaintenance)
             const diferencia = dateMaintenance - today
             const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24))
-            mantenimientos.innerHTML += `<li> M�quina ${machine.id}: L�nea ${machine.line} - Mantenimiento ${machine.typeMaintenance} en ${dias} d�as. </li>`
+            mantenimientos.innerHTML += `<li> Maquina ${machine.id}: Linea ${machine.line} - Mantenimiento ${machine.typeMaintenance} en ${dias} dias. </li>`
         })
     }
 }
@@ -393,7 +399,7 @@ notifyForm.addEventListener('submit', async (e) => {
                 state = ""
 
                 // Notificar al usuario
-                alert(`M�quina ${machine.id} notificada con irregularidad.`)
+                alert(`Maquina ${machine.id} notificada con irregularidad.`)
 
 
                 // Actualizar lista de m�quinas
@@ -401,7 +407,7 @@ notifyForm.addEventListener('submit', async (e) => {
                 updateMaintenance()
             }
             else {
-                alert('Error al a�adir m�quina, revise la consola y/o servidor')
+                alert('Error al añadir maquina, revise la consola y/o servidor')
             }
         }
         // Notificaci�n de defecto
@@ -423,17 +429,17 @@ notifyForm.addEventListener('submit', async (e) => {
 
                 // Notificar al usuario
                 if (machine.line !== 0) {
-                    alert(`M�quina ${machine.id} notificada con defecto, la misma ha sido removida de la l�nea ${machine.line}.`)
+                    alert(`Maquina ${machine.id} notificada con defecto, la misma ha sido removida de la linea ${machine.line}.`)
                 }
                 else {
-                    alert(`M�quina ${machine.id} notificada con defecto.`)
+                    alert(`Maquina ${machine.id} notificada con defecto.`)
                 }
 
                 // Actualizar lista de m�quinas
                 machines = await getMachines().then((json) => { return json.machines })
             }
             else {
-                alert('Error al a�adir m�quina, revise la consola y/o servidor')
+                alert('Error al añadir maquina, revise la consola y/o servidor')
             }
         }
         else {
@@ -496,22 +502,22 @@ releaseForm.addEventListener('submit', async (e) => {
                     displayRelease.innerHTML = ""
                 }
                 else {
-                    alert('Error al liberar m�quina, revise la consola y/o servidor')
+                    alert('Error al liberar maquina, revise la consola y/o servidor')
                 }
             })
             // Notificar al usuario
-            alert(`M�quinas liberadas de la l�nea ${lineasRelease.value}.`)
+            alert(`Maquinas liberadas de la linea ${lineasRelease.value}.`)
 
             // Actualizar lista de m�quinas
             machines = await getMachines().then((json) => { return json.machines })
             updateMaintenance()
         }
         else {
-            alert("Seleccione al menos una m�quina")
+            alert("Seleccione al menos una maquina")
         }
     }
     else {
-        alert("Seleccione una l�nea")
+        alert("Seleccione una linea")
     }
 
 
@@ -567,22 +573,22 @@ assignForm.addEventListener('submit', async (e) => {
                     displayAssign.innerHTML = ""
                 }
                 else {
-                    alert('Error al asignar m�quina, revise la consola y/o servidor')
+                    alert('Error al asignar maquina, revise la consola y/o servidor')
                 }
             })
             // Notificar al usuario
-            alert(`M�quinas asignadas a la l�nea ${lineasAssign.value}.`)
+            alert(`Maquinas asignadas a la linea ${lineasAssign.value}.`)
 
             // Actualizar lista de m�quinas
             machines = await getMachines().then((json) => { return json.machines })
             updateMaintenance()
         }
         else {
-            alert("Seleccione al menos una m�quina")
+            alert("Seleccione al menos una maquina")
         }
     }
     else {
-        alert("Seleccione una l�nea y un tipo de m�quina")
+        alert("Seleccione una linea y un tipo de maquina")
     }
 })
 
