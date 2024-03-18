@@ -4,9 +4,9 @@ const isVisible = 'is-visible'
 
 /* //Modal animation
 -------------------- */
-document.addEventListener('DOMContentLoaded', function () {
-  // Lógica para acceder a productTable y llamar a obtenerDatosGenerales
-  // obtenerDatosGenerales()
+const reportes = document.getElementById('generar-button')
+reportes.addEventListener('click', function () {
+  obtenerDatosGenerales()
 })
 
 for (const el of openEls) {
@@ -163,11 +163,16 @@ async function saveProduct () {
 async function saveCargo () {
   const codValue = document.getElementById('codigoC').value
   const cantidadValue = document.getElementById('cantidadC').value
+  const costoValue = document.getElementById('costoC').value
+  const obserValue = document.getElementById('costoC').value
 
   const product = {
-    id: codValue,
-    sum: 1,
-    units: cantidadValue
+    productId: codValue,
+    motivo: 'AJU',
+    tipo: 'CARGO',
+    units: cantidadValue,
+    total: costoValue * cantidadValue,
+    observ: obserValue
   }
   await insertStock(product)
   await fillModalCargo()
@@ -176,11 +181,16 @@ async function saveCargo () {
 async function saveDescargo () {
   const codValue = document.getElementById('codigoD').value
   const cantidadValue = document.getElementById('cantidadD').value
+  const costoValue = document.getElementById('costoD').value
+  const obserValue = document.getElementById('costoD').value
 
   const product = {
-    id: codValue,
-    sum: '0',
-    units: cantidadValue
+    productId: codValue,
+    motivo: 'AJU',
+    tipo: 'DESCARGO',
+    units: cantidadValue,
+    total: costoValue * cantidadValue,
+    observ: obserValue
   }
   await insertStock(product)
   await fillModalDescargo()
@@ -209,7 +219,6 @@ async function modProduct (id, des, category) {
   const selectElement = document.getElementById('categoria')
   selectElement.innerHTML = options.join('')
 }
-
 
 // eslint-disable-next-line no-unused-vars
 async function addCategory (params) {
@@ -263,7 +272,7 @@ async function fillModal (id) {
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
   const lstCategory = await getCategory()
 
-  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[0]
+  const selectedCategoty = id ? lstCategory.find(item => item.id === parseInt(selected.categoryId)) : lstCategory[1]
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
@@ -271,6 +280,11 @@ async function fillModal (id) {
   const viewPrice = selected?.price || ''
   const viewCost = selected?.cost || ''
   const viewStock = selected?.stock || 0
+  const viewStockComprometido = selected?.comprometido || 0
+  let viewStockDisponible = selected?.stock - selected?.comprometido || 0
+  if (viewStockDisponible < 0) {
+    viewStockDisponible = 0
+  }
 
   const status = 'readonly'
 
@@ -313,6 +327,14 @@ async function fillModal (id) {
       <div class="details-row">
           <strong>Stock:</strong>
           <input type="text" id="stock" name="stock" placeholder="Stock" value="${viewStock}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Stock Comprometido:</strong>
+          <input type="text" id="stock" name="stock" placeholder="Stock" value="${viewStockComprometido}" ${status}>
+      </div>
+      <div class="details-row">
+          <strong>Stock Disponible:</strong>
+          <input type="text" id="stock" name="stock" placeholder="Stock" value="${viewStockDisponible}" ${status}>
       </div>
   </div>
 </article>
@@ -364,6 +386,7 @@ async function fillModalCargo (id) {
 
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
+  const viewCost = selected?.cost || ''
   const status = 'readonly'
   const actions = `
     <button id="saveCargo" onclick="saveCargo()" class="close-modal" >Guardar</button>
@@ -376,11 +399,12 @@ async function fillModalCargo (id) {
     <article class="grid">
       <h2>Nuevo Movimiento</h2>
       <div class="article-wrapper">
-        <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
-          <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigoC" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
-          <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidadC" name="cantidad" placeholder="Ingrese la cantidad" ></p>
-        </div>
+      <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
+        <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigoC" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
+        <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
+        <p style="margin: 0; padding-left: 10px; width: 180px;"><strong style="padding-left: 10px;">Costo:</strong> <input style="width: 80px;" type="text" id="costoC" name="costoD" value="${viewCost}" ${status}></p>
+        <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidadC" name="cantidad" placeholder="Ingrese la cantidad" ></p>
+      </div>
       </div>
     </article>
   `
@@ -393,7 +417,7 @@ async function fillModalCargo (id) {
 async function fillModalDescargo (id) {
   const lstProducts = await getProducts()
   const selected = id ? lstProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
-
+  const viewCost = selected?.cost || ''
   const viewID = selected?.id || ''
   const viewDescription = selected?.description || ''
   const status = 'readonly'
@@ -411,6 +435,7 @@ async function fillModalDescargo (id) {
         <div style="display: flex; flex-direction:row; justify-content:center; align-items:center" class="article-body">
           <p style="margin: 0; padding-left: 10px;"><strong>Codigo:</strong> <input type="text" id="codigoD" name="codigo" placeholder="Codigo" value="${viewID}" ${status}></p>
           <p style="margin: 0; padding-left: 10px;"><strong style="padding-left: 10px;">Descripcion:</strong> <input type="text" id="descripcion" name="descripcion" placeholder="Ingrese la descripción" value="${viewDescription}" ${status}></p>
+          <p style="margin: 0; padding-left: 10px; width: 180px;"><strong style="padding-left: 10px;">Costo:</strong> <input style="width: 80px;" type="text" id="costoD" name="costoD" value="${viewCost}" ${status}></p>
           <p style="margin: 0; padding-left: 10px;"><strong>Cantidad:</strong> <input type="text" id="cantidadD" name="cantidad" placeholder="Ingrese la cantidad" ></p>
         </div>
       </div>
@@ -428,6 +453,7 @@ async function getProducts (params) {
   return await response.json()
 }// Devuelve array con todos los articulos creados
 
+// eslint-disable-next-line no-unused-vars
 async function getWarehouse (params) {
   const response = await fetch('/api/inventario/warehouse')
   return await response.json()
@@ -578,30 +604,71 @@ async function removeCategory (id) {
 // Nueva funcion para obtener los datos de productos, almacenes, categorias y recetas
 // eslint-disable-next-line no-unused-vars
 async function obtenerDatosGenerales () {
-  const [productos, almacenes, categorias] = await Promise.all([
+  const select = document.getElementById('report-list')
+  const selected = select.options[select.selectedIndex].value
+  const [productos, inventario, categorias] = await Promise.all([
     fetch('/api/inventario/products'),
-    fetch('/api/inventario/warehouse'),
+    fetch('/api/inventario/inventario'),
     fetch('/api/inventario/category')
   ])
 
   const datos = Promise.all([
     productos.json(),
-    almacenes.json(),
+    inventario.json(),
     categorias.json()
   ])
-  mostrarDatosGeneralesEnTabla(await datos)
+  mostrarDatosGeneralesEnTabla(await datos, selected)
 }
-function mostrarDatosGeneralesEnTabla(datos) {
+function mostrarDatosGeneralesEnTabla (datos, tipo) {
   const tabla = document.getElementById('productTable')
-  const table = document.createElement('ul') // Corrección: Cambié 'tabla.document.createElement' por 'document.createElement'4
-  let htmlGeneral = ''
+  const titulo = document.getElementById('titulo-reporte')
 
-  // Mostrar productos
-  htmlGeneral += '<p><strong>Productos:</strong></p>'
-  for (const producto of datos[0]) {
-    htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
+  const table = document.createElement('ul')
+  let htmlGeneral = ''
+  if (tipo === 'pr') {
+    // Mostrar productos
+    titulo.innerHTML = 'Listado de Productos'
+    for (const producto of datos[0]) {
+      htmlGeneral += `<p>${producto.id} - ${producto.description}</p>`
+    }
+  } else if (tipo === 'ct') {
+    // Mostrar categorias
+    titulo.innerHTML = 'Listado de Categorias'
+    for (const producto of datos[2]) {
+      htmlGeneral += `<p>${producto.id} - ${producto.description}</p>`
+    }
+  } else if (tipo === 'prs') {
+    // Mostrar categorias
+    titulo.innerHTML = 'Productos con su Stock'
+    for (const producto of datos[0]) {
+      htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.stock}</p>`
+    }
+  } else if (tipo === 'prsd') {
+    // Mostrar categorias
+    titulo.innerHTML = 'Productos con su Stock Disponible'
+    for (const producto of datos[0]) {
+      let disponible = producto.stock - producto.comprometido
+      if (disponible < 0) {
+        disponible = 0
+      }
+      htmlGeneral += `<p>${producto.id} - ${producto.description} = ${disponible}</p>`
+    }
+  } else if (tipo === 'prsc') {
+    // Mostrar categorias
+    titulo.innerHTML = 'Productos con su Stock Comprometido'
+    for (const producto of datos[0]) {
+      htmlGeneral += `<p>${producto.id} - ${producto.description} = ${producto.comprometido}</p>`
+    }
+  } else if (tipo === 'inv') {
+    // Mostrar categorias
+    titulo.innerHTML = 'Ajustes de Stock Manuales'
+    for (const movimiento of datos[1]) {
+      const producto = datos[0].find(item => item.id === movimiento.productId)
+      htmlGeneral += `<p>${movimiento.id} - ${movimiento.motivo} - ${movimiento.productId} - ${producto.description} -  ${movimiento.tipo} - ${movimiento.stock}</p>`
+    }
   }
+  console.log(datos)
   tabla.innerHTML = ''
   table.innerHTML = htmlGeneral
-  tabla.appendChild(table) // Corrección: Agregué la tabla al elemento tabla
+  tabla.appendChild(table)
 }
