@@ -3,27 +3,32 @@ const Token = process.env.DB_MAN_TOKEN
 const urlMan = process.env.mode === 'production' ? process.env.DB_MAN_URL : 'file:./backend/local.db'
 
 const client = createClient({
-  authToken: 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0NTc1OTAsImlkIjoiZTc4ZjIyY2YtZDAyNS0xMWVlLTg0Y2MtY2E4ODQ5YzIwMGFhIn0.d1LfMhWIwFy-wJm5C28xxcHBEAfjKLvCsbUHjXJC2BtmssaEndu93sKAPmWaRoRJl5KFKzBGKR8xa-l-K22iBw',
-  url: 'libsql://maintenance-time9683.turso.io'
+  authToken: Token,
+  url: urlMan
 })
+
 // create the tables
 
-await client.execute(`
+if (process.env.mode !== 'production') {
+  await client.execute(`
+  DROP TABLE IF EXISTS INVENTARIO
+`)
+  await client.execute(`
     DROP TABLE IF EXISTS PRODUCTS
   `)
-await client.execute(`
+  await client.execute(`
     DROP TABLE IF EXISTS WAREHOUSE
   `)
-await client.execute(`
+  await client.execute(`
     DROP TABLE IF EXISTS CATEGORY
   `)
-
-await client.execute(`
+  await client.execute(`
   CREATE TABLE IF NOT EXISTS WAREHOUSE (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     description TEXT NOT NULL
   )
 `)
+}
 
 await client.execute(`
   CREATE TABLE IF NOT EXISTS CATEGORY (
@@ -38,33 +43,51 @@ await client.execute(`
     categoryId INTEGER NOT NULL,
     description TEXT NOT NULL,
     ref TEXT,
-    cost TEXT,
-    price TEXT,
-    stock DECIMAL,
+    cost DECIMAL DEFAULT 0,
+    price DECIMAL DEFAULT 0,
+    stock DECIMAL DEFAULT 0,
+    comprometido DECIMAL DEFAULT 0,
     FOREIGN KEY (categoryId) REFERENCES CATEGORY(id)
   )
 `)
 
-await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Materia Prima'] })
-await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Producto Final'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka Bar', '', '10', '12', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Candied Apple', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka Swirl Lollipops', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Bluebirds egg candy', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Rompemuelas eterno', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Three-course dinner gum', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Stained-glass hard candy', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka whipple-scrumptious fudgemallow delight', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka nutty chocolate surprise', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Edible grass', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'cacao', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate negro', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate con leche', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'manzana', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'azucar', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'jarabe de maiz', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate negro', '', '8', '15', '0'] })
-await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'taza de almendras', '', '8', '15', '0'] })
-
-
+await client.execute(`
+  CREATE TABLE IF NOT EXISTS INVENTARIO (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    motivo TEXT NOT NULL,
+    tipo TEXT NOT NULL,
+    productId INTEGER NOT NULL,
+    stock DECIMAL NOT NULL,
+    total DECIMAL,
+    observacion TEXT,
+    FOREIGN KEY (productId) REFERENCES PRODUCTS(id)
+  )
+`)
+try {
+  const { rows: products } = await client.execute('SELECT * FROM PRODUCTS')
+  if (products.length <= 0) {
+    await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Materia Prima'] })
+    await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: ['Producto Final'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka Bar', '', '10', '12', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Candied Apple', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka Swirl Lollipops', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Bluebirds egg candy', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Rompemuelas eterno', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Three-course dinner gum', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Stained-glass hard candy', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka whipple-scrumptious fudgemallow delight', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Wonka nutty chocolate surprise', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['2', 'Edible grass', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'cacao', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate negro', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate con leche', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'manzana', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'azucar', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'jarabe de maiz', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate negro', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'taza de almendras', '', '8', '15', '0'] })
+  }
+} catch (error) {
+  console.log('Error de Carga incial de Inventario')
+}
 export default client
