@@ -67,12 +67,14 @@ async function orderporId(id) {
             document.getElementById('facturaexistente').style.display = 'block'
             document.getElementById('errornofactura').style.display = 'none'
             document.getElementById('NombreEmpresa').value = data ? data.customerName : ""
-            document.getElementById('RifEmpresa').value = data ? data.customerId : ""
-            document.getElementById('EmailEmpresa').value = data ? data.email : ""
-            document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
-            document.getElementById('HoraEmpresa').value = data ? data.time : ""
-            document.getElementById('StatusEmpresa').value = data ? data.status : ""
-            document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+            //document.getElementById('RifEmpresa').value = data ? data.customerId : ""
+            //document.getElementById('EmailEmpresa').value = data ? data.email : ""
+            //document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
+            //document.getElementById('HoraEmpresa').value = data ? data.time : ""
+            //document.getElementById('StatusEmpresa').value = data ? data.status : ""
+            //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+            document.getElementById('Direccion').value = 'tumama'
+            document.getElementById('numerodecamion').value = 13
             resProducts(id)
             //Desglosar factura
           
