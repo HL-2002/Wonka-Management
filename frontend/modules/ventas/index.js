@@ -312,7 +312,6 @@ async function submitOrder () {
     totalPrice += product.totalPrice
   }
 
-  console.log(customerId)
   // Construir el objeto de pedido
   const order = {
     name,
@@ -334,7 +333,28 @@ async function submitOrder () {
       },
       body: JSON.stringify(order)
     })
-
+    // Actualiza el inventario comprometido
+    for (const Element of order.products) {
+      const params = {
+        productId: Element.productId,
+        tipo: 'CARGO',
+        units: Element.productQuantity
+      }
+      try {
+        const response = await fetch('/api/inventario/set/product/stock/comprometido', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(params)
+        })
+        if (!response.ok) {
+          throw new Error('Error to update product stock.')
+        }
+      } catch (error) {
+        console.error('Error updating product stock:', error)
+      }
+    }
     if (response.ok) {
       // Pedido enviado correctamente
       toast('Pedido enviado correctamente', {
