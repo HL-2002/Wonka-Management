@@ -10,7 +10,7 @@ Router.get('/', async (req, res) => {
   // make a query to the database update the machines  state in base of the maintenance date
   try {
     await client.execute({ sql: 'UPDATE MACHINE SET state = ? , availability = 0, line = null   WHERE date((select dateMaintenance from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) <= date() AND date((select dateAvailability from  MAINTENANCE WHERE MACHINE.id =  MAINTENANCE.machineId)) >= date();', args: ['mantenimiento'] })
-    await client.execute({ sql: 'DELETE FROM MAINTENANCE WHERE date(dateAvailability) <= date()' })
+    await client.execute('DELETE FROM MAINTENANCE WHERE date(dateAvailability) <= date()')
   } catch (error) {
     console.error('dont have maintenance to update the state of the machine', error)
   }
@@ -72,7 +72,7 @@ Router.patch('/machine/:id', async (req, res) => {
   const { state, line, availability } = req.body
   // update the machine in the database
 
-  const { rows: machines } = await client.execute('SELECT * FROM MACHINE WHERE id = ?', [id])
+  const { rows: machines } = await client.execute({ sql: 'SELECT * FROM MACHINE WHERE id = ?', args: [id] })
 
   const machine = machines[0]
   const stateDB = state ?? machine.state

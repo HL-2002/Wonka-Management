@@ -6,7 +6,7 @@ const router = express.Router()
 // Obtener todos los Almacenes
 router.get('/warehouse', async (req, res) => {
   try {
-    const { rows: warehouse } = await client.execute({ sql: 'SELECT * FROM WAREHOUSE' })
+    const { rows: warehouse } = await client.execute('SELECT * FROM WAREHOUSE')
     res.json(warehouse)
   } catch (error) {
     console.log(error)
@@ -17,7 +17,7 @@ router.get('/warehouse', async (req, res) => {
 // Obtener todos los productos
 router.get('/products', async (req, res) => {
   try {
-    const { rows: products } = await client.execute({ sql: 'SELECT * FROM PRODUCTS' })
+    const { rows: products } = await client.execute('SELECT * FROM PRODUCTS')
     res.json(products)
   } catch (error) {
     console.log(error)
@@ -25,11 +25,22 @@ router.get('/products', async (req, res) => {
   }
 })
 
-// Obtener todas las categorías
+// Obtener todos los movimientos de inventario
+router.get('/inventario', async (req, res) => {
+  try {
+    const { rows: products } = await client.execute('SELECT * FROM INVENTARIO')
+    res.json(products)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+// Obtener todos los productos
 router.get('/category', async (req, res) => {
   try {
-    const { rows: category } = await client.execute({ sql: 'SELECT * FROM CATEGORY' })
-    res.json(category)
+    const { rows: products } = await client.execute('SELECT * FROM CATEGORY')
+    res.json(products)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Internal Server Error' })
@@ -55,22 +66,90 @@ router.post('/new/product', async (req, res) => {
   }
 })
 
-// Actualizar el stock de un producto
-router.patch('/set/product/stock', async (req, res) => {
-  const { id, sum, units } = req.body
+// Movimiento de Inventario
+router.post('/new/inventario', async (req, res) => {
+  const { productId, motivo, tipo, units, total } = req.body
+
+  const product = parseInt(productId)
+  const motive = motivo || null
+  const type = tipo || null
+  const stock = units || null
+  const totals = total || null
 
   try {
-    const { rows: products } = await client.execute({ sql: 'SELECT stock FROM PRODUCTS WHERE id = ?', args: [id] })
+    await client.execute({ sql: 'INSERT INTO INVENTARIO (motivo, tipo, productId, stock, total) VALUES (?, ?, ?, ?, ?)', args: [motive, type, product, stock, totals] })
+    res.status(201).end()
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+// Actualizar el stock de un producto
+router.patch('/set/product/stock', async (req, res) => {
+  const { productId, motivo, tipo, units, total, observacion } = req.body
+  const product = parseInt(productId)
+  const motiveValue = motivo || null
+  const typeValue = tipo || null
+  const stockValue = units || null
+  const totalValue = total || null
+  const observ = observacion || null
+
+  try {
+    // Insertar en la tabla INVENTARIO
+    await client.execute({
+      sql: 'INSERT INTO INVENTARIO (motivo, tipo, productId, stock, total, observacion) VALUES (?, ?, ?, ?, ?, ?)',
+      args: [motiveValue, typeValue, product, stockValue, totalValue, observ]
+    })
+    // Actualizar el stock del producto
+    const { rows: products } = await client.execute({
+      sql: 'SELECT stock FROM PRODUCTS WHERE id = ?',
+      args: [productId]
+    })
 
     if (products.length === 0) {
       return res.status(404).json({ error: 'Product not found' })
     }
 
     const currentStock = products[0].stock
-    const newStock = sum === 1 ? currentStock + parseInt(units) : currentStock - parseInt(units)
-    console.log(req.body, 'AQUI')
+    const newStock = tipo === 'CARGO' ? currentStock + parseInt(units) : currentStock - parseInt(units)
 
-    await client.execute({ sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?', args: [newStock, id] })
+    await client.execute({
+      sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?',
+      args: [newStock, productId]
+    })
+
+    res.status(201).end()
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+// Actualizar el stock comprometido de un producto
+router.patch('/set/product/stock/comprometido', async (req, res) => {
+  const { productId, tipo, units } = req.body
+  const typeValue = tipo || null
+
+  try {
+    // Actualizar el stock del producto
+    const { rows: products } = await client.execute({
+      sql: 'SELECT comprometido FROM PRODUCTS WHERE id = ?',
+      args: [productId]
+    })
+
+    if (products.length === 0) {
+      return res.status(404).json({ error: 'Product not found' })
+    }
+
+    const currentComprometido = products[0].comprometido
+    const newComprometido = typeValue === 'CARGO' ? currentComprometido + parseInt(units) : currentComprometido - parseInt(units)
+
+    await client.execute({
+      sql: 'UPDATE PRODUCTS SET comprometido = ? WHERE id = ?',
+      args: [newComprometido, productId]
+    })
+
     res.status(201).end()
   } catch (error) {
     console.error(error)
@@ -97,7 +176,7 @@ router.patch('/set/product/:id', async (req, res) => {
 
 // Crear una nueva categoría
 router.post('/new/category', async (req, res) => {
-  const description = req.body
+  const { description } = req.body
   try {
     await client.execute({ sql: 'INSERT INTO CATEGORY (description) VALUES (?)', args: [description] })
     res.status(201).end()
@@ -181,6 +260,7 @@ router.get('/warehouse/:id', async (req, res) => {
   }
 })
 
+
 // Obtener una categoría por ID
 router.get('/category/:id', async (req, res) => {
   const { id } = req.params
@@ -192,5 +272,18 @@ router.get('/category/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
+//Borrar categoria por id
+router.delete('/category/delete/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const { rows: category } = await client.execute({ sql: 'delete FROM CATEGORY WHERE id = ?', args: [id] })
+    res.json(category)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 export default router

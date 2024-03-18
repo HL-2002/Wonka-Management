@@ -238,6 +238,7 @@ main{
     cursor: default;
     width: fit-content;
     height: fit-content;
+    min-width: 300px;
   }
 
   .modal-dialog::-webkit-scrollbar {

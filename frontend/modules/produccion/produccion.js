@@ -6,12 +6,21 @@
 //id = mM# es maquinas en mantenimiento **preguntar a mantenimiento si tienen esto
 
 // # es el numero de la linea de produccion de 1-10
-
+/* ID DE MATERIA PRIMA
+    11 CACAO
+    12 CHOCOLATE NEGRO
+    13 CHOCOLATE CON LECHE
+    14 MANZANA
+    15 AZUCAR
+    16 JARABE DE MAIZ
+    17 CHOCOLATE NEGRO
+    18 TAZA de ALMENDRAS
+    */
 /* ID de los productos por numero 
    1 Wonka bar: Barra Wonka
    2 Candied apples: Manzanas acarameladas
    3 Wonka Swirl Lollipops: Chupeta espiral Wonka
-   4 Bluebird's egg candy: Caramelo de huevo de pájaro azul
+   4 Bluebird's egg candy: Caramelo de huevo de pï¿½jaro azul
    5 Rompemuelas eterno: Rompemuelas eterno
    6 Three-course dinner gum: Chicle de cena de tres platos
    7 Stained-glass hard candy: Caramelo duro de vidriera
@@ -22,7 +31,61 @@
 /* que hay que hacer?
     4) terminar de decir a mantenimineto de implementar su modulo en los botones (lo haran ellos)
 */
+const recetas = {
+    'Wonka Bar': [
+        { ingrediente: 'cacao', cantidad: 50, id: 11},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 }
+    ],
+    'Manzanas acarameladas': [
+        { ingrediente: 'manzana', cantidad: 1, id: 14},
+        { ingrediente: 'azucar', cantidad: 300, id: 15},
+        { ingrediente: 'mantequilla', cantidad: 100, id: 19}
+    ],
+    'Chupeta espiral Wonka': [
+        { ingrediente: 'jarabe de maiz', cantidad: 115, id: 16},
+        { ingrediente: 'azucar', cantidad: 340, id: 15 }
+    ],
+    'Barra sorpresa de chocolate de nueces Wonka': [
+        { ingrediente: 'cacao', cantidad: 50, id: 11},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12},
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13},
+        { ingrediente: 'taza de almendras', cantidad: 50, id: 18}
+    ]
+}
 
+// FunciÃ³n para calcular los ingredientes totales
+async function calcularIngredientesTotales(productos) {
+    const ingredientesTotales = {}
+
+    productos.forEach((producto) => {
+        const { productName, productQuantity } = producto
+        const receta = recetas[productName]
+
+        receta.forEach((ingrediente) => {
+            const { ingrediente: nombre, cantidad, id} = ingrediente
+            if (!ingredientesTotales[nombre]) {
+                ingredientesTotales[nombre] = 0
+            }
+            ingredientesTotales[nombre] += cantidad * productQuantity
+                const removeProduct = {
+                    id: id,
+                    sum: '0',
+                    units: ingredientesTotales[nombre]
+                };
+                console.log(removeProduct)
+                insertStock(removeProduct);
+        })
+    })
+
+    const resultado = Object.entries(ingredientesTotales).map(([nombre, cantidad, id]) => ({
+        ingrediente: nombre,
+        cantidad,
+        id
+    }))
+
+    return resultado
+}
 //LLAMANDO A LA API EL ORDERID CUANDO SE DA CLICK A BOTON "ENVIAR"
 async function Verificar() {
     const codigoIngresado = document.getElementById('factura').value
@@ -48,23 +111,16 @@ async function Verificar() {
 
 
         } else {
-            // Error al obtener la última orden
-            console.error("Hubo un error al obtener la última orden. Código de estado:", response.status);
-            alert("Hubo un error al obtener la última orden. Por favor, inténtelo de nuevo más tarde.");
+            // Error al obtener la ï¿½ltima orden
+            console.error("Hubo un error al obtener la ultima orden. Codigo de estado:", response.status);
+            alert("Hubo un error al obtener la ultima orden. Por favor, intentelo de nuevo mas tarde.");
         }
     } catch (error) {
-        console.error("Error al obtener la última orden:", error);
-        alert("Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.");
+        console.error("Error al obtener la ultima orden:", error);
+        alert("Hubo un error al obtener la ultima orden. Por favor, revise la consola para mas detalles.");
     }
 }
-async function getProducts2() {
-    try {
-        
-        
-    } catch (error) {
-        console.error('Error al obtener productos:', error);
-    }
-}
+let m = 0
 async function crearHTML() {
     try {
         const orders = await Verificar() // Espera a que se resuelva la promesa
@@ -74,15 +130,16 @@ async function crearHTML() {
         const response = await fetch('/api/inventario/products');
         const productoss = await response.json();
 
-        // Filtrar los productos según el atributo categoryId sea igual a 2
+        // Filtrar los productos segï¿½n el atributo categoryId sea igual a 2
         let filteredProducts = productoss.filter(product => product.categoryId === 2);
 
-        // Llamar a la función que agrega los productos filtrados al select
+        // Llamar a la funciï¿½n que agrega los productos filtrados al select
         console.log(filteredProducts)
         seccionMantenimiento.innerHTML = ''
         total.innerHTML = 'Numero total'
         let total_productos = 0
         let n = 1
+        m = 0
         console.log(orders)
         filteredProducts.forEach(product => {
             seccionMantenimiento.innerHTML += `
@@ -98,14 +155,14 @@ async function crearHTML() {
                             </tr>
                     <tr>
                         <th id="pp${n}">Productos por producir: </th>
-                        <th id="mU1">Maquinas en uso: </th>
-                        <th id="mM1">Maquinas en mantenimiento: </th>
-                        <th id="pf1">Productos fabricados: 0</th>
+                        <th id="mU">Maquinas en uso: ${machineCount(n)}</th>
+                        <th id="pf${n}">Productos fabricados: 0</th>
                     </tr>
                         </thead>
                     </table>
         `
             n++
+            m++
         })
         n = 1
         orders.products.forEach(producto => {
@@ -118,7 +175,7 @@ async function crearHTML() {
         total.innerHTML = `${total_productos}`
     } catch (error) {
         console.error('Error al crear el HTML:', error)
-        alert('Hubo un error al crear el HTML. Por favor, revise la consola para más detalles.')
+        alert('Hubo un error al crear el HTML. Por favor, revise la consola para mas detalles.')
     }
 }
 
@@ -127,22 +184,13 @@ async function getProducts() {
         const response = await fetch('/api/inventario/products');
         const products = await response.json();
 
-        // Filtrar los productos según el atributo categoryId sea igual a 2 que busca solo productos no materia prima
+        // Filtrar los productos segï¿½n el atributo categoryId sea igual a 2 que busca solo productos no materia prima
         filteredProducts = products.filter(product => product.categoryId === 1);
 
-        // Llamar a la función que agrega los productos filtrados al select
+        // Llamar a la funciï¿½n que agrega los productos filtrados al select
         console.log(filteredProducts)
         crearHTML(filteredProducts);
-        filteredProducts.forEach((producto) => {
-            const { productId, productQuantity } = producto
-            const removeProduct = {
-                id: productId,
-                sum: '0',
-                units: productQuantity
-            };
-            console.log(removeProduct)
-            insertStock(removeProduct);
-        });
+        
 
     } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -156,19 +204,20 @@ async function Producir() {
     orders = await Verificar()
     
     console.log('Maquinaria:', orders)
-    const productos = orders.products
-    productos.forEach((producto) => {
-        const { productId, productQuantity } = producto
-        const removeProduct = {
-            id: productId,
+    n = 1
+    orders.products.forEach(producto => {
+        const table = document.getElementById(`pf${producto.productId}`);
+        table.innerHTML += `${producto.productQuantity}`
+        const addProduct = {
+            id: producto.productId,
             sum: 1,
-            units: productQuantity
+            units: producto.productQuantity
         };
-        console.log(removeProduct)
-        insertStock(removeProduct);
-    });
-
-    
+        console.log(addProduct)
+        insertStock(addProduct);
+        n++
+    })
+    calcularIngredientesTotales(orders.products)
 }
 async function insertStock(params) {
     try {
@@ -189,55 +238,61 @@ async function insertStock(params) {
         // console.error('Error de red:', error)
     }
 }
-
+function generateNumberList(m) {
+    let numberList = [];
+    for (let i = 1; i <= m; i++) {
+        numberList.push(i);
+    }
+    return numberList;
+}
 
 
 
 
 
 // COMIENZO DE MAQUINAS ************************
-// –––––––––––––––– CARGAR MÁQUINAS, MANTENIMIENTOS Y LÍNEAS DISPONIBLES ––––––––––––––––
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CARGAR Mï¿½QUINAS, MANTENIMIENTOS Y Lï¿½NEAS DISPONIBLES ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 let machines = []
-let lineas = []
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Cargar máquinas
+    // Cargar mï¿½quinas
     machines = await getMachines().then((json) => { return json.machines })
     console.log('Maquinaria:', machines)
 
     // Cargar mantenimientos
     updateMaintenance()
-
-    // TODO ANGEL: Cargar líneas disponibles
-    // Cargar líneas disponibles
+    
+    let lineas = [1,2,3,4,5,6,7,8,9,10];
+    // TODO ANGEL: Cargar lï¿½neas disponibles
+    // Cargar lï¿½neas disponibles
     // lineas = await getLines().then((json) => { return json.lines })
     // Esto es para las pruebas
-    lineas = [1, 2, 3]
-    // Actualizar las líneas disponibles en los formularios de asignación y liberación
+ 
+    // Actualizar las lÃ­neas disponibles en los formularios de asignaciÃ³n y liberaciÃ³n
     const lineasRelease = document.getElementById("release-line")
     const lineasAssign = document.getElementById("assign-line")
     updateLines(lineas, lineasRelease, lineasAssign)
 
 })
 
-// Obtener máquinas del servidor
+// Obtener mï¿½quinas del servidor
 async function getMachines() {
     const response = await fetch('/api/mantenimiento/')
     return response.json()
 }
 
-// Añadir líneas según las disponibles
+// Aï¿½adir lï¿½neas segï¿½n las disponibles
 function updateLines(lineas, lineasRelease, lineasAssign) {
     lineas.forEach((line) => {
         const option = document.createElement("option")
         option.value = line
-        option.textContent = `Línea ${line}`
+        option.textContent = `LÃ­nea ${line}`
         lineasRelease.appendChild(option)
         lineasAssign.appendChild(option.cloneNode(true))
     })
 }
 
-// Revisar mantenimientos de máquinas
+// Revisar mantenimientos de mï¿½quinas
 function updateMaintenance() {
     // Obtener elemento del DOM
     const mantenimientos = document.getElementById("mantenimientos")
@@ -267,8 +322,8 @@ function updateMaintenance() {
 
     if (count > 0) {
         // Notificar al usuario
-        alert(`Alerta: Hay ${count} máquinas con mantenimientos próximos.`)
-        // Sortear máquinas por fecha de mantenimiento
+        alert(`Alerta: Hay ${count} maquinas con mantenimientos proximos.`)
+        // Sortear mï¿½quinas por fecha de mantenimiento
         maintainMachines.sort((a, b) => {
             return strToDate(a.dateMaintenance) - strToDate(b.dateMaintenance)
         })
@@ -278,7 +333,7 @@ function updateMaintenance() {
             const dateMaintenance = strToDate(machine.dateMaintenance)
             const diferencia = dateMaintenance - today
             const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24))
-            mantenimientos.innerHTML += `<li> Máquina ${machine.id}: Línea ${machine.line} - Mantenimiento ${machine.typeMaintenance} en ${dias} días. </li>`
+            mantenimientos.innerHTML += `<li> Maquina ${machine.id}: Linea ${machine.line} - Mantenimiento ${machine.typeMaintenance} en ${dias} dias. </li>`
         })
     }
 }
@@ -290,24 +345,24 @@ function strToDate(dateString) {
 }
 
 
-// ————————————————— CARGAR CANTIDAD DE MÁQUINAS —————————————————
-function machineCount(line, type) {
-    const machinesLine = machines.filter((machine) => machine.line == line && machine.type == type)
+// â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” CARGAR CANTIDAD DE MÃQUINAS â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+function machineCount(line) {
+    const machinesLine = machines.filter((machine) => machine.line == line)
     return machinesLine.length
 }
 
-// –––––––––––––––– NOTIFICAR MÁQUINA ––––––––––––––––
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ NOTIFICAR Mï¿½QUINA ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 const notifyForm = document.getElementById("notify-form")
 const idInput = document.getElementById("id-number")
 let validId = false
 
-// Validar input y cambiar estilo del mismo según se ingrese una id válida
+// Validar input y cambiar estilo del mismo segï¿½n se ingrese una id vï¿½lida
 idInput.addEventListener('keyup', (e) => {
     const id = idInput.value
-    // Buscar la máquina con la id ingresada
+    // Buscar la mï¿½quina con la id ingresada
     const machine = machines.find((machine) => machine.id == id)
 
-    // Sólo se permiten máquinas disponibles o en uso
+    // Sï¿½lo se permiten mï¿½quinas disponibles o en uso
     if (machine && (machine.state === 'disponible' || machine.state === 'uso')) {
         idInput.style.border = '1.5px solid lightgreen'
         validId = true
@@ -318,7 +373,7 @@ idInput.addEventListener('keyup', (e) => {
     }
 })
 
-// Añadir evento de notificación
+// Aï¿½adir evento de notificaciï¿½n
 notifyForm.addEventListener('submit', async (e) => {
     e.preventDefault()
 
@@ -326,7 +381,7 @@ notifyForm.addEventListener('submit', async (e) => {
     const machine = machines.find((machine) => machine.id == idInput.value)
 
     if (validId) {
-        // Notificación de irregularidad
+        // Notificaciï¿½n de irregularidad
         if (state === "irregularidad") {
             const response = await fetch(`/api/mantenimiento/machine/${idInput.value}`,
                 {
@@ -337,25 +392,25 @@ notifyForm.addEventListener('submit', async (e) => {
                     body: JSON.stringify({ state: "notificada", line: machine.line, availability: machine.availability })
                 })
 
-            // Respuesta según el estado de la petición
+            // Respuesta segï¿½n el estado de la peticiï¿½n
             if (response.status !== 500) {
                 // Limpiar formulario
                 idInput.value = ""
                 state = ""
 
                 // Notificar al usuario
-                alert(`Máquina ${machine.id} notificada con irregularidad.`)
+                alert(`Maquina ${machine.id} notificada con irregularidad.`)
 
 
-                // Actualizar lista de máquinas
+                // Actualizar lista de mï¿½quinas
                 machines = await getMachines().then((json) => { return json.machines })
                 updateMaintenance()
             }
             else {
-                alert('Error al añadir máquina, revise la consola y/o servidor')
+                alert('Error al aÃ±adir maquina, revise la consola y/o servidor')
             }
         }
-        // Notificación de defecto
+        // Notificaciï¿½n de defecto
         else if (state === "defectuosa") {
             const response = await fetch(`/api/mantenimiento/machine/${idInput.value}`,
                 {
@@ -366,7 +421,7 @@ notifyForm.addEventListener('submit', async (e) => {
                     body: JSON.stringify({ state: "defectuosa", line: 0, availability: 0 })
                 })
 
-            // Respuesta según el estado de la petición
+            // Respuesta segï¿½n el estado de la peticiï¿½n
             if (response.status !== 500) {
                 // Limpiar formulario
                 idInput.value = ""
@@ -374,17 +429,17 @@ notifyForm.addEventListener('submit', async (e) => {
 
                 // Notificar al usuario
                 if (machine.line !== 0) {
-                    alert(`Máquina ${machine.id} notificada con defecto, la misma ha sido removida de la línea ${machine.line}.`)
+                    alert(`Maquina ${machine.id} notificada con defecto, la misma ha sido removida de la linea ${machine.line}.`)
                 }
                 else {
-                    alert(`Máquina ${machine.id} notificada con defecto.`)
+                    alert(`Maquina ${machine.id} notificada con defecto.`)
                 }
 
-                // Actualizar lista de máquinas
+                // Actualizar lista de mï¿½quinas
                 machines = await getMachines().then((json) => { return json.machines })
             }
             else {
-                alert('Error al añadir máquina, revise la consola y/o servidor')
+                alert('Error al aÃ±adir maquina, revise la consola y/o servidor')
             }
         }
         else {
@@ -392,18 +447,18 @@ notifyForm.addEventListener('submit', async (e) => {
         }
     }
     else {
-        alert("Ingrese una id válida. Recuerde que la máquina debe estar disponible o en uso.")
+        alert("Ingrese una id vï¿½lida. Recuerde que la mï¿½quina debe estar disponible o en uso.")
     }
 })
 
 
-// –––––––––––––––– LIBERAR MÁQUINAS ––––––––––––––––
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LIBERAR Mï¿½QUINAS ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // Obtener elementos del DOM
 let lineasRelease = document.getElementById("release-line")
 const displayRelease = document.getElementById("release-display")
 const releaseForm = document.getElementById("release-form")
 
-// Display de máquinas según la línea seleccionada
+// Display de mï¿½quinas segï¿½n la lï¿½nea seleccionada
 lineasRelease.addEventListener('change', (e) => {
     displayRelease.innerHTML = ""
     const line = lineasRelease.value
@@ -418,7 +473,7 @@ lineasRelease.addEventListener('change', (e) => {
     }
 })
 
-// Añadir evento de liberación
+// Aï¿½adir evento de liberaciï¿½n
 releaseForm.addEventListener('submit', async (e) => {
     e.preventDefault()
 
@@ -427,7 +482,7 @@ releaseForm.addEventListener('submit', async (e) => {
         const machinesSelected = Array.from(displayRelease.querySelectorAll('input[type="checkbox"]:checked'))
 
         if (machinesSelected.length > 0) {
-            // Liberar máquinas seleccionadas
+            // Liberar mï¿½quinas seleccionadas
             machinesSelected.forEach(async (machine) => {
                 const state = machine.state === "notificada" ? "notificada" : "disponible"
                 console.log(state)
@@ -440,45 +495,45 @@ releaseForm.addEventListener('submit', async (e) => {
                         body: JSON.stringify({ state: state, line: 0, availability: 1 })
                     })
 
-                // Respuesta según el estado de la petición
+                // Respuesta segï¿½n el estado de la peticiï¿½n
                 if (response.status !== 500) {
                     // Limpiar formulario
                     lineasRelease.value = ""
                     displayRelease.innerHTML = ""
                 }
                 else {
-                    alert('Error al liberar máquina, revise la consola y/o servidor')
+                    alert('Error al liberar maquina, revise la consola y/o servidor')
                 }
             })
             // Notificar al usuario
-            alert(`Máquinas liberadas de la línea ${lineasRelease.value}.`)
+            alert(`Maquinas liberadas de la linea ${lineasRelease.value}.`)
 
-            // Actualizar lista de máquinas
+            // Actualizar lista de mï¿½quinas
             machines = await getMachines().then((json) => { return json.machines })
             updateMaintenance()
         }
         else {
-            alert("Seleccione al menos una máquina")
+            alert("Seleccione al menos una maquina")
         }
     }
     else {
-        alert("Seleccione una línea")
+        alert("Seleccione una linea")
     }
 
 
 })
 
-// ————————————————— ASIGNAR MÁQUINAS —————————————————
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ASIGNAR Mï¿½QUINAS ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // Obtener elementos del DOM
 let lineasAssign = document.getElementById("assign-line")
 const tipoAssign = document.getElementById("assign-type")
 const displayAssign = document.getElementById("assign-display")
 const assignForm = document.getElementById("assign-form")
 
-// Display de máquinas según el tipo seleccionado
+// Display de mï¿½quinas segï¿½n el tipo seleccionado
 tipoAssign.addEventListener('change', (e) => {
     const type = tipoAssign.value
-    // Sólo aquellas máquinas disponibles o notificadas
+    // Sï¿½lo aquellas mï¿½quinas disponibles o notificadas
     const machinesType = machines.filter((machine) => machine.type == type && (machine.state === 'disponible' || machine.state === 'notificada'))
     displayAssign.innerHTML = ""
     machinesType.forEach((machine) => {
@@ -489,7 +544,7 @@ tipoAssign.addEventListener('change', (e) => {
     })
 })
 
-// Añadir evento de asignación
+// Aï¿½adir evento de asignaciï¿½n
 assignForm.addEventListener('submit', async (e) => {
     e.preventDefault()
 
@@ -498,7 +553,7 @@ assignForm.addEventListener('submit', async (e) => {
         const machinesSelected = Array.from(displayAssign.querySelectorAll('input[type="checkbox"]:checked'))
 
         if (machinesSelected.length > 0) {
-            // Asignar máquinas seleccionadas
+            // Asignar mï¿½quinas seleccionadas
             machinesSelected.forEach(async (machine) => {
                 const state = machine.state === "notificada" ? "notificada" : "uso"
                 const response = await fetch(`/api/mantenimiento/machine/${machine.id}`,
@@ -510,7 +565,7 @@ assignForm.addEventListener('submit', async (e) => {
                         body: JSON.stringify({ state: state, line: lineasAssign.value, availability: 0 })
                     })
 
-                // Respuesta según el estado de la petición
+                // Respuesta segï¿½n el estado de la peticiï¿½n
                 if (response.status !== 500) {
                     // Limpiar formulario
                     lineasAssign.value = ""
@@ -518,28 +573,28 @@ assignForm.addEventListener('submit', async (e) => {
                     displayAssign.innerHTML = ""
                 }
                 else {
-                    alert('Error al asignar máquina, revise la consola y/o servidor')
+                    alert('Error al asignar maquina, revise la consola y/o servidor')
                 }
             })
             // Notificar al usuario
-            alert(`Máquinas asignadas a la línea ${lineasAssign.value}.`)
+            alert(`Maquinas asignadas a la linea ${lineasAssign.value}.`)
 
-            // Actualizar lista de máquinas
+            // Actualizar lista de mï¿½quinas
             machines = await getMachines().then((json) => { return json.machines })
             updateMaintenance()
         }
         else {
-            alert("Seleccione al menos una máquina")
+            alert("Seleccione al menos una maquina")
         }
     }
     else {
-        alert("Seleccione una línea y un tipo de máquina")
+        alert("Seleccione una linea y un tipo de maquina")
     }
 })
 
 
 
-// –––––––––––––––– FUNCIONALIDAD DE DIALOG PARA BOTONES ––––––––––––––––
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ FUNCIONALIDAD DE DIALOG PARA BOTONES ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // obtener los botones de abrir y cerrar
 const btns = document.querySelectorAll('.btn-open')
 const btnsClose = document.querySelectorAll('.close-button')

@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <wc-toast></wc-toast>
     <div class="lading-container">
 
         <header class="header">
@@ -49,16 +50,16 @@
                         Máquinas
                     </h2>
                     <div class="search">
-                        <input class="search-input" id="search-input" type="num" placeholder="Buscar máquina por Id"
-                            min="1">
+                        <input class="search-input" id="search-input" type="number" step="1"
+                            placeholder="Buscar máquina por Id" min="1">
                         <button value="search" class="btn-open" id="search-button">Buscar</button>
                     </div>
 
                     <dialog id="search" class="dialog">
                         <div class="dialog-content">
                             <div class="dialog-head">
-                                <h2 class="form-element" id="form-title">Busqueda por Id</h2>
                                 <button class="close-button">x</button>
+                                <h2 class="form-element" id="form-title">Busqueda por Id</h2>
                             </div>
                             <div id="search-display">
                             </div>
@@ -310,7 +311,7 @@
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section" style="display:none;">
                 <h2>
                     Gestión de Maquinaria
                 </h2>
@@ -403,7 +404,7 @@
             </section>
         </main>
     </div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
     <script src="maquinaria.js"></script>
 </body>
 

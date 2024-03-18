@@ -40,14 +40,18 @@
     <main>
         <div class="facturacion">
             <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style = "max-width: 100%; height: auto;">
-            <h3>Ingrese el numero de su factura</h3>
-            <label for=""><input type="number" placeholder="12345678" id="factura"> <button id="sumit" onclick="Verificar()">Enviar</button></label>
+            <h3>Coloqué el ID del pedido</h3>
+            <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit" >Enviar</button></label>
             
         </div>
         <div>    
             <div id="errornofactura" style="display: none;">
                 <div class="divfactura">
+<<<<<<< HEAD
                     <h2 style="text-align: center;"><strong style="color: red">¡</strong> El número de factura no se encontro <strong style="color:red">!</strong></h2>
+=======
+                    <h2 style="text-align: center;"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong style="color:red">!</strong></h2>
+>>>>>>> ee1911765328a6af1ec83c5facfee9b8d2affcc6
                 </div>
             </div>
             <div id="facturaexistente" style="display: none;">
@@ -62,7 +66,44 @@
                     <form action="/" method="post">
 
                         <div class="Formulario">
+<<<<<<< HEAD
                             
+=======
+                            <div class="infoEmpresa">
+                               
+                                    <Label for="NombreEmpresa"><strong> Empresa:  </strong></Label>
+                                        <input type="text" id="NombreEmpresa" readonly>
+                                    
+                                
+                                
+                                    <label for="RifEmpresa" class="EnElMedio"><strong> Rif:  </strong></label>
+                                        <input type="text" id="RifEmpresa" readonly> 
+                                    
+                                
+                            </div><br>
+                            <div class="labelEmail">
+                                <label for="EmailEmpresa"><strong> Email:  </strong></label>
+                                    <input type="text" id="EmailEmpresa" readonly>
+                                    
+                                
+                                <label for="NumberEmpresa" class="EnElMedio2"><strong> Numero de Telefono:  </strong></label>
+                                    <input type="text" id="NumberEmpresa" readonly>
+                            </div><br>
+                            <div class="labelDireccion">
+                                <label for="HoraEmpresa"><strong> Hora de Compra:  </strong></label>
+                                    <input type="text" id="HoraEmpresa" readonly>
+                                
+                                <label for="StatusEmpresa" class="EnElMedio3"><strong> Estado de la entrega:  </strong></label>
+                                    <input type="text" id="StatusEmpresa" readonly> 
+                                
+                                
+                            </div><br>
+                            <div class="labelPrecioT">
+                                <label for="PrecioTEmpresa" id="labelprecio" ><Strong> Precio Total:  $</Strong></label>
+                                    <input type="text" id="PrecioTEmpresa" readonly>
+                                
+                            </div>
+>>>>>>> ee1911765328a6af1ec83c5facfee9b8d2affcc6
                         </div>
                     </form>
                     
