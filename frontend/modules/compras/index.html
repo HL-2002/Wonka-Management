@@ -17,73 +17,98 @@
     <div class="lading-container">
       <header class="header">
         <nav>
-            <ul class="header-navbar">
-                <a href="../../index.html">
-                    <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
-                </a>
+          <ul class="header-navbar">
+            <a href="../../index.html">
+              <img
+                width="160px"
+                height="160px"
+                src="../../public/logotipo-blanco-op.webp"
+                alt="logo de wonka's"
+              />
+            </a>
 
-                <li><a href="/modules/ventas"><img src="/public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                <li><a href="/modules/despacho"><img src="/public/icono_2.webp"
-                            alt="icono Distribucion">Distribución</a></li>
-                <li><a href="/modules/inventario"><img src="/public/icono_3.webp"
-                            alt="icono de inventario">Inventario</a></li>
-                <li><a href="/modules/produccion"><img src="/public/icono_4.webp"
-                            alt="icono Produccion">Producción</a></li>
-                <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
-                            alt="icono de Mantenimiento">Mantenimiento</a></li>
-                <li><a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
-
-
-            </ul>
+            <li>
+              <a href="/modules/ventas"
+                ><img src="/public/icono_1.webp" alt="icono  tienda" />Venta</a
+              >
+            </li>
+            <li>
+              <a href="/modules/despacho"
+                ><img
+                  src="/public/icono_2.webp"
+                  alt="icono Distribucion"
+                />Distribución</a
+              >
+            </li>
+            <li>
+              <a href="/modules/inventario"
+                ><img
+                  src="/public/icono_3.webp"
+                  alt="icono de inventario"
+                />Inventario</a
+              >
+            </li>
+            <li>
+              <a href="/modules/produccion"
+                ><img
+                  src="/public/icono_4.webp"
+                  alt="icono Produccion"
+                />Producción</a
+              >
+            </li>
+            <li>
+              <a href="/modules/mantenimiento"
+                ><img
+                  src="/public/icono_5.webp"
+                  alt="icono de Mantenimiento"
+                />Mantenimiento</a
+              >
+            </li>
+            <li>
+              <a href="/modules/compras"
+                ><img
+                  src="/public/icono_6.webp"
+                  alt="icono de Ingredientes"
+                />Compra</a
+              >
+            </li>
+          </ul>
         </nav>
-    </header>
+      </header>
 
       <main class="main">
         <h1>Compra</h1>
 
         <section class="section">
           <div class="contenedor-menu">
-
             <div class="menu">
               <button class="btn-registro">Registro</button>
               <button class="btn-requisicion active">Requisicion</button>
             </div>
-            
           </div>
 
           <div class="contenido">
-
             <div class="solicitudes">
               <h2>Requisicion</h2>
               <p>Tienes $ solicitudes:</p>
-  
-              <div class="solicitud">
-                <h2>Titulo</h2>
-                <p>categoria</p>
-                <p>cantidad</p>
-                <a onclick="cargarProductos()" class="btn-open">Efectuar</a>
-              </div>
+              <div id="tarjetasSolicitudes"></div>
             </div>
-  
+
             <div class="registro-seccion">
               <h2>Registro</h2>
               <p>Tienes $ registradas:</p>
-  
+
               <div class="registros-hechos">
                 <h2>Titulo</h2>
-                <p>categoria</p>
+                <p>costo</p>
                 <p>cantidad</p>
                 <a href="#" class="btn-open">Ver</a>
               </div>
             </div>
-
           </div>
 
-
           <div class="modal">
-
             <div class="efectuar-modal">
-
               <div class="efectuar-modal-header">
                 <h2>Provedores</h2>
                 <a href="#" class="salir">X</a>
@@ -92,21 +117,17 @@
               <div class="seccion-provedores"></div>
 
               <div class="seccion-calculos">
-
                 <h2>Calculos</h2>
 
                 <div class="zona-calculos">
-
-                  <div class="codigoArticulo">
-                  </div>
-
-                  <div class="descripcionArticulo">
+                  <div class="cantidadContenedor">
+                    <h4>Cantidad</h4>
+                    <p>12</p>
                   </div>
 
                   <div class="precioPorUnidad">
-                  </div>
-
-                  <div class="cantidadContenedor">
+                    <h4>Monto</h4>
+                    <p>1.5$</p>
                   </div>
 
                   <div class="montoDeprecioPorUnidad">
@@ -115,41 +136,24 @@
                   </div>
 
                   <div class="IvaContenedor">
-
+                    <h4>Iva</h4>
+                    <p>1200$</p>
                   </div>
 
                   <div class="totalContenedor">
-
+                    <h4>Total</h4>
+                    <p>1200$</p>
                   </div>
-
-
                 </div>
-
               </div>
 
-              <div class="seccion-ordenDeCompra">
-                <h2>Orden de Compra</h2>
-
-                <div class="ordenDeCompra">
-                  <p>Hola</p>
-                </div>
-
-                <button class="btn-ordenDeCompra">Enviar orden de compra</button>
-
-              </div>
-
+              <a href="#" class="btn-ordenDeCompra">Enviar orden de compra</a>
             </div>
-
           </div>
-
         </section>
-
-
-
-
       </main>
     </div>
   </body>
   <script src="compras.js"></script>
-  <script src="index.js"></script>
+  <script src="producto.js"></script>
 </html>
