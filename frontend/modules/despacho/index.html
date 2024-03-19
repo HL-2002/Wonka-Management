@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,21 +38,19 @@
         </header>
     </div>
     <main>
-        <div class="facturacion">
-            <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style = "max-width: 100%; height: auto;">
-            <h3>Coloqué el ID del pedido</h3>
-            <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit" >Enviar</button></label>
-            
-        </div>
-        <div>    
+            <div class="facturacion" style="display: inline-block;">
+                <h1>Distribución</h1> <img src="/public/img_factura.webp" alt="factura" style="max-width: 100%; height: auto;"><br>
+                <h3>Coloqué el ID del pedido</h3><br>
+                <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit">Enviar</button></label>
+            </div>
             <div id="errornofactura" style="display: none;">
                 <div class="divfactura">
-                    <h2 style="text-align: center;"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong style="color:red">!</strong></h2>
+                    <h2 id="texto_aviso"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong style="color:red">!</strong></h2>
                 </div>
             </div>
             <div id="facturaexistente" style="display: none;">
                 <div class="divfactura">
-                    <h2>Factura encontrada</h2>
+                    <h2>Estado del pedido</h2>
                     <Label for="NombreEmpresa"><strong> Empresa:  </strong></Label>
                             <input type="text" id="NombreEmpresa" readonly><br>
                     <label for="Direccion"><strong> dirección:  </strong></label>
@@ -60,9 +58,39 @@
                     <label for="numerodecamion" class="EnElMedio3"><strong> Número de camion:  </strong></label>
                             <input type="text" id="numerodecamion" readonly> 
                     <form action="/" method="post">
-
                         <div class="Formulario">
-                            
+                            <div id="Camion1" class="camionesdiv" >
+                                <h4>La loca Jeniffer: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones" ></a>
+                            </div>
+                            <div id="camion2" class="camionesdiv">
+                                <h4>Pricila: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion3" class="camionesdiv">
+                                <h4>El Señor Juan: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion4" class="camionesdiv">
+                                <h4>El Cacique: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion5" class="camionesdiv">
+                                <h4>Don Omar: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion6" class="camionesdiv">
+                                <h4>La Concava: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion7" class="camionesdiv">
+                                <h4>Gustavo: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
+                            <div id="camion8" class="camionesdiv">
+                                <h4>El Soldado: </h4>
+                                <a href="rutas.html"><img src="/public/Camion_Verde.webp" class="acamiones"></a>
+                            </div>
                         </div>
                     </form>
                     
