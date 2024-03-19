@@ -76,30 +76,30 @@ async function orderporId(id) {
             console.log(data)
             document.getElementById('facturaexistente').style.display = 'block'
             document.getElementById('errornofactura').style.display = 'none'
-            document.getElementById('NombreEmpresa').value = data ? data.customerName : ""
+            document.getElementById('NombreEmpresa').value = data ? data.name : ""
             //document.getElementById('RifEmpresa').value = data ? data.customerId : ""
             //document.getElementById('EmailEmpresa').value = data ? data.email : ""
             //document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
             //document.getElementById('HoraEmpresa').value = data ? data.time : ""
             //document.getElementById('StatusEmpresa').value = data ? data.status : ""
             //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
-            document.getElementById('Direccion').value = 'tumama'
+            document.getElementById('Direccion').value = data ? data.address : ""
             document.getElementById('numerodecamion').value = 13
             resProducts(id)
             //Desglosar factura
           
         } else {
             // Error al obtener la �ltima orden
-            console.error("Hubo un error al obtener la orden. Código de estado:", response.status);
-            alert("Hubo un error al obtener la orden. Por favor, inténtelo de nuevo más tarde.");
+            /*console.error("Hubo un error al obtener la orden. Código de estado:", response.status);
+            alert("Hubo un error al obtener la orden. Por favor, inténtelo de nuevo más tarde.");*/
             document.getElementById('facturaexistente').style.display = 'none'
             document.getElementById('errornofactura').style.display = 'block'
         }
         console.log(response.ok)
           
     } catch (error) {
-        console.error("Error al obtener la orden:", error);
-        alert("Hubo un error al obtener la orden. Por favor, revise la consola para más detalles.");
+        /*console.error("Error al obtener la orden:", error);
+        alert("Hubo un error al obtener la orden. Por favor, revise la consola para más detalles.");*/
         document.getElementById('facturaexistente').style.display = 'none'
         document.getElementById('errornofactura').style.display = 'block'
     }
