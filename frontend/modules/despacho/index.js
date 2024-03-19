@@ -1,6 +1,16 @@
+const facturasProcesadas = [];
+
 // Resta del stock
 async function resProducts(id){
   try{
+    if (facturasProcesadas.includes(id)) {
+        console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
+        return;
+      }
+
+
+
+
    var response = await fetch(`/api/ventas/orders/${id}`)
    const products= await response.json()
 
@@ -13,7 +23,7 @@ async function resProducts(id){
      };
      console.log(removeProduct)
      insertStock(removeProduct);
- 
+     facturasProcesadas.push(id)
      
    });
   } catch(error){
