@@ -241,7 +241,7 @@ ventasRouter.post('/customer', async (req, res) => {
     res.status(201).json({ message: 'El cliente se creó correctamente.' })
   } catch (error) {
     console.log(error.code)
-    if (error.code === 'SQLITE_CONSTRAINT_PRIMARYKEY') {
+    if (error.code === 'SQLITE_CONSTRAINT_PRIMARYKEY' || error.code === 'ER_DUP_ENTRY' || error.code === 'SQLITE_CONSTRAINT') {
       return res.status(409).json({ error: 'El RIF ya está registrado con otro cliente' })
     }
     console.error('Error al crear el cliente:', error)

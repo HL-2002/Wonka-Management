@@ -18,19 +18,22 @@
                     <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
                 </a>
                 <li><a href="/modules/ventas"><img src="../../public/icono_1.webp" alt="icono  tienda">Venta</a></li>
-                <li><a href="/modules/despacho"><img src="../../public/icono_2.webp" alt="icono Distribucion">Distribución</a></li>
+                <li><a href="/modules/despacho"><img src="../../public/icono_2.webp"
+                            alt="icono Distribucion">Distribución</a></li>
                 <li>
                     <a href="/modules/inventario/">
                         <img src="../../public/icono_3.webp" alt="icono de inventario">Inventario
                     </a>
                 </li>
-                <li><a href="/modules/produccion"><img src="../../public/icono_4.webp" alt="icono Produccion">Producción</a></li>
+                <li><a href="/modules/produccion"><img src="../../public/icono_4.webp"
+                            alt="icono Produccion">Producción</a></li>
                 <li>
                     <a href="/modules/mantenimiento">
                         <img src="../../public/icono_5.webp" alt="icono de Mantenimiento">Mantenimiento
                     </a>
                 </li>
-                <li><a href="/modules/compras"><img src="../../public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
+                <li><a href="/modules/compras"><img src="../../public/icono_6.webp"
+                            alt="icono de Ingredientes">Compra</a></li>
 
             </ul>
         </nav>
@@ -53,6 +56,13 @@
                                 </button>
                             </label>
                         </th>
+                    </tr>
+                </thead>
+            </table>
+            <table class="center">
+                <thead>
+                    <tr>
+                        <th id="nombre">Nombre:</th>
                     </tr>
                 </thead>
             </table>
@@ -167,6 +177,18 @@
         </div>
 
     </section>
+    <!-- Modal para los productos -->
+    <div class="modal" id="recipe-modal">
+        <div class="modal-dialog">
+            <header class="modal-header">
+                <button class="close-modal" aria-label="close modal" data-close>✕</button>
+                <h2>Receta</h2>
+            </header>
+            <section id="recipe-detail" class="modal-detail">
+                <!-- Recipe details will be populated here dynamically -->
+            </section>
+        </div>
+    </div>
 
     <!-- Scripts, DESPUES DEL BODY -->
 

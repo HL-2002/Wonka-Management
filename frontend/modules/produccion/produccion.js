@@ -109,63 +109,62 @@ Fudge:
 
 const recetas = {
     'Wonka Bar': [
-        { ingrediente: 'cacao', cantidad: 50, id: 11},
-        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
-        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 }
+        { ingrediente: 'cacao', cantidad: 50, id: 11, unidad: 'gramos'},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos'},
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13, unidad: 'gramos' }
     ],
     'Manzanas acarameladas': [
-        { ingrediente: 'manzana', cantidad: 1, id: 14},
-        { ingrediente: 'azucar', cantidad: 300, id: 15},
-        { ingrediente: 'mantequilla', cantidad: 100, id: 19}
+        { ingrediente: 'manzana', cantidad: 1, id: 14, unidad: 'unidad'},
+        { ingrediente: 'azucar', cantidad: 300, id: 15, unidad: 'gramos'},
+        { ingrediente: 'mantequilla', cantidad: 100, id: 19, unidad: 'gramos'}
     ],
     'Chupeta espiral Wonka': [
-        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16},
-        { ingrediente: 'azucar', cantidad: 340, id: 15 }
+        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16, unidad: 'mililitros'},
+        { ingrediente: 'azucar', cantidad: 340, id: 15, unidad: 'gramos' }
     ],
     'Caramelo de huevo de pájaro azul': [
-        { ingrediente: 'azucar', cantidad: 300, id: 15},
-        { ingrediente: 'mantequilla de mani', cantidad: 300, id: 20},
-        { ingrediente: 'queso crema', cantidad: 225, id: 16},
-        { ingrediente: 'mantequilla', cantidad: 150, id: 19},
-        { ingrediente: 'coco', cantidad: 300, id: 21},
-        { ingrediente: 'chispas de chocolate', cantidad: 200, id: 22},
-        { ingrediente: 'chispas de chocolate', cantidad: 200, id: 24}
+        { ingrediente: 'azucar', cantidad: 300, id: 15, unidad: 'gramos'},
+        { ingrediente: 'mantequilla de mani', cantidad: 300, id: 20, unidad: 'gramos'},
+        { ingrediente: 'queso crema', cantidad: 225, id: 16, unidad: 'mililitros'},
+        { ingrediente: 'mantequilla', cantidad: 150, id: 19, unidad: 'gramos'},
+        { ingrediente: 'coco', cantidad: 300, id: 21, unidad: 'gramos'},
+        { ingrediente: 'chispas de chocolate', cantidad: 200, id: 22, unidad: 'gramos'},
     ],
     'Barra sorpresa de chocolate de nueces Wonka': [
-        { ingrediente: 'cacao', cantidad: 50, id: 11 },
-        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
-        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 },
-        { ingrediente: 'taza de almendras', cantidad: 50, id: 18 }
+        { ingrediente: 'cacao', cantidad: 50, id: 11, unidad: 'gramos' },
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos' },
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13, unidad: 'gramos' },
+        { ingrediente: 'taza de almendras', cantidad: 50, id: 18, unidad: 'gramos' }
     ],
     'Rompemuelas eterno': [
-        { ingrediente: 'harina', cantidad: 1000, id: 23},
-        { ingrediente: 'azucar', cantidad: 250, id: 15 },
-        { ingrediente: 'coco', cantidad: 500, id: 21 }
+        { ingrediente: 'harina', cantidad: 1000, id: 23, unidad: 'gramos'},
+        { ingrediente: 'azucar', cantidad: 250, id: 15, unidad: 'gramos' },
+        { ingrediente: 'coco', cantidad: 500, id: 21, unidad: 'gramos' }
     ],
     'Chicle de cena de tres platos': [
-        { ingrediente: 'harina', cantidad: 1000, id: 23},
-        { ingrediente: 'manzana', cantidad: 5, id: 14},
-        { ingrediente: 'azucar', cantidad: 500, id: 15 },
-        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16},
-        { ingrediente: 'chocolate con leche', cantidad: 300, id: 13 }
+        { ingrediente: 'harina', cantidad: 1000, id: 23, unidad: 'gramos'},
+        { ingrediente: 'manzana', cantidad: 5, id: 14, unidad: 'unidad'},
+        { ingrediente: 'azucar', cantidad: 500, id: 15, unidad: 'gramos' },
+        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16, unidad: 'mililitros'},
+        { ingrediente: 'chocolate con leche', cantidad: 300, id: 13, unidad: 'gramos' }
     ],
     'Caramelo duro de vidriera': [
-        { ingrediente: 'azucar', cantidad: 400, id: 15},
-        { ingrediente: 'jarabe de maiz', cantidad: 200, id: 16},
+        { ingrediente: 'azucar', cantidad: 400, id: 15, unidad: 'gramos'},
+        { ingrediente: 'jarabe de maiz', cantidad: 200, id: 16, unidad: 'mililitros'},
     ],
     'Fudge:': [
-        { ingrediente: 'leche condensada', cantidad: 350, id: 25},
-        { ingrediente: 'leche', cantidad: 75, id: 26},
-        { ingrediente: 'azucar', cantidad: 225, id: 15},
-        { ingrediente: 'mantequilla', cantidad: 60, id: 19}
+        { ingrediente: 'leche condensada', cantidad: 350, id: 25, unidad: 'mililitros'},
+        { ingrediente: 'leche', cantidad: 75, id: 26, unidad: 'mililitros'},
+        { ingrediente: 'azucar', cantidad: 225, id: 15, unidad: 'gramos'},
+        { ingrediente: 'mantequilla', cantidad: 60, id: 19, unidad: 'gramos'}
     ],
     'Hierba comestible': [
         { ingrediente: 'coco', cantidad: 240, id: 21}
     ],
     'Barra delicia de crema, malvavisco y fudge Wonka': [
-        { ingrediente: 'malvadiscos', cantidad: 100, id: 27},
-        { ingrediente: 'cacao', cantidad: 50, id: 11},
-        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 }
+        { ingrediente: 'malvadiscos', cantidad: 100, id: 27, unidad: 'gramos'},
+        { ingrediente: 'cacao', cantidad: 50, id: 11, unidad: 'gramos'},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos' }
     ],
 
 }
@@ -233,6 +232,59 @@ async function Verificar() {
         alert("Hubo un error al obtener la ultima orden. Por favor, revise la consola para mas detalles.");
     }
 }
+function receta1() {
+    /* ESTO ES LO QUE MAS O MENOS SE PUEDE HACER
+    try {
+        const prod = 'Wonka Bar'; // Assuming 'Wonka Bar' is the product you want to show the recipe for
+        const receta = recetas[prod];
+
+        const modal = document.getElementById('recipe-modal');
+        const modalDetail = document.getElementById('recipe-detail');
+
+        // Clear previous content
+        modalDetail.innerHTML = '';
+
+        receta.forEach((ingrediente) => {
+            const { nombre, cantidad, unidad } = ingrediente;
+            modalDetail.innerHTML += `
+                <div>
+                    <h2>${nombre}</h2>
+                    <p>${cantidad} ${unidad}</p>
+                </div>
+            `;
+        });
+
+        // Show the modal
+        modal.classList.add('is-visible');
+    } catch (error) {
+        console.error('Error showing recipe:', error);
+        alert('Hubo un error al mostrar la receta. Por favor, revise la consola para más detalles.');
+    } */
+    var modal = document.getElementById("recipe-modal");
+    var detail = document.getElementById("recipe-detail");
+
+    // Populate recipe details (for demonstration purposes, replace with actual recipe details)
+    var recipeDetails = "<h3>Receta de Chocolate</h3><p>Ingredientes:</p><ul><li>Chocolate</li><li>Azúcar</li><li>Leche</li></ul><p>Instrucciones:</p><ol><li>Derretir el chocolate</li><li>Mezclar con azúcar y leche</li><li>Refrigerar antes de servir</li></ol>";
+
+    // Set the recipe details inside the detail element
+    detail.innerHTML = recipeDetails;
+
+    // Open the modal
+    modal.style.display = "block";
+
+    // Close the modal when the close button is clicked
+    var closeButton = modal.querySelector(".close-modal");
+    closeButton.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+}
 let m = 0
 async function crearHTML() {
     try {
@@ -252,7 +304,6 @@ async function crearHTML() {
         total.innerHTML = 'Numero total'
         let total_productos = 0
         let n = 1
-        m = 0
         console.log(orders)
         filteredProducts.forEach(product => {
             seccionMantenimiento.innerHTML += `
@@ -262,8 +313,11 @@ async function crearHTML() {
                                 <th rowspan="2">
                                     <h3>N# ${n}</h3>
                                 </th>
-                                <th colspan="4">
-                                    <h2>${product.description}</h2>
+                                <th colspan="3">
+                                    <h2 id=producto${n}>${product.description}</h2>
+                                </th>
+                                <th>
+                                    <button onclick="receta${n}()"> Receta </button>
                                 </th>
                             </tr>
                     <tr>
@@ -275,7 +329,6 @@ async function crearHTML() {
                     </table>
         `
             n++
-            m++
         })
         n = 1
 
@@ -381,7 +434,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Cargar l�neas disponibles
     // lineas = await getLines().then((json) => { return json.lines })
     // Esto es para las pruebas
- 
+    const openRecipeButtons = document.querySelectorAll('.open-recipe');
+
+    openRecipeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            receta();
+        });
+    });
+
+    const closeRecipeButtons = document.querySelectorAll('.close-modal');
+
+    closeRecipeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            modal.classList.remove('is-visible');
+        });
+    });
+
     // Actualizar las líneas disponibles en los formularios de asignación y liberación
     const lineasRelease = document.getElementById("release-line")
     const lineasAssign = document.getElementById("assign-line")
