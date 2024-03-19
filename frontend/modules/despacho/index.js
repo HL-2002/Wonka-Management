@@ -1,6 +1,16 @@
+const facturasProcesadas = [];
+
 // Resta del stock
 async function resProducts(id){
   try{
+    if (facturasProcesadas.includes(id)) {
+        console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
+        return;
+      }
+
+
+
+
    var response = await fetch(`/api/ventas/orders/${id}`)
    const products= await response.json()
 
@@ -13,7 +23,7 @@ async function resProducts(id){
      };
      console.log(removeProduct)
      insertStock(removeProduct);
- 
+     facturasProcesadas.push(id)
      
    });
   } catch(error){
@@ -67,12 +77,14 @@ async function orderporId(id) {
             document.getElementById('facturaexistente').style.display = 'block'
             document.getElementById('errornofactura').style.display = 'none'
             document.getElementById('NombreEmpresa').value = data ? data.customerName : ""
-            document.getElementById('RifEmpresa').value = data ? data.customerId : ""
-            document.getElementById('EmailEmpresa').value = data ? data.email : ""
-            document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
-            document.getElementById('HoraEmpresa').value = data ? data.time : ""
-            document.getElementById('StatusEmpresa').value = data ? data.status : ""
-            document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+            //document.getElementById('RifEmpresa').value = data ? data.customerId : ""
+            //document.getElementById('EmailEmpresa').value = data ? data.email : ""
+            //document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
+            //document.getElementById('HoraEmpresa').value = data ? data.time : ""
+            //document.getElementById('StatusEmpresa').value = data ? data.status : ""
+            //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+            document.getElementById('Direccion').value = 'tumama'
+            document.getElementById('numerodecamion').value = 13
             resProducts(id)
             //Desglosar factura
           
