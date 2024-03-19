@@ -61,6 +61,12 @@
                     <p>Crea orden para nuestro distribuidor en Carabobo</p>
 
                     <form>
+                        <label class="label-clients">
+                            clientes registrados
+                            <select name="customer" id="customer">
+                                <option value="new">Nuevo Cliente</option>
+                            </select>
+                        </label>
 
                         <div class="info-container">
 
@@ -104,6 +110,35 @@
                                 <input type="number" id="phoneNumber" placeholder="Ingresa numero telefonico">
                             </label>
                         </div>
+
+                        <div class="address">
+                            <label>Municipio
+                                <select>
+                                    <option value="valencia">Valencia</option>
+                                    <option value="naguanagua">Naguanagua</option>
+                                    <option value="san diego">San Diego</option>
+                                    <option value="libertador">Libertador</option>
+                                    <option value="guacara">Guacara</option>
+                                    <option value="puerto cabello">Puerto Cabello</option>
+                                    <option value="juan jose mora">Juan José Mora</option>
+                                    <option value="bejuma">Bejuma</option>
+                                    <option value="miranda">Miranda</option>
+                                    <option value="montalban">Montalbán</option>
+                                    <option value="los guayos">Los Guayos</option>
+                                    <option value="diego ibarra">Diego Ibarra</option>
+                                    <option value="san joaquin">San Joaquín</option>
+                                    <option value="Carlos Arvelo">Carlos Arvelo</option>
+
+                                </select>
+
+                            </label>
+
+                            <label>
+                                direccion corta
+                                <input type="text" id="shortAddress" placeholder="Ingresa la direccion corta">
+                            </label>
+                        </div>
+
                 </div>
 
 
@@ -189,6 +224,7 @@
                     <th>Telefono</th>
                     <th>Estado</th>
                     <th>Creada</th>
+                    <th>direccion</th>
                     <th>
                         costo
                     </th>
@@ -218,6 +254,7 @@
             <p>Telefono: <span id="phone-number"></span></p>
             <p>Estado: <span id="status"></span></p>
             <p>Creada: <span id="time"></span></p>
+            <p>direccion: <span id="address"></span></p>
             <p>Costo: <span id="total-price-order"></span></p>
 
             <div id="order-items"></div>
@@ -233,6 +270,7 @@
     </script>
     <script type="module" src="./index.js"></script>
     <script type="module" src="./nav.js"></script>
+    <script type="module" src="./customer.js"></script>
 
 </body>
 
