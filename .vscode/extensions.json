@@ -1,7 +1,0 @@
-{
-	"recommendations": [
-		"dbaeumer.vscode-eslint",
-        "usernamehw.errorlens",
-        "ms-vscode.live-server"
-	]
-}
