@@ -6,26 +6,24 @@
 //id = mM# es maquinas en mantenimiento **preguntar a mantenimiento si tienen esto
 
 // # es el numero de la linea de produccion de 1-10
-/* ID DE MATERIA PRIMA
-    11 CACAO
-    12 CHOCOLATE NEGRO
-    13 CHOCOLATE CON LECHE
-    14 MANZANA
-    15 AZUCAR
-    16 JARABE DE MAIZ
-    17 CHOCOLATE NEGRO
-    18 TAZA de ALMENDRAS
-    19 QUESO CREMA
-    20 MANTEQUILLA DE MANI
-    21 COCO EN HOJUELAS
-    22 TAZA CHISPA DE CHOCOLATE
-    23 MANTECA
-    24 AGUA
-    25 HARINA
-    26 CHOCOLATE SEMIDULCE
-    27 CHUCHARADA DE VAINILLA
-    28 COCO RAYADO
-    29 
+/* ID DE MATERIA PRIMA con su unidad
+    11 CACAO gramos
+    12 CHOCOLATE NEGRO gramos
+    13 CHOCOLATE CON LECHE gramos
+    14 MANZANA unidad
+    15 AZUCAR gramos
+    16 JARABE DE MAIZ ml
+    17 CHOCOLATE NEGRO gramos
+    18 TAZA de ALMENDRAS gramos
+    19 QUESO CREMA ml
+    20 MANTEQUILLA DE MANI gramos
+    21 COCO gramos
+    22 CHISPAS DE CHOCOLATE gramos
+    23 HARINA gramos
+    24 CHOCOLATE SEMIDULCE gramos
+    25 LECHE CONDENSADA ml 
+    26 LECHE ml
+    27 MALVADISCO gramos
     */
 
 
@@ -45,7 +43,6 @@
 
 
 /*
-Recetario:
 •    Wonka bar: Barra Wonka:
 50 gramos de cacao
 125 gramos de chocolate negro
@@ -59,41 +56,35 @@ Recetario:
 
 •    Wonka Swirl Lollipops: Chupeta espiral Wonka
 1 taza de azúcar
-1/3 de jarabe de maíz ligero
-Termómetro de azúcar
-Palitos de paletas de caramelo
-
+125ml de jarabe de maíz 
 
 
 
 •    Bluebird's egg candy: Caramelo de huevo de pájaro azul
-1 paquete (8 onzas) de queso crema
+225ml de queso crema
 100 gramos de mantequilla
-2 cucharaditas de extracto de vainilla
 300 gramos azúcar
-12 onzas de mantequilla de maní
-12 onzas de coco 
-4 tazas de chispas de chocolate semidulce
+300 gramos de mantequilla de maní
+300 gramos de coco 
+200 gramos de chispas de chocolate semidulce
 
 •    Rompemuelas eterno: Rompemuelas eterno:
 500 gr coco rallado
-1 kg harina
+1000 gramos harina
 250 gr azucar
-100 ml agua
 
 •    Three-course dinner gum: Chicle de cena de tres platos
-sopa de tomate = sopa de tomate deshidratada en polvo
-Rosbif = rosbif finamente cortado para sándwiches, deshidratado y molido. El saborizante de papa se crea usando puré de papa instantáneo (deshidratado). 
-Se puede agregar sabor a mantequilla usando saborizantes líquidos de las tiendas de repostería.
-pastel de arándanos = sabor líquido a arándano que se encuentra en las tiendas de repostería
+1000 gramos harina
+5 manzanas
+300 gramos de azucar
+125ml de jarabe de maiz
+300 gramos de chocolate con leche
+
 
 
 •    Stained-glass hard candy: Caramelo duro de vidriera
-50ml de agua
 400 gramos de azúcar
-1 ½ tazas de jarabe de maíz ligero
-1 cucharada de extracto de almendras
-1 cucharada de colorante alimentario rojo
+200 ml jarabe de maíz ligero
 
 •    Wonka whipple-scrumptious fudgemallow delight: Barra delicia de crema, malvavisco y fudge Wonka
 180 gramos de galletas de barquillo de chocolate
@@ -101,11 +92,10 @@ pastel de arándanos = sabor líquido a arándano que se encuentra en las tienda
 100 gramos de malvaviscos
 
 Fudge:
-0,5 latas de leche condensada
+350 ml de leche condensada
 75 mililitros de leche
-225 gramos de azúcar demerara
+225 gramos de azúcar
 60 gramos de mantequilla
-6 gramos de sal marina
 
 •    Wonka nutty chocolate surprise: Barra sorpresa de chocolate de nueces Wonka
 50 gramos de cacao
@@ -114,11 +104,9 @@ Fudge:
 50 g taza de almendras (picadas, en hojuelas o enteras)
 
 •    Edible grass: Hierba comestible
-240 g ( 8,5 oz ) de coco rallado sin azúcar
-½  cucharadita colorante alimentario verde
-cucharada agua tibia
-
+240 g coco rallado 
 */
+
 const recetas = {
     'Wonka Bar': [
         { ingrediente: 'cacao', cantidad: 50, id: 11},
@@ -131,21 +119,55 @@ const recetas = {
         { ingrediente: 'mantequilla', cantidad: 100, id: 19}
     ],
     'Chupeta espiral Wonka': [
-        { ingrediente: 'jarabe de maiz', cantidad: 115, id: 16},
+        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16},
         { ingrediente: 'azucar', cantidad: 340, id: 15 }
     ],
     'Caramelo de huevo de pájaro azul': [
-        { ingrediente: 'cacao', cantidad: 50, id: 11},
-        { ingrediente: 'chocolate negro', cantidad: 125, id: 12},
-        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13},
-        { ingrediente: 'taza de almendras', cantidad: 50, id: 18}
+        { ingrediente: 'azucar', cantidad: 300, id: 15},
+        { ingrediente: 'mantequilla de mani', cantidad: 300, id: 20},
+        { ingrediente: 'queso crema', cantidad: 225, id: 16},
+        { ingrediente: 'mantequilla', cantidad: 150, id: 19},
+        { ingrediente: 'coco', cantidad: 300, id: 21},
+        { ingrediente: 'chispas de chocolate', cantidad: 200, id: 22},
+        { ingrediente: 'chispas de chocolate', cantidad: 200, id: 24}
     ],
     'Barra sorpresa de chocolate de nueces Wonka': [
         { ingrediente: 'cacao', cantidad: 50, id: 11 },
         { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
         { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 },
         { ingrediente: 'taza de almendras', cantidad: 50, id: 18 }
-    ]
+    ],
+    'Rompemuelas eterno': [
+        { ingrediente: 'harina', cantidad: 1000, id: 23},
+        { ingrediente: 'azucar', cantidad: 250, id: 15 },
+        { ingrediente: 'coco', cantidad: 500, id: 21 }
+    ],
+    'Chicle de cena de tres platos': [
+        { ingrediente: 'harina', cantidad: 1000, id: 23},
+        { ingrediente: 'manzana', cantidad: 5, id: 14},
+        { ingrediente: 'azucar', cantidad: 500, id: 15 },
+        { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16},
+        { ingrediente: 'chocolate con leche', cantidad: 300, id: 13 }
+    ],
+    'Caramelo duro de vidriera': [
+        { ingrediente: 'azucar', cantidad: 400, id: 15},
+        { ingrediente: 'jarabe de maiz', cantidad: 200, id: 16},
+    ],
+    'Fudge:': [
+        { ingrediente: 'leche condensada', cantidad: 350, id: 25},
+        { ingrediente: 'leche', cantidad: 75, id: 26},
+        { ingrediente: 'azucar', cantidad: 225, id: 15},
+        { ingrediente: 'mantequilla', cantidad: 60, id: 19}
+    ],
+    'Hierba comestible': [
+        { ingrediente: 'coco', cantidad: 240, id: 21}
+    ],
+    'Barra delicia de crema, malvavisco y fudge Wonka': [
+        { ingrediente: 'malvadiscos', cantidad: 100, id: 27},
+        { ingrediente: 'cacao', cantidad: 50, id: 11},
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 }
+    ],
+
 }
 
 // Función para calcular los ingredientes totales
@@ -192,6 +214,7 @@ async function Verificar() {
             }
 
         });
+        
 
         if (response.ok) {
             // Obtener la respuesta en formato JSON
@@ -199,10 +222,6 @@ async function Verificar() {
             console.log(typeof (Order))
             console.log(Order)
             return await Order
-            
-
-
-
 
         } else {
             // Error al obtener la �ltima orden
@@ -259,6 +278,7 @@ async function crearHTML() {
             m++
         })
         n = 1
+
         orders.products.forEach(producto => {
             const table = document.getElementById(`pp${producto.productId}`);
             table.innerHTML += `${producto.productQuantity}`
