@@ -1,19 +1,19 @@
-import express from 'express'
+import express, { Router } from 'express'
 import client from './model.js'
 
 const ventasRouter = express.Router()
 
 ventasRouter.post('/orders', async (req, res) => {
-  const { name, customerId, email, phoneNumber, time, products, totalPriceOrder } = req.body
+  const { customerId, time, products, totalPriceOrder } = req.body
 
-  if (!name || !customerId || !email || !phoneNumber || !time || !products || products.length === 0) {
+  if (!customerId || !time || !products || products.length === 0) {
     return res.status(400).json({ error: 'Por favor complete todos los campos del formulario y agregue al menos un producto al ticket.' })
   }
 
   try {
     const clientInsertResult = await client.execute({
-      sql: 'INSERT INTO OrderTable (customerName, customerId, email, phoneNumber, time, totalPriceOrder) VALUES (?, ?, ?, ?, ?, ?)',
-      args: [name, customerId, email, phoneNumber, time, totalPriceOrder]
+      sql: 'INSERT INTO OrderTable (customerId, time, totalPriceOrder) VALUES (?, ?, ?)',
+      args: [customerId, time, totalPriceOrder]
     })
 
     const result = await client.execute(
@@ -46,7 +46,7 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
   try {
     // Obtener la información de la orden
     const orderResult = await client.execute({
-      sql: 'SELECT * FROM OrderTable WHERE id = ?',
+      sql: 'SELECT * FROM OrderTable INNER JOIN Client ON OrderTable.customerId = Client.rif WHERE OrderTable.id = ?',
       args: [orderId]
     })
 
@@ -67,10 +67,11 @@ ventasRouter.get('/orders/:orderId', async (req, res) => {
     // Combinar la información de la orden y los productos
     const orderWithProducts = {
       orderId: order.id,
-      customerName: order.customerName,
+      name: order.name,
       customerId: order.customerId,
       email: order.email,
       phoneNumber: order.phoneNumber,
+      address: order.address,
       status: order.status,
       time: order.time,
       products,
@@ -89,11 +90,10 @@ ventasRouter.get('/orders', async (req, res) => {
   try {
     // Obtener todas las órdenes
     const ordersResult = await client.execute(
-      'SELECT * FROM OrderTable'
+      'SELECT * FROM OrderTable INNER JOIN Client ON OrderTable.customerId = Client.rif ORDER BY time DESC'
     )
 
     const orders = ordersResult.rows
-
     // Para cada orden, obtener los productos asociados
     const ordersWithProducts = await Promise.all(orders.map(async (order) => {
       const productsResult = await client.execute({
@@ -103,10 +103,11 @@ ventasRouter.get('/orders', async (req, res) => {
       const products = productsResult.rows
       return {
         orderId: order.id,
-        customerName: order.customerName,
+        name: order.name,
         customerId: order.customerId,
         email: order.email,
         phoneNumber: order.phoneNumber,
+        address: order.address,
         status: order.status,
         time: order.time,
         products,
@@ -193,10 +194,11 @@ ventasRouter.get('/latestOrder', async (req, res) => {
     // Combinar la información de la última orden y los productos
     const latestOrderWithProducts = {
       orderId: latestOrder.id,
-      customerName: latestOrder.customerName,
+      name: latestOrder.name,
       customerId: latestOrder.customerId,
       email: latestOrder.email,
       phoneNumber: latestOrder.phoneNumber,
+      address: latestOrder.address,
       status: latestOrder.status,
       time: latestOrder.time,
       products,
@@ -206,6 +208,43 @@ ventasRouter.get('/latestOrder', async (req, res) => {
     res.status(200).json(latestOrderWithProducts)
   } catch (error) {
     console.error('Error al obtener la última orden y sus productos:', error)
+    res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' })
+  }
+})
+
+// clientes
+ventasRouter.get('/customer', async (req, res) => {
+  try {
+    const result = await client.execute(
+      'SELECT * FROM Client'
+    )
+    res.status(200).json(result.rows)
+  } catch (error) {
+    console.error('Error al obtener los clientes:', error)
+    res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' })
+  }
+})
+
+ventasRouter.post('/customer', async (req, res) => {
+  const { name, email, phoneNumber, address, rif } = req.body
+
+  if (!name || !email || !phoneNumber || !address || !rif) {
+    return res.status(400).json({ error: 'Por favor complete todos los campos del formulario.' })
+  }
+
+  try {
+    await client.execute({
+      sql: 'INSERT INTO Client (name, email, phoneNumber, address, rif) VALUES (?, ?, ?, ?, ?)',
+      args: [name, email, phoneNumber, address, rif]
+    })
+
+    res.status(201).json({ message: 'El cliente se creó correctamente.' })
+  } catch (error) {
+    console.log(error.code)
+    if (error.code === 'SQLITE_CONSTRAINT_PRIMARYKEY') {
+      return res.status(409).json({ error: 'El RIF ya está registrado con otro cliente' })
+    }
+    console.error('Error al crear el cliente:', error)
     res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' })
   }
 })

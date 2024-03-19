@@ -80,12 +80,13 @@ const renderViewer = async () => {
         tr.innerHTML = `
         <td>${order.orderId}</td>
 
-            <td>${order.customerName}</td>
+            <td>${order.name}</td>
             <td>${order.customerId}</td>
             <td>${order.email}</td>
             <td>${order.phoneNumber}</td>
             <td>${order.status}</td>
             <td>${order.time}</td>
+            <td>${order.address}</td>
             <td>${TotalInINTL}</td>
             
             <td>
@@ -120,12 +121,13 @@ const renderDialog = async (event) => {
   dialog.showModal()
 
   dialog.querySelector('#order-id').textContent = order.orderId
-  dialog.querySelector('#customer-name').textContent = order.customerName
+  dialog.querySelector('#customer-name').textContent = order.name
   dialog.querySelector('#customer-id').textContent = order.customerId
   dialog.querySelector('#email').textContent = order.email
   dialog.querySelector('#phone-number').textContent = order.phoneNumber
   dialog.querySelector('#status').textContent = order.status
   dialog.querySelector('#time').textContent = order.time
+  dialog.querySelector('#address').textContent = order.address
   dialog.querySelector('#total-price-order').textContent = new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VES' }).format(order.totalPriceOrder)
   const orderItems = order.products.map(item => {
     const price = new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VES' }).format(item.productPrice)

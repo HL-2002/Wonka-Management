@@ -27,3 +27,5 @@ private.key
 
 # Ignore mac build files
 .DS_Store
+
+.vs

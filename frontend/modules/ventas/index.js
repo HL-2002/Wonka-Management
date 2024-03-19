@@ -1,10 +1,61 @@
 /* eslint-disable no-undef */
 import { toast } from 'wc-toast'
+import { getCustomers, loadCustomers, saveCustomer } from './customer.js'
 let filteredProducts = []
 document.addEventListener('DOMContentLoaded', async function () {
+  await loadCustomers()
   await getProducts()
   const send = document.getElementById('send')
   const add = document.getElementById('add')
+  const customerSelect = document.getElementById('customer')
+
+  customerSelect.addEventListener('change', async () => {
+    const customerId = customerSelect.value
+
+    if (customerId === 'new') {
+      document.getElementById('name').value = ''
+      document.getElementById('customerId').value = ''
+      document.getElementById('email').value = ''
+      document.getElementById('phoneNumber').value = ''
+      const addressContainer = document.querySelector('.address')
+      addressContainer.querySelector('input').value = ''
+
+      // enable the input fields
+      document.getElementById('name').disabled = false
+      document.getElementById('customerId').disabled = false
+      document.getElementById('rif-prefix').disabled = false
+      document.getElementById('email').disabled = false
+      document.getElementById('phoneNumber').disabled = false
+      addressContainer.querySelector('select').disabled = false
+      addressContainer.querySelector('input').disabled = false
+
+      return
+    }
+
+    const customers = await getCustomers()
+    const customer = customers.find(customer => customer.rif === customerId)
+
+    document.getElementById('name').value = customer.name
+    document.getElementById('customerId').value = customer.rif.split('-')[1]
+    document.getElementById('rif-prefix').value = customer.rif.split('-')[0]
+    document.getElementById('email').value = customer.email
+    document.getElementById('phoneNumber').value = customer.phoneNumber
+    const address = customer.address.split('-')
+    const municipio = address[0]
+    const shortAddress = address[1]
+    const addressContainer = document.querySelector('.address')
+    addressContainer.querySelector('select').value = municipio
+    addressContainer.querySelector('input').value = shortAddress
+
+    // disable the input fields
+    document.getElementById('name').disabled = true
+    document.getElementById('customerId').disabled = true
+    document.getElementById('rif-prefix').disabled = true
+    document.getElementById('email').disabled = true
+    document.getElementById('phoneNumber').disabled = true
+    addressContainer.querySelector('select').disabled = true
+    addressContainer.querySelector('input').disabled = true
+  })
 
   send.addEventListener('click', submitOrder)
   add.addEventListener('click', addProduct)
@@ -194,6 +245,21 @@ async function submitOrder () {
   const email = document.getElementById('email').value.trim()
   const phoneNumber = document.getElementById('phoneNumber').value.trim()
 
+  const addressContainer = document.querySelector('.address')
+  const municipio = addressContainer.querySelector('select').value
+  const shortAddress = addressContainer.querySelector('input').value
+  if (shortAddress === '') {
+    toast('Por favor, complete todos los campos del formulario', {
+      duration: 3000,
+      icon: {
+        type: 'error'
+      }
+    })
+    return
+  }
+
+  const address = `${municipio}-${shortAddress}`
+
   const productsArray = []
 
   // Recopilar la información de los productos del ticket
@@ -314,14 +380,58 @@ async function submitOrder () {
 
   // Construir el objeto de pedido
   const order = {
-    name,
     customerId,
-    email,
-    phoneNumber,
     time: fecha,
     products: productsArray,
     totalPriceOrder: totalPrice
 
+  }
+
+  // Check if customer already exists, view in the select options
+  const customerSelect = document.getElementById('customer')
+  const valueoFSelect = customerSelect.value
+  const existingCustomer = valueoFSelect !== 'new'
+
+  if (!existingCustomer) {
+    try {
+      const reponse = await saveCustomer({
+        name,
+        rif: customerId,
+        email,
+        phoneNumber,
+        address
+      })
+      console.log(reponse)
+      if (reponse.status === 201) {
+        toast('Cliente guardado correctamente', {
+          duration: 3000,
+          icon: {
+            type: 'success'
+          }
+        })
+        await loadCustomers()
+      } else {
+        if (reponse.status === 409) {
+          toast('error de conflictos ya hay un cliente registrado con los mismos datos', {
+            duration: 3000,
+            icon: {
+              type: 'error'
+            }
+          })
+          return
+        }
+
+        toast('Error al guardar el cliente', {
+          duration: 3000,
+          icon: {
+            type: 'error'
+          }
+        })
+        return
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   try {

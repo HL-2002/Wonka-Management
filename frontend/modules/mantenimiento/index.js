@@ -1,10 +1,12 @@
 import { toast } from 'wc-toast'
-
+import { HaveEnoghtMaterial } from './services.js'
 // Keep track of ids of machines
 let ids = []
 
 // Display de las máquinas y su mantenimiento al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
+  const isMaterial = await HaveEnoghtMaterial()
+  console.log(isMaterial)
   updateDisplays()
   alertMachines()
 })
@@ -796,6 +798,13 @@ mPlanForm.addEventListener('submit', async (e) => {
         }
       })
 
+      toast('se ha devuelto 2 de aceite para su uso', {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
+
       // Clear form
       document.getElementById('mPlan-select').value = ''
       document.getElementById('mPlan-date').value = ''
@@ -1064,6 +1073,21 @@ btnsClose.forEach((btn) => {
   })
 }
 )
+
+document.querySelectorAll('dialog').forEach((dialog) => {
+  dialog.addEventListener('cancel', (e) => {
+    e.preventDefault()
+    dialog.classList.remove('open')
+    dialog.classList.add('close')
+
+    const close = () => {
+      dialog.close()
+      dialog.removeEventListener('animationend', close)
+    }
+
+    dialog.addEventListener('animationend', close)
+  })
+})
 
 // Buscar máquina por id
 async function searchMachine () {
