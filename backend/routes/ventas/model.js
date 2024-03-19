@@ -1,39 +1,26 @@
-import { createClient } from '@libsql/client';
-const urlMan = process.env.mode === 'production' ? process.env.DB_MAN_URL : 'file:./backend/local.db';
-
+import { createClient } from '@libsql/client'
+const urlMan = process.env.mode === 'production' ? process.env.DB_MAN_URL : 'file:./backend/local.db'
 
 // Configuración de variables de entorno
-const Token = process.env.DB_MAN_TOKEN;
+const Token = process.env.DB_MAN_TOKEN
 // Crear cliente de base de datos
 const client = createClient({
-    authToken: Token,
-    url: urlMan
-});
+  authToken: Token,
+  url: urlMan
+})
 
 // enable foreign keys
+await client.execute('PRAGMA foreign_keys = ON')
 
 // Inicializar modelo de base de datos para ventas
 if (process.env.mode !== 'production') {
-    await client.execute(`
+  await client.execute(`
     DROP TABLE IF EXISTS OrderProduct
-    `);
-    await client.execute(`
+    `)
+  await client.execute(`
     DROP TABLE IF EXISTS OrderTable
-    `);
+    `)
 }
-// Crear tablas si no existen
-await client.execute(`
-    CREATE TABLE IF NOT EXISTS OrderTable (
-        id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-        customerName TEXT NOT NULL,
-        customerId INTEGER NOT NULL,
-        email TEXT NOT NULL,
-        phoneNumber TEXT NOT NULL,
-        time TEXT NOT NULL,
-        status TEXT DEFAULT 'pending',
-        totalPriceOrder REAL NOT NULL DEFAULT 0
-    )
-`);
 
 await client.execute(`
     CREATE TABLE IF NOT EXISTS OrderProduct (
@@ -46,7 +33,29 @@ await client.execute(`
         FOREIGN KEY (orderId) REFERENCES OrderTable(id)
         
     )
-`);
+`)
+
+await client.execute(`
+    CREATE TABLE IF NOT EXISTS Client (
+        name TEXT NOT NULL unique,
+        email TEXT NOT NULL unique,
+        phoneNumber TEXT NOT NULL unique,
+        address TEXT NOT NULL,
+        rif TEXT NOT NULL unique PRIMARY KEY
+    );
+`)
+
+// Crear tablas si no existen
+await client.execute(`
+    CREATE TABLE IF NOT EXISTS OrderTable (
+        id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+        customerId TEXT NOT NULL,
+        time TEXT NOT NULL,
+        status TEXT DEFAULT 'pending',
+        totalPriceOrder REAL NOT NULL DEFAULT 0,
+        FOREIGN KEY (customerId) REFERENCES Client(rif)
+    )
+`)
 
 // Exportar cliente de base de datos
-export default client;
+export default client
