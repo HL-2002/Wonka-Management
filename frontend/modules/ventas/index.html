@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../header.css">
+    <link rel="stylesheet" href="../../reset.css">
+    <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
+</head>
+
+<body>
+
+    <header class="header">
+
+
+        <nav>
+            <ul class="header-navbar">
+                <a href="/">
+                    <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's">
+                </a>
+
+                <li><a href="/index.html"><img src="../../public/icono_1.webp" alt="icono  tienda">Venta</a></li>
+                <li><a href="/modules/despacho"><img src="../../public/icono_2.webp"
+                            alt="icono Distribucion">Distribución</a></li>
+                <li><a href="/modules/inventario/"><img src="../../public/icono_3.webp"
+                            alt="icono de inventario">Inventario</a></li>
+                <li><a href="/modules/produccion"><img src="../../public/icono_4.webp"
+                            alt="icono Produccion">Producción</a></li>
+                <li><a href="/modules/mantenimiento"><img src="../../public/icono_5.webp"
+                            alt="icono de Mantenimiento">Mantenimiento</a>
+                </li>
+                <li><a href="/modules/compras"><img src="../../public/icono_6.webp"
+                            alt="icono de Ingredientes">Compra</a></li>
+
+            </ul>
+        </nav>
+
+
+    </header>
+
+    <main>
+        <wc-toast></wc-toast>
+
+        <div>
+            <div class="btn-nav">
+
+                <button data-action="create" class="selected">Crear orden</button>
+                <button data-action="view">ver ordenes</button>
+
+            </div>
+            <h1 class="main-title">Crea Orden de Pedido</h1>
+        </div>
+        <section class="main-container" id="creater" style="display: none;">
+
+            <section class="sales-container">
+                <div class="">
+                    <h2>Orden</h2>
+                    <p>Crea orden para nuestro distribuidor en Carabobo</p>
+
+                    <form>
+
+                        <div class="info-container">
+
+                            <div class="sales-container__name">
+                                <label>Empresa
+                                    <input type="text" id="name" placeholder="Ingresa el nombre de la empresa" required>
+                                </label>
+                            </div>
+                            <div class="sales-container__id">
+                                <label>Rif
+
+                                    <div class="rif-container">
+                                        <select name="" id="rif-prefix">
+                                            <option value="V">V</option>
+                                            <option value="J">J</option>
+                                            <option value="E">E</option>
+                                            <option value="P">P</option>
+                                            <option value="G">G</option>
+                                        </select>
+                                        <input type="number" name="customerId" id="customerId" placeholder="RIF"
+                                            required>
+
+
+
+                                    </div>
+
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sales-container__email">
+                            <label>E-mail
+                                <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
+                            </label>
+                        </div>
+
+                        <div class="sales-container__phone">
+                            <label>Telefono
+                                <input type="number" id="phoneNumber" placeholder="Ingresa numero telefonico">
+                            </label>
+                        </div>
+                </div>
+
+
+
+
+                <h3>Seleccion de productos</h3>
+
+                <div class="products">
+                    <div class="sales-container__products">
+                        <label>Productos
+                            <select name="why" id="why">
+
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="sales-container__quantity">
+                        <label>Cantidad
+                            <input type="number" name="quantity" id="quantity" value="1" placeholder="1" min="1"
+                                max="99">
+                        </label>
+
+                    </div>
+                </div>
+
+                </form>
+                <button id="add">Agregar Producto</button>
+            </section>
+
+
+            <section class="ticket-container">
+                <div class="ticket-container__top">
+                    <h2>Ticket de Pedido</h2>
+                    <table class="ticket-table" id="table">
+
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Eliminar</th>
+                        </tr>
+
+                        <tbody id="productTable"></tbody>
+
+
+
+
+                    </table>
+                </div>
+
+                <button type="submit" id="send">Enviar Pedido</button>
+            </section>
+
+
+
+
+
+
+
+
+        </section>
+
+        <section id="viewer" style="display: none;">
+
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Buscar ordenes">
+                <!-- add checkbox for filter for state -->
+
+                <label for="state">Estado</label>
+                <select name="state" id="state">
+                    <option value="all">Todos</option>
+                    <option value="pending">Pendiente</option>
+                    <option value="entregado">Entregado</option>
+                </select>
+            </div>
+
+            <table class="table" id="table">
+
+                <tr>
+                    <th>id</th>
+                    <th>Empresa</th>
+                    <th>Rif</th>
+                    <th>Correo</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Creada</th>
+                    <th>
+                        costo
+                    </th>
+                    <th>accion</th>
+                </tr>
+
+                <tbody id="orderTable">
+
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+        </section>
+
+        <dialog class="dialog" id="dialog">
+            <button id="close">Cerrar</button>
+            <h2>Orden de Pedido</h2>
+            <p>id: <span id="order-id"></span></p>
+            <p>Empresa: <span id="customer-name"></span></p>
+            <p>Rif: <span id="customer-id"></span></p>
+            <p>Correo: <span id="email"></span></p>
+            <p>Telefono: <span id="phone-number"></span></p>
+            <p>Estado: <span id="status"></span></p>
+            <p>Creada: <span id="time"></span></p>
+            <p>Costo: <span id="total-price-order"></span></p>
+
+            <div id="order-items"></div>
+        </dialog>
+    </main>
+    <script type="importmap">
+
+        {
+            "imports": {
+                "wc-toast": "../../utils/wc-toast/src/index.js"
+            }
+        }
+    </script>
+    <script type="module" src="./index.js"></script>
+    <script type="module" src="./nav.js"></script>
+
+</body>
+
+</html>
