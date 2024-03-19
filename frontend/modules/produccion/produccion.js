@@ -15,7 +15,20 @@
     16 JARABE DE MAIZ
     17 CHOCOLATE NEGRO
     18 TAZA de ALMENDRAS
+    19 QUESO CREMA
+    20 MANTEQUILLA DE MANI
+    21 COCO EN HOJUELAS
+    22 TAZA CHISPA DE CHOCOLATE
+    23 MANTECA
+    24 AGUA
+    25 HARINA
+    26 CHOCOLATE SEMIDULCE
+    27 CHUCHARADA DE VAINILLA
+    28 COCO RAYADO
+    29 
     */
+
+
 /* ID de los productos por numero 
    1 Wonka bar: Barra Wonka
    2 Candied apples: Manzanas acarameladas
@@ -28,8 +41,83 @@
    9 Wonka nutty chocolate surprise: Barra sorpresa de chocolate de nueces Wonka
    10 Edible grass: Hierba comestible
 */
-/* que hay que hacer?
-    4) terminar de decir a mantenimineto de implementar su modulo en los botones (lo haran ellos)
+
+
+
+/*
+Recetario:
+•    Wonka bar: Barra Wonka:
+50 gramos de cacao
+125 gramos de chocolate negro
+150 gramos de chocolate con leche
+
+•    Candied apples: Manzanas acarameladas:
+300 gramos de azúcar blanco refinado
+1 manzana
+100 gramos de mantequilla
+
+
+•    Wonka Swirl Lollipops: Chupeta espiral Wonka
+1 taza de azúcar
+1/3 de jarabe de maíz ligero
+Termómetro de azúcar
+Palitos de paletas de caramelo
+
+
+
+
+•    Bluebird's egg candy: Caramelo de huevo de pájaro azul
+1 paquete (8 onzas) de queso crema
+100 gramos de mantequilla
+2 cucharaditas de extracto de vainilla
+300 gramos azúcar
+12 onzas de mantequilla de maní
+12 onzas de coco 
+4 tazas de chispas de chocolate semidulce
+
+•    Rompemuelas eterno: Rompemuelas eterno:
+500 gr coco rallado
+1 kg harina
+250 gr azucar
+100 ml agua
+
+•    Three-course dinner gum: Chicle de cena de tres platos
+sopa de tomate = sopa de tomate deshidratada en polvo
+Rosbif = rosbif finamente cortado para sándwiches, deshidratado y molido. El saborizante de papa se crea usando puré de papa instantáneo (deshidratado). 
+Se puede agregar sabor a mantequilla usando saborizantes líquidos de las tiendas de repostería.
+pastel de arándanos = sabor líquido a arándano que se encuentra en las tiendas de repostería
+
+
+•    Stained-glass hard candy: Caramelo duro de vidriera
+50ml de agua
+400 gramos de azúcar
+1 ½ tazas de jarabe de maíz ligero
+1 cucharada de extracto de almendras
+1 cucharada de colorante alimentario rojo
+
+•    Wonka whipple-scrumptious fudgemallow delight: Barra delicia de crema, malvavisco y fudge Wonka
+180 gramos de galletas de barquillo de chocolate
+150 gramos de chocolate amargo
+100 gramos de malvaviscos
+
+Fudge:
+0,5 latas de leche condensada
+75 mililitros de leche
+225 gramos de azúcar demerara
+60 gramos de mantequilla
+6 gramos de sal marina
+
+•    Wonka nutty chocolate surprise: Barra sorpresa de chocolate de nueces Wonka
+50 gramos de cacao
+125 gramos de chocolate negro
+150 gramos de chocolate con leche
+50 g taza de almendras (picadas, en hojuelas o enteras)
+
+•    Edible grass: Hierba comestible
+240 g ( 8,5 oz ) de coco rallado sin azúcar
+½  cucharadita colorante alimentario verde
+cucharada agua tibia
+
 */
 const recetas = {
     'Wonka Bar': [
@@ -46,11 +134,17 @@ const recetas = {
         { ingrediente: 'jarabe de maiz', cantidad: 115, id: 16},
         { ingrediente: 'azucar', cantidad: 340, id: 15 }
     ],
-    'Barra sorpresa de chocolate de nueces Wonka': [
+    'Caramelo de huevo de pájaro azul': [
         { ingrediente: 'cacao', cantidad: 50, id: 11},
         { ingrediente: 'chocolate negro', cantidad: 125, id: 12},
         { ingrediente: 'chocolate con leche', cantidad: 150, id: 13},
         { ingrediente: 'taza de almendras', cantidad: 50, id: 18}
+    ],
+    'Barra sorpresa de chocolate de nueces Wonka': [
+        { ingrediente: 'cacao', cantidad: 50, id: 11 },
+        { ingrediente: 'chocolate negro', cantidad: 125, id: 12 },
+        { ingrediente: 'chocolate con leche', cantidad: 150, id: 13 },
+        { ingrediente: 'taza de almendras', cantidad: 50, id: 18 }
     ]
 }
 
