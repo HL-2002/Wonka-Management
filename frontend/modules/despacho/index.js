@@ -13,7 +13,9 @@ async function resProducts(id) {
 
         var response = await fetch(`/api/ventas/orders/${id}`)
         const products = await response.json()
-
+      if (response.ok) {
+          localStorage.setItem('direccionPedido', products.address)
+      }
         products.products.forEach(producto => {
             const { productId, productQuantity } = producto
             const removeProduct = {
