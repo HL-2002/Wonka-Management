@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', async function () {
   const send = document.getElementById('send')
   const add = document.getElementById('add')
   const customerSelect = document.getElementById('customer')
+  const select = document.getElementById('why')
+
+  await showStock(select.options[select.selectedIndex].value)
+
+  select.addEventListener('change', async (evt) => {
+    await showStock(evt.currentTarget.selectedOptions[0].value)
+  })
 
   customerSelect.addEventListener('change', async () => {
     const customerId = customerSelect.value
@@ -123,7 +130,6 @@ async function getProducts () {
 
 function populateSelect (products) {
   const select = document.getElementById('why')
-
   // Limpiar cualquier opción previa
   select.innerHTML = ''
 
@@ -136,7 +142,13 @@ function populateSelect (products) {
   })
 }
 
-function addProduct () {
+async function showStock (id) {
+  const stock = document.getElementById('stock')
+  const product = id ? filteredProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
+  stock.value = product.stock - product.comprometido
+}
+
+async function addProduct () {
   console.log('addProduct')
   const select = document.getElementById('why')
   const productName = select.options[select.selectedIndex].text

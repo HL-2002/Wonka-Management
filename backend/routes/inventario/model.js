@@ -87,8 +87,36 @@ try {
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'jarabe de maiz', '', '8', '15', '0'] })
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'chocolate negro', '', '8', '15', '0'] })
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'taza de almendras', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'QUESO CREMA', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'MANTEQUILLA DE MANI', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'COCO', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'CHISPAS DE CHOCOLATE', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'HARINA', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'CHOCOLATE SEMIDULCE', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'LECHE CONDENSADA', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'LECHE', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'MALVADISCO', '', '8', '15', '0'] })
   }
 } catch (error) {
   console.log('Error de Carga incial de Inventario')
 }
 export default client
+/* ID DE MATERIA PRIMA con su unidad
+    11 CACAO gramos
+    12 CHOCOLATE NEGRO gramos
+    13 CHOCOLATE CON LECHE gramos
+    14 MANZANA unidad
+    15 AZUCAR gramos
+    16 JARABE DE MAIZ ml
+    17 CHOCOLATE NEGRO gramos
+    18 TAZA de ALMENDRAS gramos
+    19 QUESO CREMA ml
+    20 MANTEQUILLA DE MANI gramos
+    21 COCO gramos
+    22 CHISPAS DE CHOCOLATE gramos
+    23 HARINA gramos
+    24 CHOCOLATE SEMIDULCE gramos
+    25 LECHE CONDENSADA ml 
+    26 LECHE ml
+    27 MALVADISCO gramos
+    */
