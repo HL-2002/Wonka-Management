@@ -96,6 +96,7 @@ try {
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'LECHE CONDENSADA', '', '8', '15', '0'] })
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'LECHE', '', '8', '15', '0'] })
     await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?, ?,?,?,?,?)', args: ['1', 'MALVADISCO', '', '8', '15', '0'] })
+    await client.execute({ sql: 'INSERT INTO PRODUCTS (categoryId, description, ref, cost, price, stock) VALUES (?,?,?, ?, ?, ?)', args: ['3', 'Aceite', '', '540', '0', '0'] })
   }
 } catch (error) {
   console.log('Error de Carga incial de Inventario')
@@ -116,7 +117,7 @@ export default client
     22 CHISPAS DE CHOCOLATE gramos
     23 HARINA gramos
     24 CHOCOLATE SEMIDULCE gramos
-    25 LECHE CONDENSADA ml 
+    25 LECHE CONDENSADA ml
     26 LECHE ml
     27 MALVADISCO gramos
     */

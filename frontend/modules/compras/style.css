@@ -1,5 +1,5 @@
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
@@ -42,28 +42,32 @@ h1 {
   margin: 5px;
 }
 
-.menu{
+.menu {
   display: flex;
   margin: auto;
 }
 
-.btn-open:hover{
+.btn-open:hover {
   cursor: pointer;
   scale: 1.2;
 }
-.salir:hover{
+
+.salir:hover {
   cursor: pointer;
   scale: 1.2;
 }
-.btn-ordenDeCompra:hover{
+
+.btn-ordenDeCompra:hover {
   cursor: pointer;
   scale: 1.2;
 }
-.btn-nuevo:hover{
+
+.btn-nuevo:hover {
   cursor: pointer;
   scale: 1.2;
 }
-.btn-eliminar:hover{
+
+.btn-eliminar:hover {
   cursor: pointer;
   scale: 1.2;
 }
@@ -105,11 +109,11 @@ h1 {
   margin-top: 20px;
 }
 
-.solicitud p{
+.solicitud p {
   margin-bottom: 1rem;
 }
 
-.solicitudes a{
+.solicitudes a {
   display: block;
   text-align: center;
   text-decoration: none;
@@ -134,11 +138,11 @@ h1 {
   margin-top: 20px;
 }
 
-.registros-hechos p{
+.registros-hechos p {
   margin-bottom: 1rem;
 }
 
-.registros-hechos a{
+.registros-hechos a {
   display: block;
   text-align: center;
   text-decoration: none;
@@ -151,7 +155,7 @@ h1 {
   color: #ececec;
 }
 
-.modal{
+.modal {
   display: flex;
   position: fixed;
   top: 0;
@@ -163,7 +167,7 @@ h1 {
   background-color: rgba(0, 0, 0, 0.404);
 }
 
-.modal-show{
+.modal-show {
   opacity: 1;
   pointer-events: unset;
 }
@@ -180,7 +184,7 @@ h1 {
   padding: 2px;
 }
 
-.efectuar-modal{
+.efectuar-modal {
   background-color: #6f27ff;
   border-radius: 20px;
   padding: 20px;
@@ -192,14 +196,14 @@ h1 {
 
 }
 
-.efectuar-modal-header{
+.efectuar-modal-header {
   display: flex;
   justify-content: space-between;
   text-align: center;
   margin-bottom: 10px;
 }
 
-.seccion-provedores{
+.seccion-provedores {
   display: flex;
   flex-wrap: wrap;
 }
@@ -212,7 +216,7 @@ h1 {
   margin: 5px;
 }
 
-.tarjeta-proveedor h3{
+.tarjeta-proveedor h3 {
   text-align: center;
 }
 
@@ -221,21 +225,23 @@ h1 {
   margin: auto;
 }
 
-.zona-calculos div{
+.zona-calculos div {
   padding: 2%;
   margin-right: 8%;
   text-align: center;
 }
 
-.zona-calculos h4{
+.zona-calculos h4 {
   font-size: 15px;
 }
 
 /* Estilos de la barra scroll*/
 
 .efectuar-modal::-webkit-scrollbar {
-  width: 8px;     /* Tamaño del scroll en vertical */
-  height: 8px;    /* Tamaño del scroll en horizontal */
+  width: 8px;
+  /* Tamaño del scroll en vertical */
+  height: 8px;
+  /* Tamaño del scroll en horizontal */
 }
 
 /* Ponemos un color de fondo y redondeamos las esquinas del thumb */
