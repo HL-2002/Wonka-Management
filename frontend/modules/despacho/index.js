@@ -194,4 +194,7 @@ function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
 }
-
+function noverpedidos() {
+    let pedidos = document.getElementById("divpedidos");
+    pedidos.style.display = "none";
+}
