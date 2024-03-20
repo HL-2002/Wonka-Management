@@ -171,21 +171,32 @@ h2 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+
 }
 
+
+
 .modal-dialog {
-    background-color: #fefefe;
+    background-color: #6f27ff;
+    border-radius: 20px;
     margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    padding: 15px;
+    width: 78%;
+    color: white;
 }
 
 .modal-header {
+    background-color: #6f27ff;
     padding: 10px;
-    background-color: #f5f5f5;
+    height: 70px;
     border-bottom: 1px solid #ddd;
+}
+
+button.close-modal {
+    background-color: red;
+    border-radius: 5px;
+    color: #ececec;
+
 }
 
 .modal-header h2 {
