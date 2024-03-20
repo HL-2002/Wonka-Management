@@ -308,13 +308,18 @@ hr{
 #pedir h2{
   color: black;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  display: inline-block;
 }
 
 #noverpedidos{
-  background-color: aqua;
+  background-color: rgb(56, 7, 180);
   width: 30px;
   height: 10px;
   float: right;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline;
 }
 
 #Despachar{
