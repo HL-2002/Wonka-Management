@@ -70,6 +70,14 @@ export const ReturnMaterial = async () => {
 // create a order for buy the materials
 export const createOrder = async () => {
   // /api/compras/new/requisicion post
+  // verificar si ya existe una requisicion /api.compras/requisicion
+
+  const response = await fetch('/api/compras/requisicion')
+  const data = await response.json()
+  if (data.length > 0) {
+    return 409
+  }
+
   const res = await fetch('/api/compras/new/requisicion', {
     method: 'POST',
     headers: {
