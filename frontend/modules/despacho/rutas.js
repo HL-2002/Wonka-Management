@@ -105,6 +105,11 @@ boton.addEventListener('click', () => {
     mapa.style.display = 'block'
 })*/
 /*mport { response } from "Express"*/
+function autoResizeInput(input) {
+    input.style.width = "auto";
+    input.style.width = (input.scrollWidth + 10) + "px";
+  }
+
 document.addEventListener('DOMContentLoaded', async () => { 
   const address = localStorage.getItem('direccionPedido') + ' Carabobo Venezuela' 
 //Pedir del Local
@@ -147,8 +152,10 @@ const dataRoute = await route.json()
   console.log('dataRoute', dataRoute)
   const distance = document.getElementById('destino')
   const municipio = document.getElementById('municipio')
-  distance.value = length
-  municipio.value = duration
+  km = length / 1000
+  tiempo = duration / 60
+  distance.value = parseFloat(km.toFixed(1));
+  municipio.value = parseFloat(tiempo.toFixed(1));
   // Initiate and authenticate your connection to the HERE platform:
 const platform = new H.service.Platform({
     apikey: 'GOdm4EI-zu94iYyyCugZc0CJ1MUYqio36JoTAhF3b_c',

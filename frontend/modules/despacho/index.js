@@ -68,7 +68,7 @@ async function pesoCamion(id) {
             }
             if(idProducto == 4){
                 let pesoProduct = 2645;
-                pesoTotal += pesoProduct*cantidad;
+                pesoTotal += pesoProduct* cantidad;
             }
             if(idProducto == 5){
                 let pesoProduct = 1750;
@@ -96,6 +96,7 @@ async function pesoCamion(id) {
             }
             console.log(pesoTotal)
             
+
         })
 
 
@@ -156,7 +157,7 @@ async function orderporId(id) {
             //document.getElementById('StatusEmpresa').value = data ? data.status : ""
             //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
             document.getElementById('Direccion').value = data ? data.address : ""
-            document.getElementById('numerodecamion').value = 13
+            document.getElementById('numerodecamion').value = 1
             resProducts(id)
             //Desglosar factura
 
@@ -178,8 +179,8 @@ async function orderporId(id) {
         document.getElementById('facturaexistente').style.display = 'none'
         document.getElementById('errornofactura').style.display = 'block'
     }
-}
 
+}
 
 const submit = document.getElementById('sumit')
 submit.addEventListener('click', () => {
@@ -189,18 +190,8 @@ submit.addEventListener('click', () => {
 
 })
 
+function verpedidos() {
+    let pedidos = document.getElementById("divpedidos");
+    pedidos.style.display = "block";
+}
 
-/*const data //OrderbyId
-
-//{products} = data
-
-const factura = document.createElement('ul')
-const frag = document.createDocumentFragment()
-products.foreach(producto => { 
-    const {productName, productQuantity, productPrice} = producto
-    const li = document.createElement('li')
-    li.textContent = `${productName} - ${productQuantity} - ${productPrice} = ${productQuantity * productPrice}`
-    frag.appendChild(li)
-
-})
-factura.appendChild(frag)*/
