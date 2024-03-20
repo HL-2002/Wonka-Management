@@ -147,8 +147,8 @@ label {
 }
 /* Esto es lo del mapa */
 #mapContainer {
-  width: 85vw;
-  height: 70vh;
+  width: 50vw;
+  height: 50vh;
   display: inline-block;
   margin: 3vh 10vh;
   border-radius: 2%;
