@@ -16,6 +16,7 @@ main {
   background-color: green;
   border: 3px solid #ececec;
   color: #ececec;
+  padding: 1px;
   border-radius: 5px;
   margin-left: 10px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -30,7 +31,10 @@ main {
 #factura {
   border-radius: 5px;
 }
+
+
 .facturacion {
+  font-size: 3vh;
   position: relative;
   width: 100%;
   padding: 0;
@@ -45,7 +49,7 @@ main {
 
 h1 {
   color: #ececec;
-  font-size: 3rem;
+  font-size: 9vh;
   font-weight: 900;
   margin: 10px 0px 30px 20px;
   padding-bottom: 60px;
@@ -80,12 +84,18 @@ h1 {
   margin-bottom: 60px;
   padding-bottom: 60px;
 }
+#facturaexistente, h2{
+  font-size: 5vh;
+}
+#facturaexistente, h4{
+  font-size: 3vh;
+}
 
 
 .divfactura {
   background-color: rgb(52, 0, 95);
   padding-bottom: 20px;
-  margin: 0px 30px 10px 20px;
+  margin: 0px 30px 0px 20px;
 }
 
 .Formulario {
@@ -109,7 +119,8 @@ label {
 .divfactura input {
   border: transparent;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-left: -10px;
   background-color: rgb(52, 0, 95);
   outline: none;
   color: #ececec;
@@ -138,14 +149,35 @@ label {
 
 .camionesdiv {
   display: inline-block;
+  margin: 10px 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .acamiones {
-  width: auto;
-  height: auto;
+  width: 270px;
+  height: 150px;
 }
 .camionesdiv h4 {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #ececec;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.veruta{
+  background-color: rgb(58, 0, 105);
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 10px 29%;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  text-align: center;
 }
