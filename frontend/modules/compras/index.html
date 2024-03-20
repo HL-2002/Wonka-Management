@@ -78,7 +78,7 @@
         <section class="section">
           <div class="contenedor-menu">
             <div class="menu">
-              <button class="btn-registro">Registro</button>
+              <button class="btn-registro">Compra</button>
               <button class="btn-requisicion active">Requisicion</button>
             </div>
           </div>
@@ -87,7 +87,23 @@
             <div class="solicitudes">
               <h2>Requisicion</h2>
               <p>Tienes $ solicitudes:</p>
-              <div id="tarjetasSolicitudes"></div>
+              <div>
+                <div class="solicitud">
+                  <h2>Nueva Requisicion</h2>
+                  <div>
+                    <select name="" id="vproducts"></select>
+                    <input id="vcantidad" type="text" placeholder="CANTIDAD">
+                  </div>
+                  <div style="display: flex;">
+                    <a onclick="agregarRequisicion()" class="btn-nuevo">Crear</a>
+                  </div>
+                  </div>
+                  `
+              </div>
+              <div id="tarjetasSolicitudes">
+
+
+              </div>
             </div>
 
             <div class="registro-seccion">
@@ -95,56 +111,15 @@
               <p>Tienes $ registradas:</p>
 
               <div class="registros-hechos">
-                <h2>Titulo</h2>
-                <p>costo</p>
-                <p>cantidad</p>
-                <a href="#" class="btn-open">Ver</a>
+                <div id="registros-hechos">
+
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="modal">
-            <div class="efectuar-modal">
-              <div class="efectuar-modal-header">
-                <h2>Provedores</h2>
-                <a href="#" class="salir">X</a>
-              </div>
-
-              <div class="seccion-provedores"></div>
-
-              <div class="seccion-calculos">
-                <h2>Calculos</h2>
-
-                <div class="zona-calculos">
-                  <div class="cantidadContenedor">
-                    <h4>Cantidad</h4>
-                    <p>12</p>
-                  </div>
-
-                  <div class="precioPorUnidad">
-                    <h4>Monto</h4>
-                    <p>1.5$</p>
-                  </div>
-
-                  <div class="montoDeprecioPorUnidad">
-                    <h4>Monto</h4>
-                    <p>1200$</p>
-                  </div>
-
-                  <div class="IvaContenedor">
-                    <h4>Iva</h4>
-                    <p>1200$</p>
-                  </div>
-
-                  <div class="totalContenedor">
-                    <h4>Total</h4>
-                    <p>1200$</p>
-                  </div>
-                </div>
-              </div>
-
-              <a href="#" class="btn-ordenDeCompra">Enviar orden de compra</a>
-            </div>
+          <div id="modal" class="modal">
+            
           </div>
         </section>
       </main>
