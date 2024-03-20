@@ -159,26 +159,54 @@ const recetas = {
   ]
 
 }
+//PARA AGREGAR UNA COMPRA
+//COMPRAS
+async function insertRequisicion (params) {
+  try {
+    const response = await fetch('/api/compras/new/requisicion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar el producto:', response.status)
+    }
+  } catch (error) {
+    // // console.error('Error de red:', error)
+  }
+}
 
 // Función para calcular los ingredientes totales
 async function calcularIngredientesTotales (productos) {
   const ingredientesTotales = {}
-
+  let m = 0
+  materiaP = await getProductsa()
+  console.log('MATERIA PRIMA GENERADA', materiaP)
   productos.forEach((producto) => {
     const { productName, productQuantity } = producto
     const receta = recetas[productName]
-
-    receta.forEach((ingrediente) => {
-      const { ingrediente: nombre, cantidad, id } = ingrediente
-      if (!ingredientesTotales[nombre]) {
-        ingredientesTotales[nombre] = 0
+    
+    receta.forEach((unidad) => {
+      const { ingrediente, cantidad, id } = unidad
+      const materiaPrima = materiaP[id] //agarra
+      console.log('MATERIA PRIMA GENERADA con ID', materiaPrima)
+      console.log('MATERIA PRIMA GENERADA STOCK', materiaPrima.stock)
+      if (!ingredientesTotales[ingrediente]) {
+        ingredientesTotales[ingrediente] = 0
       }
-      ingredientesTotales[nombre] += cantidad * productQuantity
-      const codValue = ingrediente.id
-      const cantidadValue = ingrediente.cantidad
+      ingredientesTotales[ingrediente] += cantidad * productQuantity
+      
+      const codValue = unidad.id
+      const cantidadValue = unidad.cantidad
       const costoValue = producto.productPrice
       const obserValue = 'produccion'
-
+      const productValue = unidad.id
+      if (ingredientesTotales[ingrediente] < materiaPrima.stock) {
       const removeProduct = {
         productId: codValue,
         motivo: 'AJU',
@@ -189,6 +217,11 @@ async function calcularIngredientesTotales (productos) {
       }
       console.log(removeProduct)
       insertStock(removeProduct)
+      return 1
+    } else {
+      insertRequisicion({productValue, cantidadValue})
+      return 0
+    }
     })
   })
 
@@ -197,8 +230,6 @@ async function calcularIngredientesTotales (productos) {
     cantidad,
     id
   }))
-
-  return resultado
 }
 // LLAMANDO A LA API EL ORDERID CUANDO SE DA CLICK A BOTON "ENVIAR"
 async function Verificar () {
@@ -345,7 +376,7 @@ async function crearHTML () {
     alert('Hubo un error al crear el HTML. Por favor, revise la consola para mas detalles.')
   }
 }
-
+//PRODUCTOS TERMINADOS
 async function getProducts () {
   try {
     const response = await fetch('/api/inventario/products')
@@ -361,28 +392,32 @@ async function getProducts () {
     console.error('Error al obtener productos:', error)
   }
 }
+//MATERIA PRIMA
+async function getProductsa() {
+  try {
+    const response = await fetch('/api/inventario/products')
+    const products = await response.json()
+
+    // Filtrar los productos seg�n el atributo categoryId sea igual a 2 que busca solo productos no materia prima
+    filteredProducts = products.filter(product => product.categoryId === 1)
+
+    // Llamar a la funci�n que agrega los productos filtrados al select
+    console.log(filteredProducts)
+    return filteredProducts
+  } catch (error) {
+    console.error('Error al obtener productos:', error)
+  }
+}
 
 let orders = []
 // BOTON PRODUCIR
 async function Producir () {
-  /*
-    const codValue = document.getElementById('codigoC').value
-    const cantidadValue = document.getElementById('cantidadC').value
-    const costoValue = document.getElementById('costoC').value
-    const obserValue = document.getElementById('costoC').value
-
-  const product = {
-    productId: codValue,
-    motivo: 'AJU',
-    tipo: 'CARGO',
-    units: cantidadValue,
-    total: costoValue * cantidadValue,
-    observ: obserValue
-  }
-    */
-  orders = await Verificar()
-
-  console.log('Maquinaria:', orders)
+  orders = await Verificar ()
+  prima = await getProductsa ()
+  v = await calcularIngredientesTotales(orders.products)
+  console.log('v', v)
+  console.log('ORDENES', orders)
+  console.log('MATERIA PRIMA', orders)
   n = 1
   orders.products.forEach(producto => {
     const codValue = producto.productId
@@ -398,12 +433,21 @@ async function Producir () {
       total: costoValue * cantidadValue,
       observ: obserValue
     }
-
+    if (v === 1) {
     console.log(addProduct, '1')
     insertStock(addProduct)
+    productoProducido = document.getElementById(`pf${n}`)
+    productoProducido.innerHTML = `
+      Producto Producido: ${producto.productQuantity}
+    `
     n++
+    alert('Porduccion generada correctamente!')
+    }
+    else {
+      alert('Se necesita materia prima, ya se notifico a Compras!')
+    }
   })
-  calcularIngredientesTotales(orders.products)
+  
 }
 async function insertStock (params) {
   try {
