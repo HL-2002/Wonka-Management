@@ -1,12 +1,11 @@
 import { toast } from 'wc-toast'
-import { HaveEnoghtMaterial } from './services.js'
+import { HaveEnoghtMaterial, ReturnMaterial, UseMaterial, createOrder, getMaterials } from './services.js'
 // Keep track of ids of machines
 let ids = []
 
 // Display de las máquinas y su mantenimiento al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
-  const isMaterial = await HaveEnoghtMaterial()
-  console.log(isMaterial)
+  // Actualizar los displays y formularios
   updateDisplays()
   alertMachines()
 })
@@ -193,7 +192,7 @@ function displayMaintenance (machines) {
   })
 }
 
-function displayMaintenanceForms (machines) {
+async function displayMaintenanceForms (machines) {
   // Formulario de mantenimiento preventivo
   const prevSelect = document.getElementById('prevent-select')
   // Formulario de mantenimiento predictivo
@@ -205,6 +204,16 @@ function displayMaintenanceForms (machines) {
   // Formulario de modificación de mantenimiento
   const mManSelect = document.getElementById('mMan-select')
 
+  const stockMaterial = document.querySelectorAll('.stock-material')
+
+  try {
+    const actualMaterial = await getMaterials()
+    stockMaterial.forEach(async (stock) => {
+      stock.innerHTML = actualMaterial.stock
+    })
+  } catch (e) {
+    console.error(e)
+  }
   // Limpiar formularios antes de añadir las máquinas
   prevSelect.innerHTML = '<option value="">Seleccionar máquina</option>'
   predSelect.innerHTML = '<option value="">Seleccionar máquina</option>'
@@ -430,7 +439,7 @@ function strToDate (dateString) {
 // Planificar mantenimiento preventivo
 // Obtener formulario de planificación
 const prevForm = document.getElementById('prevent').children[0]
-// Evento al enviarlo
+// Evento al enviarlo  - Planificar mantenimiento preventivo
 prevForm.addEventListener('submit', async (e) => {
   e.preventDefault()
 
@@ -478,9 +487,51 @@ prevForm.addEventListener('submit', async (e) => {
     return
   }
 
+  if (!await HaveEnoghtMaterial()) {
+    // alert('No hay suficiente aceite para realizar el mantenimiento')
+    toast('No hay suficiente aceite para realizar el mantenimiento', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+
+    const resOrder = await createOrder()
+
+    if (resOrder !== 201) {
+      toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
+        duration: 4000,
+        icon: {
+          type: 'error'
+        }
+      })
+      return
+    }
+
+    toast('Se ha generado una requisicion de 10 unidades de aceite para el mantenimiento, revise el apartado de compra para autorizar', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
+
+    return
+  }
+
   // Crear mantenimiento preventivo en la base de datos
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
   dateAvailability = dateAvailability.toISOString().split('T')[0]
+
+  const resInventory = await UseMaterial()
+  if (!resInventory) {
+    toast('Error al usar el aceite, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+    return
+  }
 
   const response = await fetch('/api/mantenimiento/', {
     method: 'POST',
@@ -493,7 +544,7 @@ prevForm.addEventListener('submit', async (e) => {
   // Actualizar las máquinas visibles si la respuesta es exitosa
   if (response.status !== 500) {
     // alert('Mantenimiento preventivo planificado')
-    toast('Mantenimiento preventivo planificado', {
+    toast('Mantenimiento preventivo planificado, se han apartado 2 envaces de aceite', {
       duration: 5000,
       icon: {
         type: 'success'
@@ -574,11 +625,53 @@ predForm.addEventListener('submit', async (e) => {
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
   dateAvailability = dateAvailability.toISOString().split('T')[0]
 
+  if (!await HaveEnoghtMaterial()) {
+    // alert('No hay suficiente aceite para realizar el mantenimiento')
+    toast('No hay suficiente aceite para realizar el mantenimiento', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+
+    const resOrder = await createOrder()
+
+    if (resOrder !== 201) {
+      toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
+        duration: 4000,
+        icon: {
+          type: 'error'
+        }
+      })
+      return
+    }
+
+    toast('Se ha generado una requisicion de 10 unidades de aceite para el mantenimiento, revise el apartado de compra para autorizar', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
+
+    return
+  }
+
   // Borrar mantenimiento previo si lo había
   if (getMachine(id).typeMaintenance !== null) {
     const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'DELETE'
     })
+  }
+
+  const resInventory = await UseMaterial()
+  if (!resInventory) {
+    toast('Error al usar el aceite, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+    return
   }
 
   // Crear mantenimiento
@@ -593,12 +686,13 @@ predForm.addEventListener('submit', async (e) => {
   // Actualizar las máquinas visibles si la respuesta es exitosa
   if (response.status !== 500) {
     // alert('Mantenimiento predictivo planificado')
-    toast('Mantenimiento predictivo planificado', {
-      duration: 5000,
-      icon: {
-        type: 'success'
-      }
-    })
+    toast('Mantenimiento predictivo planificado, se  han apartado 2 envaces de aceite',
+      {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
 
     // Clear form
     document.getElementById('predict-select').value = ''
@@ -667,11 +761,53 @@ corrForm.addEventListener('submit', async (e) => {
   dateAvailability = dateAvailability.toISOString().split('T')[0]
   dateMaintenance = dateMaintenance.toISOString().split('T')[0]
 
+  if (!await HaveEnoghtMaterial()) {
+    // alert('No hay suficiente aceite para realizar el mantenimiento')
+    toast('No hay suficiente aceite para realizar el mantenimiento', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+
+    const resOrder = await createOrder()
+
+    if (resOrder !== 201) {
+      toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
+        duration: 4000,
+        icon: {
+          type: 'error'
+        }
+      })
+      return
+    }
+
+    toast('Se ha generado una requisicion de 10 unidades de aceite para el mantenimiento, revise el apartado de compra para autorizar', {
+      duration: 5000,
+      icon: {
+        type: 'success'
+      }
+    })
+
+    return
+  }
+
   // Borrar mantenimiento previo si lo había
   if (getMachine(id).typeMaintenance !== null) {
     const response = await fetch(`/api/mantenimiento/${id}`, {
       method: 'DELETE'
     })
+  }
+
+  const resInventory = await UseMaterial()
+  if (!resInventory) {
+    toast('Error al usar el aceite, revise la consola y/o el servidor', {
+      duration: 5000,
+      icon: {
+        type: 'error'
+      }
+    })
+    return
   }
 
   // Creación de mantenimiento
@@ -686,7 +822,7 @@ corrForm.addEventListener('submit', async (e) => {
   // Actualizar las máquinas visibles si la respuesta es exitosa
   if (response.status !== 500) {
     // alert('Mantenimiento correctivo planificado')
-    toast('Mantenimiento correctivo planificado', {
+    toast('Mantenimiento correctivo planificado,se han apartado 2 envases de aceite ', {
       duration: 5000,
       icon: {
         type: 'success'
@@ -797,6 +933,19 @@ mPlanForm.addEventListener('submit', async (e) => {
           type: 'success'
         }
       })
+
+      const resInventory = await ReturnMaterial()
+
+      if (!resInventory) {
+        // alert('Error al devolver el aceite, revise la consola y/o el servidor')
+        toast('Error al devolver el aceite, revise la consola y/o el servidor', {
+          duration: 5000,
+          icon: {
+            type: 'error'
+          }
+        })
+        return
+      }
 
       toast('se ha devuelto 2 de aceite para su uso', {
         duration: 5000,
@@ -976,6 +1125,26 @@ mManForm.addEventListener('submit', async (e) => {
       toast(`Mantenimiento de la máquina ${machineSelectedMan.id} eliminado. \n` +
             'La máquina ahora se encuentra disponible. \n' +
             'Si la misma estaba notificada o defectuosa, y no ha culminado su mantenimiento, asegúrese de que producción notifique su estado actual.', {
+        duration: 5000,
+        icon: {
+          type: 'success'
+        }
+      })
+
+      const resInventory = await ReturnMaterial()
+
+      if (!resInventory) {
+        // alert('Error al devolver el aceite, revise la consola y/o el servidor')
+        toast('Error al devolver el aceite, revise la consola y/o el servidor', {
+          duration: 5000,
+          icon: {
+            type: 'error'
+          }
+        })
+        return
+      }
+
+      toast('se ha devuelto 2 de aceite para su uso', {
         duration: 5000,
         icon: {
           type: 'success'
