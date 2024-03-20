@@ -498,12 +498,17 @@ prevForm.addEventListener('submit', async (e) => {
 
     const resOrder = await createOrder()
 
-    if (resOrder !== 201) {
+    if (resOrder !== 201 && resOrder !== 409) {
       toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
         duration: 4000,
         icon: {
           type: 'error'
         }
+      })
+      return
+    } else if (resOrder === 409) {
+      toast('Ya hay una requisicion en proceso', {
+        duration: 4000
       })
       return
     }
@@ -636,12 +641,17 @@ predForm.addEventListener('submit', async (e) => {
 
     const resOrder = await createOrder()
 
-    if (resOrder !== 201) {
+    if (resOrder !== 201 && resOrder !== 409) {
       toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
         duration: 4000,
         icon: {
           type: 'error'
         }
+      })
+      return
+    } else if (resOrder === 409) {
+      toast('Ya hay una requisicion en proceso', {
+        duration: 4000
       })
       return
     }
@@ -772,7 +782,7 @@ corrForm.addEventListener('submit', async (e) => {
 
     const resOrder = await createOrder()
 
-    if (resOrder !== 201) {
+    if (resOrder !== 201 && resOrder !== 409) {
       toast('Error al solicitar el aceite, revise la consola y/o el servidor', {
         duration: 4000,
         icon: {
@@ -780,8 +790,12 @@ corrForm.addEventListener('submit', async (e) => {
         }
       })
       return
+    } else if (resOrder === 409) {
+      toast('Ya hay una requisicion en proceso', {
+        duration: 4000
+      })
+      return
     }
-
     toast('Se ha generado una requisicion de 10 unidades de aceite para el mantenimiento, revise el apartado de compra para autorizar', {
       duration: 5000,
       icon: {
