@@ -51,6 +51,22 @@ h1 {
   cursor: pointer;
   scale: 1.2;
 }
+.salir:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
+.btn-ordenDeCompra:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
+.btn-nuevo:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
+.btn-eliminar:hover{
+  cursor: pointer;
+  scale: 1.2;
+}
 
 .menu button {
   background-color: rgb(52, 0, 95);
