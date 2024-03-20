@@ -305,22 +305,23 @@ async function crearHTML () {
     seccionOrder.innerHTML = ''
     seccionOrder.innerHTML += `
         <thead>
-                            <tr>
-                                <th rowspan="2">
-                                    <h3>N# ${orders.orderId}</h3>
-                                </th>
-                                <th colspan="4">
-                                    <h2>${orders.name}</h2>
-                                </th>
-                            </tr>
+          <tr>
+              <th rowspan="2">
+                  <h3>N# ${orders.orderId}</h3>
+               </th>
+              <th colspan="4">
+                <h2>${orders.name}</h2>
+              </th>
+              
+          </tr>
                     <tr>
                         <th>${orders.customerId}</th>
                         <th>${orders.email}</th>
                         <th>${orders.phoneNumber}</th>
+                        <th>Total: ${orders.totalPriceOrder}</th>
                     </tr>
                         </thead>
         `
-
     const seccionMantenimiento = document.getElementById('tabla_productos')
     const total = document.getElementById('NumeroTotal')
     const response = await fetch('/api/inventario/products')
@@ -447,7 +448,6 @@ async function Producir () {
       alert('Se necesita materia prima, ya se notifico a Compras!')
     }
   })
-  
 }
 async function insertStock (params) {
   try {
