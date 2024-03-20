@@ -58,8 +58,6 @@
 1 taza de azúcar
 125ml de jarabe de maíz 
 
-
-
 •    Bluebird's egg candy: Caramelo de huevo de pájaro azul
 225ml de queso crema
 100 gramos de mantequilla
@@ -79,8 +77,6 @@
 300 gramos de azucar
 125ml de jarabe de maiz
 300 gramos de chocolate con leche
-
-
 
 •    Stained-glass hard candy: Caramelo duro de vidriera
 400 gramos de azúcar
@@ -113,16 +109,16 @@ const recetas = {
         { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos'},
         { ingrediente: 'chocolate con leche', cantidad: 150, id: 13, unidad: 'gramos' }
     ],
-    'Manzanas acarameladas': [
+    'Candied Apple': [
         { ingrediente: 'manzana', cantidad: 1, id: 14, unidad: 'unidad'},
         { ingrediente: 'azucar', cantidad: 300, id: 15, unidad: 'gramos'},
         { ingrediente: 'mantequilla', cantidad: 100, id: 19, unidad: 'gramos'}
     ],
-    'Chupeta espiral Wonka': [
+    'Wonka Swirl Lollipops': [
         { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16, unidad: 'mililitros'},
         { ingrediente: 'azucar', cantidad: 340, id: 15, unidad: 'gramos' }
     ],
-    'Caramelo de huevo de pájaro azul': [
+    'Bluebirds egg candy': [
         { ingrediente: 'azucar', cantidad: 300, id: 15, unidad: 'gramos'},
         { ingrediente: 'mantequilla de mani', cantidad: 300, id: 20, unidad: 'gramos'},
         { ingrediente: 'queso crema', cantidad: 225, id: 16, unidad: 'mililitros'},
@@ -130,7 +126,7 @@ const recetas = {
         { ingrediente: 'coco', cantidad: 300, id: 21, unidad: 'gramos'},
         { ingrediente: 'chispas de chocolate', cantidad: 200, id: 22, unidad: 'gramos'},
     ],
-    'Barra sorpresa de chocolate de nueces Wonka': [
+    'Wonka nutty chocolate surprise': [
         { ingrediente: 'cacao', cantidad: 50, id: 11, unidad: 'gramos' },
         { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos' },
         { ingrediente: 'chocolate con leche', cantidad: 150, id: 13, unidad: 'gramos' },
@@ -141,31 +137,31 @@ const recetas = {
         { ingrediente: 'azucar', cantidad: 250, id: 15, unidad: 'gramos' },
         { ingrediente: 'coco', cantidad: 500, id: 21, unidad: 'gramos' }
     ],
-    'Chicle de cena de tres platos': [
+    'Three-course dinner gum': [
         { ingrediente: 'harina', cantidad: 1000, id: 23, unidad: 'gramos'},
         { ingrediente: 'manzana', cantidad: 5, id: 14, unidad: 'unidad'},
         { ingrediente: 'azucar', cantidad: 500, id: 15, unidad: 'gramos' },
         { ingrediente: 'jarabe de maiz', cantidad: 125, id: 16, unidad: 'mililitros'},
         { ingrediente: 'chocolate con leche', cantidad: 300, id: 13, unidad: 'gramos' }
     ],
-    'Caramelo duro de vidriera': [
+    'Stained-glass hard candy': [
         { ingrediente: 'azucar', cantidad: 400, id: 15, unidad: 'gramos'},
         { ingrediente: 'jarabe de maiz', cantidad: 200, id: 16, unidad: 'mililitros'},
     ],
-    'Fudge:': [
+    'Fudge': [
         { ingrediente: 'leche condensada', cantidad: 350, id: 25, unidad: 'mililitros'},
         { ingrediente: 'leche', cantidad: 75, id: 26, unidad: 'mililitros'},
         { ingrediente: 'azucar', cantidad: 225, id: 15, unidad: 'gramos'},
         { ingrediente: 'mantequilla', cantidad: 60, id: 19, unidad: 'gramos'}
     ],
-    'Hierba comestible': [
+    'Edible grass': [
         { ingrediente: 'coco', cantidad: 240, id: 21}
     ],
-    'Barra delicia de crema, malvavisco y fudge Wonka': [
+    'Wonka whipple-scrumptious fudgemallow delight': [
         { ingrediente: 'malvadiscos', cantidad: 100, id: 27, unidad: 'gramos'},
         { ingrediente: 'cacao', cantidad: 50, id: 11, unidad: 'gramos'},
         { ingrediente: 'chocolate negro', cantidad: 125, id: 12, unidad: 'gramos' }
-    ],
+    ]
 
 }
 
@@ -183,11 +179,19 @@ async function calcularIngredientesTotales(productos) {
                 ingredientesTotales[nombre] = 0
             }
             ingredientesTotales[nombre] += cantidad * productQuantity
-                const removeProduct = {
-                    id: id,
-                    sum: '0',
-                    units: ingredientesTotales[nombre]
-                };
+            const codValue = ingrediente.id
+            const cantidadValue = ingrediente.cantidad
+            const costoValue = producto.productPrice
+            const obserValue = 'produccion'
+        
+            const removeProduct = {
+                productId: codValue,
+                motivo: 'AJU',
+                tipo: 'DESCARGO',
+                units: cantidadValue,
+                total: costoValue * cantidadValue,
+                observ: obserValue
+            };
                 console.log(removeProduct)
                 insertStock(removeProduct);
         })
@@ -232,39 +236,24 @@ async function Verificar() {
         alert("Hubo un error al obtener la ultima orden. Por favor, revise la consola para mas detalles.");
     }
 }
-function receta1() {
-    /* ESTO ES LO QUE MAS O MENOS SE PUEDE HACER
-    try {
-        const prod = 'Wonka Bar'; // Assuming 'Wonka Bar' is the product you want to show the recipe for
-        const receta = recetas[prod];
-
-        const modal = document.getElementById('recipe-modal');
-        const modalDetail = document.getElementById('recipe-detail');
-
-        // Clear previous content
-        modalDetail.innerHTML = '';
-
-        receta.forEach((ingrediente) => {
-            const { nombre, cantidad, unidad } = ingrediente;
-            modalDetail.innerHTML += `
-                <div>
-                    <h2>${nombre}</h2>
-                    <p>${cantidad} ${unidad}</p>
-                </div>
-            `;
-        });
-
-        // Show the modal
-        modal.classList.add('is-visible');
-    } catch (error) {
-        console.error('Error showing recipe:', error);
-        alert('Hubo un error al mostrar la receta. Por favor, revise la consola para más detalles.');
-    } */
+function receta(n) {
+    console.log(n)
     var modal = document.getElementById("recipe-modal");
     var detail = document.getElementById("recipe-detail");
-
-    // Populate recipe details (for demonstration purposes, replace with actual recipe details)
-    var recipeDetails = "<h3>Receta de Chocolate</h3><p>Ingredientes:</p><ul><li>Chocolate</li><li>Azúcar</li><li>Leche</li></ul><p>Instrucciones:</p><ol><li>Derretir el chocolate</li><li>Mezclar con azúcar y leche</li><li>Refrigerar antes de servir</li></ol>";
+    const rece = document.getElementById(`producto${n}`)
+    const receta = recetas[rece.innerText];
+    console.log(rece)
+    console.log(receta)
+    var recipeDetails = "<h3>Receta de Chocolate</h3><p>Ingredientes:</p>";
+    receta.forEach((id) => {
+        const {ingrediente, cantidad, unidad } = id;
+        recipeDetails += `
+            <ul>
+                <li>${ingrediente} ${cantidad} ${unidad}</li>
+            </ul>
+        `;
+    });
+    
 
     // Set the recipe details inside the detail element
     detail.innerHTML = recipeDetails;
@@ -289,6 +278,25 @@ let m = 0
 async function crearHTML() {
     try {
         const orders = await Verificar() // Espera a que se resuelva la promesa
+        const seccionOrder = document.getElementById('tabla_info')
+        seccionOrder.innerHTML = ''
+        seccionOrder.innerHTML += `
+        <thead>
+                            <tr>
+                                <th rowspan="2">
+                                    <h3>N# ${orders.orderId}</h3>
+                                </th>
+                                <th colspan="4">
+                                    <h2>${orders.name}</h2>
+                                </th>
+                            </tr>
+                    <tr>
+                        <th>${orders.customerId}</th>
+                        <th>${orders.email}</th>
+                        <th>${orders.phoneNumber}</th>
+                    </tr>
+                        </thead>
+        `
 
         const seccionMantenimiento = document.getElementById('tabla_productos')
         const total = document.getElementById('NumeroTotal')
@@ -317,7 +325,7 @@ async function crearHTML() {
                                     <h2 id=producto${n}>${product.description}</h2>
                                 </th>
                                 <th>
-                                    <button onclick="receta${n}()"> Receta </button>
+                                    <button onclick="receta(${n})"> Receta </button>
                                 </th>
                             </tr>
                     <tr>
@@ -367,20 +375,41 @@ async function getProducts() {
 let orders = []
 //BOTON PRODUCIR 
 async function Producir() {
-    
+    /*
+    const codValue = document.getElementById('codigoC').value
+    const cantidadValue = document.getElementById('cantidadC').value
+    const costoValue = document.getElementById('costoC').value
+    const obserValue = document.getElementById('costoC').value
+
+  const product = {
+    productId: codValue,
+    motivo: 'AJU',
+    tipo: 'CARGO',
+    units: cantidadValue,
+    total: costoValue * cantidadValue,
+    observ: obserValue
+  }
+    */
     orders = await Verificar()
     
     console.log('Maquinaria:', orders)
     n = 1
     orders.products.forEach(producto => {
-        const table = document.getElementById(`pf${producto.productId}`);
-        table.innerHTML += `${producto.productQuantity}`
+        const codValue = producto.productId
+        const cantidadValue = producto.productQuantity
+        const costoValue = producto.productPrice
+        const obserValue = 'produccion'
+    
         const addProduct = {
-            id: producto.productId,
-            sum: 1,
-            units: producto.productQuantity
+            productId: codValue,
+            motivo: 'AJU',
+            tipo: 'CARGO',
+            units: cantidadValue,
+            total: costoValue * cantidadValue,
+            observ: obserValue
         };
-        console.log(addProduct)
+
+        console.log(addProduct, '1')
         insertStock(addProduct);
         n++
     })
@@ -389,21 +418,21 @@ async function Producir() {
 async function insertStock(params) {
     try {
         const response = await fetch('/api/inventario/set/product/stock', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(params)
         })
-
+    
         if (response.ok) {
-            await response.json()
+          await response.json()
         } else {
-            console.error('Error al insertar el producto:', response.status)
+          console.error('Error al insertar el producto:', response.status)
         }
-    } catch (error) {
-        // console.error('Error de red:', error)
-    }
+      } catch (error) {
+        // // console.error('Error de red:', error)
+      }
 }
 function generateNumberList(m) {
     let numberList = [];

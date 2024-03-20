@@ -58,6 +58,15 @@ td {
     border-style: inset;
 }
 
+.main-title2 {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: 900;
+    color: var(--backgroud);
+    font-size: 2rem;
+}
+
 th {
     color: white;
 }
