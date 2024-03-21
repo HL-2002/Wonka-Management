@@ -98,16 +98,20 @@ async function pesoCamion(id) {
                 pesoTotal += pesoProduct*cantidad;
             }
             console.log(pesoTotal)
-            
+
+            let pesoTotalKilos = pesoTotal / 1000;
+            console.log(pesoTotalKilos)
 
         })
 
 
-
+        return pesoTotal;
     } catch (error) {
         console.log('Error f:', error);
     }
+    
 }
+
 
 //Se encarga de restar del stock
 async function insertStock(params) {
@@ -198,7 +202,7 @@ submit.addEventListener('click', () => {
     const codigoIngresado = document.getElementById('factura').value
     orderporId(codigoIngresado)
     pesoCamion(codigoIngresado)
-
+    console.log(pesoTotal)
 })
 
 function verpedidos() {
@@ -211,7 +215,7 @@ function noverpedidos() {
 }
 const bdsm = document.getElementById('Despachar')
 bdsm.addEventListener('click', async () =>{
-    await cambiarstatus()
+    
 
 })
 async function cambiarstatus(){

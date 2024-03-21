@@ -163,3 +163,4 @@ const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
 // Enable dynamic resizing of the map, based on the current size of the enclosing container
 window.addEventListener('resize', () => map.getViewPort().resize())
 })
+

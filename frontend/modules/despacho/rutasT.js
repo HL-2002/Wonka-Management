@@ -232,3 +232,32 @@ const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
 // Enable dynamic resizing of the map, based on the current size of the enclosing container
 window.addEventListener('resize', () => map.getViewPort().resize())
 })
+const bdespachar = documen.getElementById('boton')
+bdespachar.addEventListener('click', async () => {
+  await cambiarstatus()
+})
+/*async function cambiarstatus(){
+    
+    const id = document.getElementById('factura').value
+    console.log(id)
+    try {
+
+        let response = await fetch(`/api/ventas/orders/${id}/status`,{
+            method: 'PATCH', headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+                'status':'entregado'
+            })
+        })
+        if(response.ok){
+            console.log('El estado de la factura ha sido cambiado')
+        }
+    } catch (error) {
+        console.log("Error no se pudo cambiar el status", error)
+    }
+    
+    
+    
+}*/
