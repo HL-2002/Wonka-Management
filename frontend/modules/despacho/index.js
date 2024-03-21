@@ -11,7 +11,7 @@ async function resProducts(id) {
 
 
 
-        var response = await fetch(`/api/ventas/orders/${id}`)
+        let response = await fetch(`/api/ventas/orders/${id}`)
         const products = await response.json()
       if (response.ok) {
           localStorage.setItem('direccionPedido', products.address)
@@ -45,7 +45,7 @@ async function pesoCamion(id) {
             console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
             return;
         }
-        var respuesta = await fetch(`/api/ventas/orders/${id}`)
+        let respuesta = await fetch(`/api/ventas/orders/${id}`)
         const productos = await respuesta.json()
         productos.products.forEach(producto => {
             const { productId, productQuantity } = producto
@@ -194,4 +194,37 @@ function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
 }
+function noverpedidos() {
+    let pedidos = document.getElementById("divpedidos");
+    pedidos.style.display = "none";
+}
+const bdsm = document.getElementById('Despachar')
+bdsm.addEventListener('click', async () =>{
+    await cambiarstatus()
 
+})
+async function cambiarstatus(){
+    
+    const id = document.getElementById('factura').value
+    console.log(id)
+    try {
+
+        let response = await fetch(`/api/ventas/orders/${id}/status`,{
+            method: 'PATCH', headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+                'status':'entregado'
+            })
+        })
+        if(response.ok){
+            console.log('El estado de la factura ha sido cambiado')
+        }
+    } catch (error) {
+        console.log("Error no se pudo cambiar el status", error)
+    }
+    
+    
+    
+}
