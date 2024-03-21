@@ -56,9 +56,8 @@ async function crearHtmlCompras () {
       <div class="registro">
       <h2>${productName}</h2>
       <p>Cantidad: ${requisicion.cantidad}</p>
-      <p>Total: ${requisicion.monto}</p>
       <div style="display: flex;">
-        <a onclick="cargarProductos('${requisicion.id}')" class="btn-open">Ver</a>
+        
       </div>
       </div>
       `
