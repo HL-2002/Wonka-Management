@@ -126,6 +126,54 @@ router.patch('/set/product/stock', async (req, res) => {
   }
 })
 
+router.patch('/set/product/stock/ventas', async (req, res) => {
+  const { productId, motivo, tipo, units, total, observacion } = req.body
+  const product = parseInt(productId)
+  const motiveValue = motivo || null
+  const typeValue = tipo || null
+  const stockValue = units || null
+  const totalValue = total || null
+  const observ = observacion || null
+
+  try {
+    // Insertar en la tabla INVENTARIO
+    await client.execute({
+      sql: 'INSERT INTO INVENTARIO (motivo, tipo, productId, stock, total, observacion) VALUES (?, ?, ?, ?, ?, ?)',
+      args: [motiveValue, typeValue, product, stockValue, totalValue, observ]
+    })
+    // Actualizar el stock del producto
+    const { rows: products } = await client.execute({
+      sql: 'SELECT stock, comprometido FROM PRODUCTS WHERE id = ?',
+      args: [productId]
+    })
+
+    if (products.length === 0) {
+      return res.status(404).json({ error: 'Product not found' })
+    }
+
+    const currentStock = products[0].stock
+    const newStock = tipo === 'CARGO' ? currentStock + parseInt(units) : parseInt(currentStock) - parseInt(units)
+
+    const currentStockC = products[0].comprometido
+    const newStockC = tipo === 'CARGO' ? currentStockC + parseInt(units) : parseInt(currentStockC) - parseInt(units)
+
+    await client.execute({
+      sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?',
+      args: [newStockC, productId]
+    })
+
+    await client.execute({
+      sql: 'UPDATE PRODUCTS SET comprometido = ? WHERE id = ?',
+      args: [newStock, productId]
+    })
+
+    res.status(201).end()
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 // Actualizar el stock comprometido de un producto
 router.patch('/set/product/stock/comprometido', async (req, res) => {
   const { productId, tipo, units } = req.body
