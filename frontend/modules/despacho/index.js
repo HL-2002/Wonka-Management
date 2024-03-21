@@ -234,13 +234,10 @@ async function verpedidos() {
         const row = document.createElement('tr')
         row.innerHTML = `
         <td>${orden.orderId}</td>
-        <td>${orden.name}</td>
-        <td>${orden.status}</td>
-        <td>${orden.address}</td>
         `
         table.appendChild(row)
     })
-    cambiarstatusdes()
+    cambiarstatus()
 
 }
 function noverpedidos() {

@@ -2,7 +2,11 @@
   margin: 0;
   padding: 0;
 }
+.veruta a {
+  text-decoration: none;
+  color: #ececec;
 
+}
 body {
   background-color: #6f27ff;
   margin-bottom: 10px;
