@@ -661,7 +661,7 @@ function mostrarDatosGeneralesEnTabla (datos, tipo) {
     }
   } else if (tipo === 'inv') {
     // Mostrar categorias
-    titulo.innerHTML = 'Ajustes de Stock Manuales'
+    titulo.innerHTML = 'Listado Movimientos de Inventario'
     for (const movimiento of datos[1]) {
       const producto = datos[0].find(item => item.id === movimiento.productId)
       htmlGeneral += `<p>${movimiento.id} - ${movimiento.motivo} - ${movimiento.productId} - ${producto.description} -  ${movimiento.tipo} - ${movimiento.stock}</p>`
