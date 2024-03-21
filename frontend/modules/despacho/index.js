@@ -8,9 +8,11 @@ async function resProducts(id) {
             return;
         }
 
+        
+        
 
 
-
+        //if(estatus == )
         let response = await fetch(`/api/ventas/orders/${id}`)
         const products = await response.json()
       if (response.ok) {
@@ -183,7 +185,12 @@ async function orderporId(id) {
                 //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
                 document.getElementById('Direccion').value = data ? data.address : ""
                 document.getElementById('numerodecamion').value = 1
-                resProducts(id)
+                if(data.status == "pending" | data.status == "fabricado"){
+                    resProducts(id)
+                }
+                else{
+                    console.log("ya ha sido restada previamente")
+                }
                 pesoCamion(id)
             }else{
                 alert('No posee Stock para realizar el envio')
@@ -222,6 +229,7 @@ function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
     cambiarstatusdes()
+
 }
 function noverpedidos() {
     let pedidos = document.getElementById("divpedidos");
