@@ -172,7 +172,7 @@ async function saveCargo () {
     tipo: 'CARGO',
     units: cantidadValue,
     total: costoValue * cantidadValue,
-    observ: obserValue
+    observacion: obserValue
   }
   await insertStock(product)
   await fillModalCargo()
@@ -190,7 +190,7 @@ async function saveDescargo () {
     tipo: 'DESCARGO',
     units: cantidadValue,
     total: costoValue * cantidadValue,
-    observ: obserValue
+    observacion: obserValue
   }
   await insertStock(product)
   await fillModalDescargo()
@@ -493,7 +493,7 @@ async function insertStock (params) {
     })
 
     if (response.ok) {
-      await response.json()
+      // await response.json()
     } else {
       console.error('Error al insertar el producto:', response.status)
     }
@@ -667,7 +667,6 @@ function mostrarDatosGeneralesEnTabla (datos, tipo) {
       htmlGeneral += `<p>${movimiento.id} - ${movimiento.motivo} - ${movimiento.productId} - ${producto.description} -  ${movimiento.tipo} - ${movimiento.stock}</p>`
     }
   }
-  console.log(datos)
   tabla.innerHTML = ''
   table.innerHTML = htmlGeneral
   tabla.appendChild(table)

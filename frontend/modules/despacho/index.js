@@ -19,10 +19,13 @@ async function resProducts(id) {
         products.products.forEach(producto => {
             const { productId, productQuantity } = producto
             const removeProduct = {
-                id: producto.productId,
-                sum: 0,
+                productId: producto.productId,
+                motivo: 'DES',
+                tipo: 'DESCARGO',
                 units: producto.productQuantity,
-            };
+                total: 1 * 1,
+                observacion: 'DESPACHO'
+              }
 
 
             console.log(removeProduct)
@@ -109,7 +112,7 @@ async function pesoCamion(id) {
 //Se encarga de restar del stock
 async function insertStock(params) {
     try {
-        const response = await fetch('/api/inventario/set/product/stock', {
+        const response = await fetch('/api/inventario/set/product/stock/ventas', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -118,7 +121,7 @@ async function insertStock(params) {
         })
 
         if (response.ok) {
-            await response.json()
+            // await response.json()
         } else {
             console.error('Error al insertar el producto:', response.status)
         }
@@ -126,6 +129,10 @@ async function insertStock(params) {
         console.error('Error de red:', error)
     }
 }
+async function getProducts (params) {
+    const response = await fetch('/api/inventario/products')
+    return await response.json()
+  }// Devuelve array con todos los articulos creados
 
 // Obtiene la orden via id
 async function orderporId(id) {
@@ -138,32 +145,36 @@ async function orderporId(id) {
             }
         });
 
-
         if (id == '') {
             document.getElementById('facturaexistente').style.display = 'none'
             document.getElementById('errornofactura').style.display = 'block'
         }
         else if (response.ok) {
             // Obtener la respuesta en formato JSON
-            var data = await response.json();
-            console.log(data)
-            document.getElementById('facturaexistente').style.display = 'block'
-            document.getElementById('errornofactura').style.display = 'none'
-            document.getElementById('NombreEmpresa').value = data ? data.name : ""
-            //document.getElementById('RifEmpresa').value = data ? data.customerId : ""
-            //document.getElementById('EmailEmpresa').value = data ? data.email : ""
-            //document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
-            //document.getElementById('HoraEmpresa').value = data ? data.time : ""
-            //document.getElementById('StatusEmpresa').value = data ? data.status : ""
-            //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
-            document.getElementById('Direccion').value = data ? data.address : ""
-            document.getElementById('numerodecamion').value = 1
-            resProducts(id)
+            const data = await response.json();
+            const products = await getProducts()
+            const aProduct = products.find((product) => product.id === data.products[0].productId)
+
+            if(data.products[0].productQuantity <= aProduct.stock){
+                console.log(data.products[0].productQuantity , aProduct.stock)
+                document.getElementById('facturaexistente').style.display = 'block'
+                document.getElementById('errornofactura').style.display = 'none'
+                document.getElementById('NombreEmpresa').value = data ? data.name : ""
+                //document.getElementById('RifEmpresa').value = data ? data.customerId : ""
+                //document.getElementById('EmailEmpresa').value = data ? data.email : ""
+                //document.getElementById('NumberEmpresa').value = data ? data.phoneNumber : ""
+                //document.getElementById('HoraEmpresa').value = data ? data.time : ""
+                //document.getElementById('StatusEmpresa').value = data ? data.status : ""
+                //document.getElementById('PrecioTEmpresa').value = data ? data.totalPriceOrder : ""
+                document.getElementById('Direccion').value = data ? data.address : ""
+                document.getElementById('numerodecamion').value = 1
+                resProducts(id)
+            }else{
+                alert('No posee Stock para realizar el envio')
+            }
+
+            
             //Desglosar factura
-
-
-
-
         } else {
             // Error al obtener la �ltima orden
             /*console.error("Hubo un error al obtener la orden. Código de estado:", response.status);

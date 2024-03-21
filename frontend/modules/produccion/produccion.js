@@ -159,8 +159,8 @@ const recetas = {
   ]
 
 }
-//PARA AGREGAR UNA COMPRA
-//COMPRAS
+// PARA AGREGAR UNA COMPRA
+// COMPRAS
 async function insertRequisicion (params) {
   try {
     const response = await fetch('/api/compras/new/requisicion', {
@@ -184,44 +184,44 @@ async function insertRequisicion (params) {
 // Función para calcular los ingredientes totales
 async function calcularIngredientesTotales (productos) {
   const ingredientesTotales = {}
-  let m = 0
+  const m = 0
   materiaP = await getProductsa()
   console.log('MATERIA PRIMA GENERADA', materiaP)
   productos.forEach((producto) => {
     const { productName, productQuantity } = producto
     const receta = recetas[productName]
-    
+
     receta.forEach((unidad) => {
       const { ingrediente, cantidad, id } = unidad
-      const materiaPrima = materiaP[id] //agarra
+      const materiaPrima = materiaP[id] // agarra
       console.log('MATERIA PRIMA GENERADA con ID', materiaPrima)
       console.log('MATERIA PRIMA GENERADA STOCK', materiaPrima.stock)
       if (!ingredientesTotales[ingrediente]) {
         ingredientesTotales[ingrediente] = 0
       }
       ingredientesTotales[ingrediente] += cantidad * productQuantity
-      
+
       const codValue = unidad.id
       const cantidadValue = unidad.cantidad
       const costoValue = producto.productPrice
       const obserValue = 'produccion'
       const productValue = unidad.id
       if (ingredientesTotales[ingrediente] < materiaPrima.stock) {
-      const removeProduct = {
-        productId: codValue,
-        motivo: 'AJU',
-        tipo: 'DESCARGO',
-        units: cantidadValue,
-        total: costoValue * cantidadValue,
-        observ: obserValue
+        const removeProduct = {
+          productId: codValue,
+          motivo: 'AJU',
+          tipo: 'DESCARGO',
+          units: cantidadValue,
+          total: costoValue * cantidadValue,
+          observ: obserValue
+        }
+        console.log(removeProduct)
+        insertStock(removeProduct)
+        return 1
+      } else {
+        insertRequisicion({ productValue, cantidadValue })
+        return 0
       }
-      console.log(removeProduct)
-      insertStock(removeProduct)
-      return 1
-    } else {
-      insertRequisicion({productValue, cantidadValue})
-      return 0
-    }
     })
   })
 
@@ -310,7 +310,7 @@ async function crearHTML () {
               <h3>N# ${orders.orderId}</h3>
             </th>
             <th colspan="4">
-              <h2>${orders.name}</h2>
+              <h2 id="fuck">${orders.name}</h2>
             </th>
           </tr>
           <tr>
@@ -376,7 +376,7 @@ async function crearHTML () {
     alert('Hubo un error al crear el HTML. Por favor, revise la consola para mas detalles.')
   }
 }
-//PRODUCTOS TERMINADOS
+// PRODUCTOS TERMINADOS
 async function getProducts () {
   try {
     const response = await fetch('/api/inventario/products')
@@ -392,8 +392,8 @@ async function getProducts () {
     console.error('Error al obtener productos:', error)
   }
 }
-//MATERIA PRIMA
-async function getProductsa() {
+// MATERIA PRIMA
+async function getProductsa () {
   try {
     const response = await fetch('/api/inventario/products')
     const products = await response.json()
@@ -409,12 +409,59 @@ async function getProductsa() {
   }
 }
 
+let interval
+async function counterToProduce (dayto) {
+  const inputDay = document.getElementById('counter-days')
+  const dayinput = dayto
+  const today = new Date()
+  const difference = dayinput - today
+  if (difference < 0) {
+    clearInterval(interval)
+    await generateProduction()
+    localStorage.removeItem('tomorrow-prod')
+    return
+  }
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+  inputDay.innerHTML = `Tiempo para iniciar la producion: ${days}d ${hours}h ${minutes}m ${seconds}s`
+  inputDay.style.display = 'block'
+  inputDay.style.textAlign = 'center'
+}
+
 let orders = []
 // BOTON PRODUCIR
 async function Producir () {
-  orders = await Verificar ()
-  prima = await getProductsa ()
-  v = await calcularIngredientesTotales(orders.products)
+  const inputDay = document.getElementById('day-to')
+  const today = new Date()
+  const isTitle = document.getElementById('fuck')
+
+  if (isTitle == null) {
+    alert('no hay factura ingreda para la produccion')
+    return
+  }
+
+  if (inputDay.value === '') {
+    await generateProduction()
+  } else {
+    const day = new Date(inputDay.value)
+    if (day < today) {
+      alert('La fecha de produccion no puede ser menor a la fecha actual')
+    } else {
+      const dayTo = new Date(inputDay.value)
+      const codigoIngresado = document.getElementById('factura').value
+      localStorage.setItem('tomorrow-prod', JSON.stringify({ date: inputDay.value, code: codigoIngresado }))
+
+      interval = setInterval(() => { counterToProduce(dayTo) }, 1000)
+    }
+  }
+}
+
+async function generateProduction () {
+  orders = await Verificar()
+  const prima = await getProductsa()
+  const v = await calcularIngredientesTotales(orders.products)
   console.log('v', v)
   console.log('ORDENES', orders)
   console.log('MATERIA PRIMA', orders)
@@ -434,20 +481,20 @@ async function Producir () {
       observ: obserValue
     }
     if (v === 1) {
-    console.log(addProduct, '1')
-    insertStock(addProduct)
-    productoProducido = document.getElementById(`pf${n}`)
-    productoProducido.innerHTML = `
+      console.log(addProduct, '1')
+      insertStock(addProduct)
+      productoProducido = document.getElementById(`pf${n}`)
+      productoProducido.innerHTML = `
       Producto Producido: ${producto.productQuantity}
     `
-    n++
-    alert('Porduccion generada correctamente!')
-    }
-    else {
+      n++
+      alert('Porduccion generada correctamente!')
+    } else {
       alert('Se necesita materia prima, ya se notifico a Compras!')
     }
   })
 }
+
 async function insertStock (params) {
   try {
     const response = await fetch('/api/inventario/set/product/stock', {
@@ -480,6 +527,28 @@ function generateNumberList (m) {
 let machines = []
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // {date:inputDay.value,code:codigoIngresado}
+  document.getElementById('detener').addEventListener('click', () => {
+    if (interval) {
+      clearInterval(interval)
+      const inputDay = document.getElementById('counter-days')
+      inputDay.innerHTML = ''
+      localStorage.removeItem('tomorrow-prod')
+    } else {
+      alert('No hay produccion programada')
+    }
+  })
+
+  const data = JSON.parse(localStorage.getItem('tomorrow-prod'))
+  if (data) {
+    const { date, code } = data
+    document.getElementById('day-to').value = date
+    document.getElementById('factura').value = code
+
+    await crearHTML()
+    await Producir()
+  }
+
   // Cargar m�quinas
   machines = await getMachines().then((json) => { return json.machines })
   console.log('Maquinaria:', machines)
