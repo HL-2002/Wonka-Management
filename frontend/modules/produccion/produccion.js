@@ -1,3 +1,7 @@
+/*
+Solo Cristo y Angel pueden entender este codigo
+*/
+
 // id = mD# es maquinas disponibles
 
 // id = mU# es maquinas en uso
