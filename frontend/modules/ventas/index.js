@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { toast } from 'wc-toast'
-import { getCustomers, loadCustomers, saveCustomer } from './customer.js'
+import { DeleteCustomer, getCustomers, loadCustomers, saveCustomer } from './customer.js'
 let filteredProducts = []
 document.addEventListener('DOMContentLoaded', async function () {
   await loadCustomers()
@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   const add = document.getElementById('add')
   const customerSelect = document.getElementById('customer')
   const select = document.getElementById('why')
+  document.getElementById('delete').addEventListener('click', async (e) => {
+    e.preventDefault()
+    customerSelect.value !== 'new' && await DeleteCustomer(customerSelect.value)
+  })
 
   await showStock(select.options[select.selectedIndex].value)
 

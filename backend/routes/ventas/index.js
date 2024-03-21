@@ -249,4 +249,24 @@ ventasRouter.post('/customer', async (req, res) => {
   }
 })
 
+// delete customer
+
+ventasRouter.delete('/customer/:rif', async (req, res) => {
+  const rif = req.params.rif
+
+  try {
+    const result = await client.execute({
+      sql: 'DELETE FROM Client WHERE rif = ?',
+      args: [rif]
+    })
+    if (result.changes === 0) {
+      return res.status(404).json({ error: 'El cliente especificado no fue encontrado.' })
+    }
+    res.status(200).json({ message: 'El cliente fue eliminado correctamente.' })
+  } catch (error) {
+    console.error('Error al eliminar el cliente:', error)
+    res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' })
+  }
+})
+
 export default ventasRouter

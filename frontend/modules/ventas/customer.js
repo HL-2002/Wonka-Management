@@ -37,3 +37,15 @@ export const loadCustomers = async () => {
     customerSelect.appendChild(option)
   })
 }
+
+export const DeleteCustomer = async (rif) => {
+  try {
+    const response = await fetch(`/api/ventas/customer/${rif}`, {
+      method: 'DELETE'
+    })
+    return response
+  } catch (error) {
+    console.error('Error al eliminar el cliente:', error)
+    return { status: 500, message: 'Ocurrió un error al procesar la solicitud.', ok: false }
+  }
+}
