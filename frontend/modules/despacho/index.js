@@ -220,6 +220,7 @@ function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
     cambiarstatusdes()
+    
 }
 function noverpedidos() {
     let pedidos = document.getElementById("divpedidos");
