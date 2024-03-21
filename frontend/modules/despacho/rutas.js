@@ -110,6 +110,7 @@ function autoResizeInput(input) {
     input.style.width = (input.scrollWidth + 10) + "px";
   }
 
+
 document.addEventListener('DOMContentLoaded', async () => { 
   const address = localStorage.getItem('direccionPedido') + ' Carabobo Venezuela' 
 //Pedir del Local
@@ -144,7 +145,7 @@ const url=`https://geocode.search.hereapi.com/v1/geocode?q=${address}&apikey=GOd
     return data
     // Now you can use the data variable
 });*/
-  const route = await fetch(`https://router.hereapi.com/v8/routes?transportMode=truck&origin=10.2363953,-67.9649982&destination=${lat},${lng}&return=summary&apikey=GOdm4EI-zu94iYyyCugZc0CJ1MUYqio36JoTAhF3b_c`)
+const route = await fetch(`https://router.hereapi.com/v8/routes?transportMode=truck&origin=10.2363953,-67.9649982&destination=${lat},${lng}&return=summary&apikey=GOdm4EI-zu94iYyyCugZc0CJ1MUYqio36JoTAhF3b_c`)
 const dataRoute = await route.json()
   const { length, duration } = dataRoute.routes[0].sections[0].summary
   console.log('distance', length)
@@ -175,11 +176,16 @@ const map = new H.Map(
         center: { lat: 10.2363953, lng: -67.9649982 },
         // Add space around the map edges to ensure markers are not cut off:
         padding: { top: 50, right: 50, bottom: 50, left: 50 },
+        interactive:true,
     }
 )
 
 const origin = { lat: 10.2363953, lng: -67.9649982 }
 const destination = { lat, lng}
+
+const ui = H.ui.UI.createDefault(map,defaultLayers);
+const zoomControl = new H.ui.ZoomControl();
+ui.addControl('Zoom', zoomControl);
 
 // Create the parameters for the routing request:
 const routingParameters = {
@@ -215,12 +221,38 @@ const onResult = function (result) {
                 lineWidth: 3,
             },
         })
-
         // Create a marker for the start point:
-        const startMarker = new H.map.Marker(origin)
+        // Crear un icono personalizado para el origen:
+        const originIcon = new H.map.Icon('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 22s-8-4.5-8-9.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8c0 5.3-8 9.8-8 9.8z"/></svg>');
+        const startMarker = new H.map.Marker(origin, { icon: originIcon });
 
-        // Create a marker for the end point:
-        const endMarker = new H.map.Marker(destination)
+// Crear un icono personalizado para el destino:
+        const destinationIcon = new H.map.Icon('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 22s-8-4.5-8-9.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8c0 5.3-8 9.8-8 9.8z"/></svg>');
+        const endMarker = new H.map.Marker(destination, { icon: destinationIcon });
+
+
+        const originBubble = new H.ui.InfoBubble(origin, {
+            content: 'Este es el origen de la ruta'
+          });
+          
+          // Añadir la burbuja de información a la interfaz de usuario:
+          ui.addBubble(originBubble);
+          originBubble.close();
+
+// Mostrar la burbuja de información cuando el cursor pasa sobre el marcador:
+          startMarker.addEventListener('pointerenter', function() {
+          originBubble.open();
+          });
+
+// Ocultar la burbuja de información cuando el cursor sale del marcador:
+           startMarker.addEventListener('pointerleave', function() {
+           originBubble.close();
+        });
+
+        
+        
+
+        
 
         // Create a H.map.Group to hold all the map objects and enable us to obtain
         // the bounding box that contains all its objects within
