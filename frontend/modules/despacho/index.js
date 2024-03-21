@@ -108,7 +108,7 @@ async function pesoCamion(id, pesoTotalKilos) {
 
         })
         pesoTotalKilos = pesoTotal / 1000;
-        console.log("pesoTotalKilos"+pesoTotalKilos)
+
         if(pesoTotalKilos >= 100){
             
             boton.style.display = "block";
@@ -222,9 +222,24 @@ submit.addEventListener('click', () => {
     
 })
 
-function verpedidos() {
+async function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
+    const table = document.querySelector('.tabla-body')
+    table.innerHTML=''
+    const ordenes = await fetch('/api/ventas/orders')
+    const data = await ordenes.json()
+    console.log(data)
+    data.forEach(orden => {
+        const row = document.createElement('tr')
+        row.innerHTML = `
+        <td>${orden.orderId}</td>
+        <td>${orden.name}</td>
+        <td>${orden.status}</td>
+        <td>${orden.address}</td>
+        `
+        table.appendChild(row)
+    })
     cambiarstatusdes()
 
 }

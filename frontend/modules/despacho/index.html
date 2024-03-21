@@ -62,7 +62,7 @@
                             <div id="Camion1" class="camionesdiv" >
                                 <h4>La Loca Jeniffer: </h4>
                                 <div class="TCamion">
-                                <img src="/public/Camioneta1.webp" class="acamiones" alt="Camion"></div>
+                                <img src="/public/Camioneta1.webp" class="acamiones" alt="Camion" onclick="verpedidos(1)"></div>
                             </div>
                             <div id="camion2" class="camionesdiv">
                                 <h4>Zenon: </h4>
@@ -100,17 +100,13 @@
                                     <table id="tabla-id">
                                         <tr>
                                             <th>Encabezado 1</th>
-                                            <th>Encabezado 2</th>
-                                            <th>Encabezado 3</th>
                                         </tr>
-                                        <tr>
-                                            <td>Dato 1</td>
-                                            <td>Dato 2</td>
-                                            <td>Dato 3</td>
+                                        <tr class="tabla-body">
+                                            
                                         </tr>
                                     </table>
-                                    <button class="veruta"><a href="rutasT.html" >Mostrar todas las rutas</a></button>
-                                    <div id="Despachar">Despachar</div><a href="notaentrega.html"><div id="factura">Factura</div></a>
+                                    <div class="veruta"><a href="rutasT.html" >Mostrar todas las rutas</a></div>
+                                    <div class="veruta" onclick="cambiarstatusdes()">Despachar</div>
                                 </div>
                             </div>
                         </div>
