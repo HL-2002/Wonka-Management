@@ -325,6 +325,7 @@ hr{
   border: 3px solid #6f27ff;
   display: inline;
   bottom: 10%;
+  display: none;
 }
 
 #factura{
