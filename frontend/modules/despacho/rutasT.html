@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruta Pedidos</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/header.css" />
+    <link rel="stylesheet" href="/reset.css" />
+    <link
+      rel="shortcut icon"
+      href="/public/logotipo-op.webp"
+      type="image/webp"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"
+    ></script>
+  </head>
+  <body>
+    <img
+      width="160px"
+      height="160px"
+      src="/public/logotipo-blanco-op.webp"
+      alt="logo de wonka's"
+      id="wonkaimg"
+    />
+    <hr />
+    <div class="contenedor">
+      <div class="divlabel">
+        <h2>Distancia y tiempo estimado</h2>
+        <strong
+          ><input
+            type="text"
+            id="destino"
+            placeholder=""
+            readonly
+            oninput="autoResizeInput(this)"
+          />
+          <label class="chiquita">km</label></strong
+        >
+        <strong
+        ><input
+          type="text"
+          id="municipio"
+          placeholder=""
+          readonly
+          oninput="autoResizeInput(this)"
+        />
+        <label class="chiquita">min</label></strong
+      >
+      </div>
+      <div id="mapa">
+        <div id="mapContainer"></div>
+      </div>
+      <a href="index.html"><div id="boton">Regresar</div></a>
+    </div>
+
+    <script src="rutasT.js"></script>
+  </body>
+</html>
