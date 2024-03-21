@@ -2,7 +2,11 @@
   margin: 0;
   padding: 0;
 }
+.veruta a {
+  text-decoration: none;
+  color: #ececec;
 
+}
 body {
   background-color: #6f27ff;
   margin-bottom: 10px;
@@ -339,4 +343,17 @@ hr{
   height: 30px;
   border: 1px solid #000;
   text-align: center;
+}
+.camionesdiv {
+  position: relative;
+  display: inline-block;
+}
+
+.invisible-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }

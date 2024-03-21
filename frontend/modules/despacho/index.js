@@ -8,9 +8,11 @@ async function resProducts(id) {
             return;
         }
 
+        
+        
 
 
-
+        //if(estatus == )
         let response = await fetch(`/api/ventas/orders/${id}`)
         const products = await response.json()
       if (response.ok) {
@@ -42,9 +44,10 @@ async function resProducts(id) {
 
 
 }
+let pesoTotalKilosGlobal = 0;
 let pesoTotal = 0;
-async function pesoCamion(id) {
-   
+pesoTotal = 0;
+async function pesoCamion(id, pesoTotalKilos) {
     try {
         const boton = document.getElementById('Despachar');
         if (facturasProcesadas.includes(id)) {
@@ -53,7 +56,7 @@ async function pesoCamion(id) {
         }
         let respuesta = await fetch(`/api/ventas/orders/${id}`)
         const productos = await respuesta.json()
-        productos.products.forEach(producto => {
+        productos.products.forEach(async producto => {
             const { productId, productQuantity } = producto
             const idProducto = productId;
             const cantidad = parseInt(productQuantity);
@@ -102,26 +105,28 @@ async function pesoCamion(id) {
             }
             console.log(pesoTotal)
 
-            
-            
 
         })
-        let pesoTotalKilos = pesoTotal / 1000;
-        console.log("pesoTotalKilos"+pesoTotalKilos)
-        if(pesoTotalKilos >= 22000){
+        pesoTotalKilos = pesoTotal / 1000;
+
+        if(pesoTotalKilos >= 100){
             
             boton.style.display = "block";
             
         }
-        return pesoTotal;
     } catch (error) {
         console.log('Error f:', error);
     }
     
     
 }
+console.log(+'calvo')
 
 
+async function obtenerPesoTotalKilos() {
+    await pesoCamion(id);
+    console.log(pesoTotalKilosGlobal);
+}
 //Se encarga de restar del stock
 async function insertStock(params) {
     try {
@@ -163,7 +168,6 @@ async function orderporId(id) {
             document.getElementById('errornofactura').style.display = 'block'
         }
         else if (response.ok) {
-            // Obtener la respuesta en formato JSON
             const data = await response.json();
             const products = await getProducts()
             const aProduct = products.find((product) => product.id === data.products[0].productId)
@@ -182,7 +186,9 @@ async function orderporId(id) {
                 document.getElementById('Direccion').value = data ? data.address : ""
                 document.getElementById('numerodecamion').value = 1
                 resProducts(id)
-                pesoCamion(id)
+                let tumama = 0
+                pesoCamion(id, tumama)
+                console.log(tumama)
             }else{
                 alert('No posee Stock para realizar el envio')
             }
@@ -216,11 +222,23 @@ submit.addEventListener('click', () => {
     
 })
 
-function verpedidos() {
+async function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
-    cambiarstatusdes()
-    
+    const table = document.querySelector('.tabla-body')
+    table.innerHTML=''
+    const ordenes = await fetch('/api/ventas/orders')
+    const data = await ordenes.json()
+    console.log(data)
+    data.forEach(orden => {
+        const row = document.createElement('tr')
+        row.innerHTML = `
+        <td>${orden.orderId}</td>
+        `
+        table.appendChild(row)
+    })
+    cambiarstatus()
+
 }
 function noverpedidos() {
     let pedidos = document.getElementById("divpedidos");
@@ -277,5 +295,43 @@ async function cambiarstatusdes(){
         console.log("Error no se pudo cambiar el status", error)
     }
     
+
+let currentTruck = 1;
+const totalTrucks = 4; // Cambia esto al número total de camiones que tienes
+
+// function nextTruck() {
+//   // Oculta el camión actual
+//   let currentTruckElement = document.getElementById("camion" + currentTruck);
+//   currentTruckElement.style.display = "none";
+
+//   // Pasa al siguiente camión
+//   currentTruck++;
+//   if (currentTruck > totalTrucks) {
+//     currentTruck = 1; // Vuelve al primer camión
+//   }
+
+//   // Muestra el siguiente camión
+//   let nextTruckElement = document.getElementById("camion" + currentTruck);
+//   nextTruckElement.style.display = "block";
+// }
+
+// Añade un controlador de eventos onclick a cada camión
+// for (let i = 1; i <= totalTrucks; i++) {
+//   let truckElement = document.getElementById("camion" + i);
+//   truckElement.onclick = nextTruck;
+// }
+
 }
- 
+const camionesdiv = document.querySelectorAll('.acamiones')
+// console.log('camionesdiv',camionesdiv)
+camionesdiv.forEach(camion => {
+    // console.log('camion',camion)
+    camion.addEventListener('click', (e) => {
+        if (tumama >= 100) {
+            return false
+        }
+        else {
+            console.log('el peso no excede los 100 kilos')
+        }
+    })
+})
