@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
     <title>Distribución</title>
 </head>
+
 <body>
     <div class="lading-container">
 
@@ -30,111 +32,144 @@
                                 alt="icono Produccion">Producción</a></li>
                     <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
                                 alt="icono de Mantenimiento">Mantenimiento</a></li>
-                    <li><a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
-    
+                    <li><a href="/modules/compras"><img src="/public/icono_6.webp"
+                                alt="icono de Ingredientes">Compra</a></li>
+
 
                 </ul>
             </nav>
         </header>
     </div>
     <main>
-            <div class="facturacion" style="display: inline-block;">
-                <h1>Distribución</h1> <img src="/public/distribucion.webp" alt="factura" style="max-width: 100%; height: auto;"><br>
-                <h3>Coloqué el ID del pedido</h3><br>
-                <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit">Enviar</button></label>
-            </div>
-            <div id="errornofactura" style="display: none;">
-                <div class="divfactura">
-                    <h2 id="texto_aviso"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong style="color:red">!</strong></h2>
-                </div>
-            </div>
-            <div id="facturaexistente" style="display: none;">
-                <div class="divfactura">
-                    <h2>Estado del pedido</h2>
-                    <button><a href="rutasT.html" >Mostrar todas las rutas</a></button>
-                    <Label for="NombreEmpresa"><strong> Empresa:  </strong></Label>
-                            <input type="text" id="NombreEmpresa" readonly><br>
-                    <label for="Direccion"><strong> Dirección:  </strong></label>
-                            <input type="text" id="Direccion" readonly><br>
-                    <label for="numerodecamion" class="EnElMedio3"><strong> Número de camion:  </strong></label>
-                            <input type="text" id="numerodecamion" readonly> 
-                    <form action="/" method="post">
-                        <div class="Formulario">
-                            <div id="Camion1" class="camionesdiv" >
-                                <h4>La Loca Jeniffer: </h4>
-                                <div class="TCamion">
-                                <img src="/public/Camioneta1.webp" class="acamiones" alt="Camion" onclick="verpedidos(1)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion2" class="camionesdiv">
-                                <h4>Zenon: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta2.webp" class="acamiones" alt="Camion" onclick="verpedidos(2)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion3" class="camionesdiv">
-                                <h4>El Sr Juan: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta3.webp" class="acamiones" alt="Camion" onclick="verpedidos(3)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion4" class="camionesdiv">
-                                <h4>Indio Cacique: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta4.webp" class="acamiones" alt="Camion" onclick="verpedidos(4)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion5" class="camionesdiv">
-                                <h4>Don Omar: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta5.webp" class="acamiones" alt="Camion" onclick="verpedidos(5)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion6" class="camionesdiv">
-                                <h4>El MirandaMovil: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta6.webp" class="acamiones" alt="Camion" onclick="verpedidos(6)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion7" class="camionesdiv">
-                                <h4>Gustaviño: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta7.webp" class="acamiones" alt="Camion" onclick="verpedidos(7)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="camion8" class="camionesdiv">
-                                <h4>Socrates: </h4>
-                                <div class="TCamion"><img src="/public/Camioneta8.webp" class="acamiones" alt="Camion" onclick="verpedidos(8)"></div>
-                                <a href="rutas.html"><div class="veruta">Ver Ruta</div></a>
-                            </div>
-                            <div id="divpedidos">
-                                <div id="pedir">
-                                    <h2>Pedidos</h2><div id="cerrar" onclick="noverpedidos()">X</div>
-                                    <hr>
-                                    <table>
-                                        <tr>
-                                            <th>Encabezado 1</th>
-                                            <th>Encabezado 2</th>
-                                            <th>Encabezado 3</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Dato 1</td>
-                                            <td>Dato 2</td>
-                                            <td>Dato 3</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dato 4</td>
-                                            <td>Dato 5</td>
-                                            <td>Dato 6</td>
-                                        </tr>
-                                    </table>
-
-                                    <div id="Despachar">Despachar</div><a href="notaentrega.html"><div id="factura">Factura</div></a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="facturacion" style="display: inline-block;">
+            <h1>Distribución</h1> <img src="/public/distribucion.webp" alt="factura"
+                style="max-width: 100%; height: auto;"><br>
+            <h3>Coloqué el ID del pedido</h3><br>
+            <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button
+                    id="sumit">Enviar</button></label>
+        </div>
+        <div id="errornofactura" style="display: none;">
+            <div class="divfactura">
+                <h2 id="texto_aviso"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong
+                        style="color:red">!</strong></h2>
             </div>
         </div>
-        
+        <div id="facturaexistente" style="display: none;">
+            <div class="divfactura">
+                <h2>Estado del pedido</h2>
+                <button><a href="rutasT.html">Mostrar todas las rutas</a></button>
+                <Label for="NombreEmpresa"><strong> Empresa: </strong></Label>
+                <input type="text" id="NombreEmpresa" readonly><br>
+                <label for="Direccion"><strong> Dirección: </strong></label>
+                <input type="text" id="Direccion" readonly><br>
+                <label for="numerodecamion" class="EnElMedio3"><strong> Número de camion: </strong></label>
+                <input type="text" id="numerodecamion" readonly>
+                <form action="/" method="post">
+                    <div class="Formulario">
+                        <div id="Camion1" class="camionesdiv">
+                            <h4>La Loca Jeniffer: </h4>
+                            <div class="TCamion">
+                                <img src="/public/Camioneta1.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(1)">
+                            </div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion2" class="camionesdiv">
+                            <h4>Zenon: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta2.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(2)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion3" class="camionesdiv">
+                            <h4>El Sr Juan: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta3.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(3)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion4" class="camionesdiv">
+                            <h4>Indio Cacique: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta4.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(4)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion5" class="camionesdiv">
+                            <h4>Don Omar: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta5.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(5)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion6" class="camionesdiv">
+                            <h4>El MirandaMovil: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta6.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(6)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion7" class="camionesdiv">
+                            <h4>Gustaviño: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta7.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(7)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="camion8" class="camionesdiv">
+                            <h4>Socrates: </h4>
+                            <div class="TCamion"><img src="/public/Camioneta8.webp" class="acamiones" alt="Camion"
+                                    onclick="verpedidos(8)"></div>
+                            <a href="rutas.html">
+                                <div class="veruta">Ver Ruta</div>
+                            </a>
+                        </div>
+                        <div id="divpedidos">
+                            <div id="pedir">
+                                <h2>Pedidos</h2>
+                                <div id="cerrar" onclick="noverpedidos()">X</div>
+                                <hr>
+                                <table>
+                                    <tr>
+                                        <th>Encabezado 1</th>
+                                        <th>Encabezado 2</th>
+                                        <th>Encabezado 3</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Dato 1</td>
+                                        <td>Dato 2</td>
+                                        <td>Dato 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dato 4</td>
+                                        <td>Dato 5</td>
+                                        <td>Dato 6</td>
+                                    </tr>
+                                </table>
+
+                                <div id="Despachar">Despachar</div><a href="notaentrega.html">
+                                    <div id="factura">Factura</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
 
 
     </main>
     <script src="index.js"></script>
 </body>
+
 </html>
