@@ -42,9 +42,10 @@ async function resProducts(id) {
 
 
 }
+let pesoTotalKilosGlobal = 0;
 let pesoTotal = 0;
-async function pesoCamion(id) {
-   
+pesoTotal = 0;
+async function pesoCamion(id, pesoTotal) {
     try {
         const boton = document.getElementById('Despachar');
         if (facturasProcesadas.includes(id)) {
@@ -102,13 +103,11 @@ async function pesoCamion(id) {
             }
             console.log(pesoTotal)
 
-            
-            
 
         })
         let pesoTotalKilos = pesoTotal / 1000;
         console.log("pesoTotalKilos"+pesoTotalKilos)
-        if(pesoTotalKilos >= 22000){
+        if(pesoTotalKilos >= 100){
             
             boton.style.display = "block";
             
@@ -122,6 +121,10 @@ async function pesoCamion(id) {
 }
 
 
+async function obtenerPesoTotalKilos() {
+    await pesoCamion(id);
+    console.log(pesoTotalKilosGlobal);
+}
 //Se encarga de restar del stock
 async function insertStock(params) {
     try {
@@ -163,7 +166,6 @@ async function orderporId(id) {
             document.getElementById('errornofactura').style.display = 'block'
         }
         else if (response.ok) {
-            // Obtener la respuesta en formato JSON
             const data = await response.json();
             const products = await getProducts()
             const aProduct = products.find((product) => product.id === data.products[0].productId)
@@ -220,7 +222,6 @@ function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
     cambiarstatusdes()
-    
 }
 function noverpedidos() {
     let pedidos = document.getElementById("divpedidos");
@@ -277,5 +278,31 @@ async function cambiarstatusdes(){
         console.log("Error no se pudo cambiar el status", error)
     }
     
+
+let currentTruck = 1;
+const totalTrucks = 4; // Cambia esto al número total de camiones que tienes
+
+function nextTruck() {
+  // Oculta el camión actual
+  let currentTruckElement = document.getElementById("camion" + currentTruck);
+  currentTruckElement.style.display = "none";
+
+  // Pasa al siguiente camión
+  currentTruck++;
+  if (currentTruck > totalTrucks) {
+    currentTruck = 1; // Vuelve al primer camión
+  }
+
+  // Muestra el siguiente camión
+  let nextTruckElement = document.getElementById("camion" + currentTruck);
+  nextTruckElement.style.display = "block";
+}
+
+// Añade un controlador de eventos onclick a cada camión
+for (let i = 1; i <= totalTrucks; i++) {
+  let truckElement = document.getElementById("camion" + i);
+  truckElement.onclick = nextTruck;
+}
+
 }
  
