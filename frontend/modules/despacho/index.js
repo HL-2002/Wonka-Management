@@ -34,6 +34,7 @@ async function resProducts(id) {
 
 
         });
+        
     } catch (error) {
         console.log('Error f:', error);
 
@@ -43,7 +44,9 @@ async function resProducts(id) {
 }
 let pesoTotal = 0;
 async function pesoCamion(id) {
+   
     try {
+        const boton = document.getElementById('Despachar');
         if (facturasProcesadas.includes(id)) {
             console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
             return;
@@ -98,16 +101,26 @@ async function pesoCamion(id) {
                 pesoTotal += pesoProduct*cantidad;
             }
             console.log(pesoTotal)
+
+            
             
 
         })
-
-
-
+        let pesoTotalKilos = pesoTotal / 1000;
+        console.log("pesoTotalKilos"+pesoTotalKilos)
+        if(pesoTotalKilos >= 22000){
+            
+            boton.style.display = "block";
+            
+        }
+        return pesoTotal;
     } catch (error) {
         console.log('Error f:', error);
     }
+    
+    
 }
+
 
 //Se encarga de restar del stock
 async function insertStock(params) {
@@ -154,7 +167,7 @@ async function orderporId(id) {
             const data = await response.json();
             const products = await getProducts()
             const aProduct = products.find((product) => product.id === data.products[0].productId)
-
+            
             if(data.products[0].productQuantity <= aProduct.stock){
                 console.log(data.products[0].productQuantity , aProduct.stock)
                 document.getElementById('facturaexistente').style.display = 'block'
@@ -169,6 +182,7 @@ async function orderporId(id) {
                 document.getElementById('Direccion').value = data ? data.address : ""
                 document.getElementById('numerodecamion').value = 1
                 resProducts(id)
+                pesoCamion(id)
             }else{
                 alert('No posee Stock para realizar el envio')
             }
@@ -197,13 +211,16 @@ const submit = document.getElementById('sumit')
 submit.addEventListener('click', () => {
     const codigoIngresado = document.getElementById('factura').value
     orderporId(codigoIngresado)
-    pesoCamion(codigoIngresado)
-
+    
+    
+    
 })
 
 function verpedidos() {
     let pedidos = document.getElementById("divpedidos");
     pedidos.style.display = "block";
+    cambiarstatusdes()
+    
 }
 function noverpedidos() {
     let pedidos = document.getElementById("divpedidos");
@@ -211,9 +228,10 @@ function noverpedidos() {
 }
 const bdsm = document.getElementById('Despachar')
 bdsm.addEventListener('click', async () =>{
-    await cambiarstatus()
-
+    
+cambiarstatus()
 })
+
 async function cambiarstatus(){
     
     const id = document.getElementById('factura').value
@@ -236,6 +254,28 @@ async function cambiarstatus(){
         console.log("Error no se pudo cambiar el status", error)
     }
     
+}
+async function cambiarstatusdes(){
     
+    const id = document.getElementById('factura').value
+    console.log(id)
+    try {
+
+        let response = await fetch(`/api/ventas/orders/${id}/status`,{
+            method: 'PATCH', headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+                'status':'despachando'
+            })
+        })
+        if(response.ok){
+            console.log('El estado de la factura ha sido cambiado')
+        }
+    } catch (error) {
+        console.log("Error no se pudo cambiar el status", error)
+    }
     
 }
+ 

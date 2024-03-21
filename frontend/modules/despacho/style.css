@@ -297,10 +297,8 @@ hr{
 
 #pedir{
   background-color: #ececec;
-  justify-items: center;
-  align-items: center;
-  padding: 10px 40px;
-  display: flex;
+  padding: 10px 20px;
+  display: flexbox;
   margin: 10% 20%;
   height: 70vh;
 }
@@ -309,6 +307,7 @@ hr{
   color: black;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   display: inline-block;
+  vertical-align: middle;
 }
 
 #noverpedidos{
@@ -319,9 +318,25 @@ hr{
   position: absolute;
   top: 0;
   left: 0;
-  display: inline;
+  display: none;
 }
 
 #Despachar{
   border: 3px solid #6f27ff;
+  display: inline;
+  bottom: 10%;
+  display: none;
+}
+
+#factura{
+  border: 2px solid #6f27ff;
+}
+
+#cerrar{
+  display: inline-block;
+  margin-left: 70%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #000;
+  text-align: center;
 }

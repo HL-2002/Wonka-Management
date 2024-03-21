@@ -51,6 +51,7 @@
             <div id="facturaexistente" style="display: none;">
                 <div class="divfactura">
                     <h2>Estado del pedido</h2>
+                    <button><a href="rutasT.html" >Mostrar todas las rutas</a></button>
                     <Label for="NombreEmpresa"><strong> Empresa:  </strong></Label>
                             <input type="text" id="NombreEmpresa" readonly><br>
                     <label for="Direccion"><strong> Dirección:  </strong></label>
@@ -102,8 +103,27 @@
                             </div>
                             <div id="divpedidos">
                                 <div id="pedir">
-                                    <h2 style="display: inline-block;">Pedidos</h2><div id="cerrar" onclick="noverpedidos()">X</div>
-                                    <div id="Despachar">Despachar</div>
+                                    <h2>Pedidos</h2><div id="cerrar" onclick="noverpedidos()">X</div>
+                                    <hr>
+                                    <table>
+                                        <tr>
+                                            <th>Encabezado 1</th>
+                                            <th>Encabezado 2</th>
+                                            <th>Encabezado 3</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Dato 1</td>
+                                            <td>Dato 2</td>
+                                            <td>Dato 3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dato 4</td>
+                                            <td>Dato 5</td>
+                                            <td>Dato 6</td>
+                                        </tr>
+                                    </table>
+
+                                    <div id="Despachar">Despachar</div><a href="notaentrega.html"><div id="factura">Factura</div></a>
                                 </div>
                             </div>
                         </div>
