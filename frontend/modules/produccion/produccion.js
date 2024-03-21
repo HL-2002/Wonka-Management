@@ -210,7 +210,7 @@ async function calcularIngredientesTotales (productos) {
       if (ingredientesTotales[ingrediente] <= materiaPrima.stock) {
         const removeProduct = {
           productId: codValue,
-          motivo: 'AJU',
+          motivo: 'PRO',
           tipo: 'DESCARGO',
           units: cantidadValue,
           total: costoValue * cantidadValue,
@@ -355,9 +355,13 @@ async function crearHTML () {
       n++
     })
     n = 1
+    const lst = await getProductsE()
 
     orders.products.forEach(producto => {
       const table = document.getElementById(`pp${producto.productId}`)
+      const validation = lst.find(item => item.id === producto.productId)
+      producto.productQuantity = (validation.comprometido - validation.stock) > 0 ? validation.comprometido - validation.stock : ''
+
       table.innerHTML += `${producto.productQuantity}`
 
       n++
@@ -367,24 +371,23 @@ async function crearHTML () {
   } catch (error) {
     console.error('Error al crear el HTML:', error)
     alert('Hubo un error al crear el HTML. Por favor, revise la consola para mas detalles.')
-  }}
-
+  }
+}
 
 // PRODUCTOS TERMINADOS
 async function getProducts () {
   try {
     const response = await fetch('/api/inventario/products')
-    const products = await response.json()
-
-    // Filtrar los productos seg�n el atributo categoryId sea igual a 2 que busca solo productos no materia prima
-    filteredProducts = products.filter(product => product.categoryId === 1)
-
-    // Llamar a la funci�n que agrega los productos filtrados al select
-    crearHTML(filteredProducts)
+    return await response.json()
   } catch (error) {
     console.error('Error al obtener productos:', error)
   }
 }
+async function getProductsE (params) {
+  const response = await fetch('/api/inventario/products')
+  return await response.json()
+}// Devuelve array con todos los articulos creados
+
 // MATERIA PRIMA
 async function getProductsa () {
   try {
@@ -428,9 +431,14 @@ async function Producir () {
   const inputDay = document.getElementById('day-to')
   const today = new Date()
   const isTitle = document.getElementById('fuck')
+  const totalAProducir = document.getElementById('NumeroTotal')
 
   if (isTitle == null) {
     alert('no hay factura ingreda para la produccion')
+    return
+  }
+  if (totalAProducir.innerHTML == 0) {
+    alert('No hay productos a producir')
     return
   }
 
@@ -457,9 +465,11 @@ async function generateProduction () {
     return
   }
   const prima = await getProductsa()
-  const v = await calcularIngredientesTotales(orders.products)
+  const lst = await getProductsE()
   n = 1
-  orders.products.forEach(producto => {
+  orders.products.forEach(async producto => {
+    const validation = lst.find(item => item.id === producto.productId)
+    producto.productQuantity = (validation.comprometido - validation.stock) > 0 ? validation.comprometido - validation.stock : ''
     const codValue = producto.productId
     const cantidadValue = producto.productQuantity
     const costoValue = producto.productPrice
@@ -467,12 +477,13 @@ async function generateProduction () {
 //comprometido orden 
     const addProduct = {
       productId: codValue,
-      motivo: 'AJU',
+      motivo: 'PRO',
       tipo: 'CARGO',
       units: cantidadValue,
       total: costoValue * cantidadValue,
       observ: obserValue
     }
+    const v = await calcularIngredientesTotales(orders.products)
     if (v === 1) {
       insertStock(addProduct)
       productoProducido = document.getElementById(`pf${n}`)
@@ -482,8 +493,10 @@ async function generateProduction () {
       n++
       cambiarstatus()
       alert('Porduccion generada correctamente!')
+      window.location.reload()
     } else {
       alert('Se necesita materia prima, ya se notifico a Compras!')
+      window.location.reload()
     }
   })
 }
