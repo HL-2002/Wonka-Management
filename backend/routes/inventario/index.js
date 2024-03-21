@@ -159,12 +159,12 @@ router.patch('/set/product/stock/ventas', async (req, res) => {
 
     await client.execute({
       sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?',
-      args: [newStockC, productId]
+      args: [newStock, productId]
     })
 
     await client.execute({
       sql: 'UPDATE PRODUCTS SET comprometido = ? WHERE id = ?',
-      args: [newStock, productId]
+      args: [newStockC, productId]
     })
 
     res.status(201).end()
