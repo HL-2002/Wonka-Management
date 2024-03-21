@@ -52,9 +52,10 @@ async function calcularIngredientesTotales (productos) {
   return resultado
 }
 
-function cargarProductos (id) {
+function cargarProductos (productId, cantidad, nombre, idRequisicion) {
   const modal = document.querySelector('.modal')
-  crearModal(id)
+  console.log(productId, 'ID DE LA TARJETA')
+  crearModal(productId, cantidad, nombre, idRequisicion)
   modal.classList.add('modal-show')
 }
 
@@ -66,14 +67,15 @@ async function crearHtml () {
   seccionRequisiciones.innerHTML = ''
 
   materiaPrima.forEach(async requisicion => {
+    console.log(requisicion.productId)
     const productName = await getProductName(requisicion.productId)
     seccionRequisiciones.innerHTML += `
     <div class="solicitud">
     <h2>${productName}</h2>
     <p>Cantidad: ${requisicion.cantidad}</p>
     <div style="display: flex;">
-      <a onclick="cargarProductos('${requisicion.id}')" class="btn-open">Efectuar</a>
-      <a onclick="eliminarRequisicion('${requisicion.id}')" style="background-color: tomato; margin-left: 5px" class="btn-eliminar">Eliminar</a>
+      <a onclick="cargarProductos('${requisicion.productId}', '${requisicion.cantidad}', '${productName}', '${requisicion.id}')" class="btn-open">Efectuar</a>
+      <a onclick="eliminarRequisicion('${requisicion.id}')" class="btn-eliminar">Eliminar</a>
     </div>
     </div>
     `
@@ -98,7 +100,7 @@ async function eliminarRequisicion (id) {
   }
 }
 
-async function agregarRequisicion() {
+async function agregarRequisicion () {
   const product = document.getElementById('vproducts')
   const cantidad = document.getElementById('vcantidad')
   const productValue = product.options[product.selectedIndex].value
@@ -108,7 +110,7 @@ async function agregarRequisicion() {
     await crearHtml()
     cantidad.value = ''
   // eslint-disable-next-line no-undef
-  } else alert("Ponga cantidad mi pana")
+  } else alert('Ingrese una cantidad')
 }
 
 async function insertRequisicion (params) {
@@ -151,7 +153,7 @@ async function insertCompra (params) {
   }
 }
 
-async function getProductName(id) {
+async function getProductName (id) {
   const products = await getProducts()
   const product = products.find((product) => product.id === id)
   return product ? product.description : 'Product not found'
@@ -207,19 +209,50 @@ function cerrarModal () {
   modal.classList.remove('modal-show')
 }
 // eslint-disable-next-line no-unused-vars
-async function generarCompra (id) {
-  const requisiciones = await getRequisicion()
-  const requisicion = requisiciones.find((req) => req.id === id)
+async function generarCompra (productId, cantidad, idRequisicion) {
   const params = {
-    productValue: requisicion.id,
-    cantidadValue: requisicion.cantidad
+    productValue: productId,
+    cantidadValue: cantidad
   }
   await insertCompra(params)
-  await eliminarRequisicion(requisicion.id)
+  await eliminarRequisicion(idRequisicion)
+  await actualizarStock(params)
   cerrarModal()
 }
 
-function crearModal (id) {
+async function actualizarStock (params) {
+  const product = {
+    productId: params.productValue,
+    motivo: 'COMP',
+    tipo: 'CARGO',
+    units: params.cantidadValue,
+    total: 1 * 1,
+    observ: 'Compra de mercancia'
+  }
+  console.log(product)
+  await insertStock(product)
+}
+
+async function insertStock (params) {
+  try {
+    const response = await fetch('/api/inventario/set/product/stock', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+
+    if (response.ok) {
+      await response.json()
+    } else {
+      console.error('Error al insertar el producto:', response.status)
+    }
+  } catch (error) {
+    // // console.error('Error de red:', error)
+  }
+}
+function crearModal (productId, cantidad, nombre, idRequisicion) {
   const modal = document.getElementById('modal')
 
   modal.innerHTML = `
@@ -237,7 +270,7 @@ function crearModal (id) {
                 <div class="zona-calculos">
                   <div class="cantidadContenedor">
                     <h4>Cantidad</h4>
-                    <p>12</p>
+                    <p>${cantidad}</p>
                   </div>
 
                   <div class="precioPorUnidad">
@@ -261,7 +294,7 @@ function crearModal (id) {
                   </div>
                 </div>
               </div>
-              <a onclick="generarCompra(${id})" class="btn-ordenDeCompra">Enviar orden de compra</a>
+              <a onclick="generarCompra(${productId}, ${cantidad}, ${idRequisicion})" class="btn-ordenDeCompra">Enviar orden de compra</a>
             </div>
 
             
@@ -310,5 +343,5 @@ function crearModal (id) {
     divTarjeta.appendChild(pTardanza)
 
     contenedor.appendChild(divTarjeta)
-  })
+  })
 }
