@@ -37,7 +37,7 @@ async function getProducts (params) {
   return await response.json()
 }// Devuelve array con todos los articulos creados
 
-async function getProductName(id) {
+async function getProductName (id) {
   const products = await getProducts()
   const product = products.find((product) => product.id === id)
   return product ? product.description : 'Product not found'
@@ -53,9 +53,10 @@ async function crearHtmlCompras () {
   comprasMostrarLaUltima.forEach(async requisicion => {
     const productName = await getProductName(requisicion.productId)
     seccionCompras.innerHTML += `
-      <div class="solicitud">
+      <div class="registro">
       <h2>${productName}</h2>
       <p>Cantidad: ${requisicion.cantidad}</p>
+      <p>Total: ${requisicion.monto}</p>
       <div style="display: flex;">
         <a onclick="cargarProductos('${requisicion.id}')" class="btn-open">Ver</a>
       </div>
@@ -86,5 +87,5 @@ async function getCompras () {
   } catch (error) {
     console.error('Error al obtener la última orden:', error)
     alert('Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.')
-  }
+  }
 }

@@ -68,11 +68,28 @@ async function crearHtml () {
 
   materiaPrima.forEach(async requisicion => {
     console.log(requisicion.productId)
+    const productId = requisicion.productId
     const productName = await getProductName(requisicion.productId)
+    const cantidadFormateada = requisicion.cantidad
+    let medidas = ''
+
+    if (productId == 16 || productId == 19 || productId == 25 || productId == 26 || productId == 28) {
+      if (cantidadFormateada > 1000) {
+        medidas = cantidadFormateada + ' ml'
+      } else {
+        medidas = cantidadFormateada + ' ml'
+      }
+    } else {
+      if (cantidadFormateada > 1000) {
+        medidas = cantidadFormateada + 'gr'
+      } else {
+        medidas = cantidadFormateada + ' gr'
+      }
+    }
     seccionRequisiciones.innerHTML += `
     <div class="solicitud">
     <h2>${productName}</h2>
-    <p>Cantidad: ${requisicion.cantidad}</p>
+    <p>Cantidad: ${medidas}</p>
     <div style="display: flex;">
       <a onclick="cargarProductos('${requisicion.productId}', '${requisicion.cantidad}', '${productName}', '${requisicion.id}')" class="btn-open">Efectuar</a>
       <a onclick="eliminarRequisicion('${requisicion.id}')" class="btn-eliminar">Eliminar</a>
@@ -209,7 +226,8 @@ function cerrarModal () {
   modal.classList.remove('modal-show')
 }
 // eslint-disable-next-line no-unused-vars
-async function generarCompra (productId, cantidad, idRequisicion) {
+async function generarCompra (productId, cantidad, idRequisicion, monto) {
+  console.log(monto)
   const params = {
     productValue: productId,
     cantidadValue: cantidad
@@ -255,6 +273,16 @@ async function insertStock (params) {
 function crearModal (productId, cantidad, nombre, idRequisicion) {
   const modal = document.getElementById('modal')
 
+  let monto
+
+  const costo = document.getElementById('costoNumero')
+
+  if (costo) {
+    monto = parseFloat(costo.textContent || 0)
+  } else {
+    monto = 0
+  }
+
   modal.innerHTML = `
   <div class="efectuar-modal">
               <div class="efectuar-modal-header">
@@ -262,7 +290,9 @@ function crearModal (productId, cantidad, nombre, idRequisicion) {
                 <a onclick="cerrarModal()" class="salir">X</a>
               </div>
 
-              <div class="seccion-provedores"></div>
+              <div class="seccion-provedores">
+
+              </div>
 
               <div class="seccion-calculos">
                 <h2>Calculos</h2>
@@ -274,74 +304,62 @@ function crearModal (productId, cantidad, nombre, idRequisicion) {
                   </div>
 
                   <div class="precioPorUnidad">
-                    <h4>Monto</h4>
-                    <p>1.5$</p>
+                    <h4>Monto Por unidad</h4>
+                    <p id="costoNumero">${monto}</p>
                   </div>
 
-                  <div class="montoDeprecioPorUnidad">
-                    <h4>Monto</h4>
-                    <p>1200$</p>
-                  </div>
 
-                  <div class="IvaContenedor">
-                    <h4>Iva</h4>
-                    <p>1200$</p>
-                  </div>
-
-                  <div class="totalContenedor">
-                    <h4>Total</h4>
-                    <p>1200$</p>
-                  </div>
-                </div>
               </div>
-              <a onclick="generarCompra(${productId}, ${cantidad}, ${idRequisicion})" class="btn-ordenDeCompra">Enviar orden de compra</a>
+              <a onclick="generarCompra(${productId}, ${cantidad}, ${idRequisicion}, ${monto})" class="btn-ordenDeCompra">Enviar orden de compra</a>
             </div>
-
             
   `
-  const contenedor = document.querySelector('.seccion-provedores')
+  const randomNumber = 0.5 + Math.random()
 
   const tarjetas = [
     {
       nombre: 'Empresa 1',
-      categoria: 'Categoría A',
-      costo: 100,
-      tardanza: '2 días'
+      costo: (randomNumber * 0.8).toFixed(2),
+      calidad: 'Baja Calidad'
     },
     {
       nombre: 'Empresa 2',
-      categoria: 'Categoría B',
-      costo: 200,
-      tardanza: '3 días'
+      costo: (randomNumber * 1.2).toFixed(2),
+      calidad: 'Calidad media'
     },
     {
       nombre: 'Empresa 3',
-      categoria: 'Categoría C',
-      costo: 300,
-      tardanza: '4 días'
+      costo: (randomNumber * 1.5).toFixed(2),
+      calidad: 'Alta calidad'
     }
   ]
 
+  const contenedor = document.querySelector('.seccion-provedores')
   tarjetas.forEach(tarjeta => {
     const divTarjeta = document.createElement('div')
     divTarjeta.classList.add('tarjeta-proveedor')
+    divTarjeta.addEventListener('click', () => {
+      const costo = document.getElementById('costoNumero')
+      costo.textContent = tarjeta.costo
+      console.log(parseFloat(costo.textContent))
+      console.log(typeof (parseFloat(costo.textContent)))
+    })
 
     const h2Nombre = document.createElement('h2')
     h2Nombre.textContent = tarjeta.nombre
     divTarjeta.appendChild(h2Nombre)
 
-    const pCategoria = document.createElement('p')
-    pCategoria.textContent = `Categoría: ${tarjeta.categoria}`
-    divTarjeta.appendChild(pCategoria)
-
     const pCosto = document.createElement('p')
-    pCosto.textContent = `Costo: ${tarjeta.costo} $`
+    pCosto.textContent = `Costo: ${tarjeta.costo} bs`
     divTarjeta.appendChild(pCosto)
 
-    const pTardanza = document.createElement('p')
-    pTardanza.textContent = `Tardanza en despachar: ${tarjeta.tardanza}`
-    divTarjeta.appendChild(pTardanza)
+    const pCalidad = document.createElement('p')
+    pCalidad.textContent = tarjeta.calidad
+    divTarjeta.appendChild(pCalidad)
 
     contenedor.appendChild(divTarjeta)
-  })
+  })
+
+  console.log(randomNumber)
+  console.log(randomNumber)
 }
