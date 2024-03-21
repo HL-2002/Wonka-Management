@@ -1,130 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Compras</title>
-    <link rel="stylesheet" href="/header.css" />
-    <link rel="stylesheet" href="/reset.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
-  </head>
-  <body>
-    <div class="lading-container">
-      <header class="header">
-        <nav>
-          <ul class="header-navbar">
-            <a href="../../index.html">
-              <img
-                width="160px"
-                height="160px"
-                src="../../public/logotipo-blanco-op.webp"
-                alt="logo de wonka's"
-              />
-            </a>
 
-            <li>
-              <a href="/modules/ventas"
-                ><img src="/public/icono_1.webp" alt="icono  tienda" />Venta</a
-              >
-            </li>
-            <li>
-              <a href="/modules/despacho"
-                ><img
-                  src="/public/icono_2.webp"
-                  alt="icono Distribucion"
-                />Distribución</a
-              >
-            </li>
-            <li>
-              <a href="/modules/inventario"
-                ><img
-                  src="/public/icono_3.webp"
-                  alt="icono de inventario"
-                />Inventario</a
-              >
-            </li>
-            <li>
-              <a href="/modules/produccion"
-                ><img
-                  src="/public/icono_4.webp"
-                  alt="icono Produccion"
-                />Producción</a
-              >
-            </li>
-            <li>
-              <a href="/modules/mantenimiento"
-                ><img
-                  src="/public/icono_5.webp"
-                  alt="icono de Mantenimiento"
-                />Mantenimiento</a
-              >
-            </li>
-            <li>
-              <a href="/modules/compras"
-                ><img
-                  src="/public/icono_6.webp"
-                  alt="icono de Ingredientes"
-                />Compra</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compras</title>
+  <link rel="stylesheet" href="/header.css" />
+  <link rel="stylesheet" href="/reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
+</head>
 
-      <main class="main">
-        <h1>Compra</h1>
+<body>
+  <div class="lading-container">
+    <header class="header">
+      <nav>
+        <ul class="header-navbar">
+          <a href="../../index.html">
+            <img width="160px" height="160px" src="../../public/logotipo-blanco-op.webp" alt="logo de wonka's" />
+          </a>
 
-        <section class="section">
-          <div class="contenedor-menu">
-            <div class="menu">
-              <button class="btn-registro">Compra</button>
-              <button class="btn-requisicion active">Requisicion</button>
-            </div>
+          <li>
+            <a href="/modules/ventas"><img src="/public/icono_1.webp" alt="icono  tienda" />Venta</a>
+          </li>
+          <li>
+            <a href="/modules/despacho"><img src="/public/icono_2.webp" alt="icono Distribucion" />Distribución</a>
+          </li>
+          <li>
+            <a href="/modules/inventario"><img src="/public/icono_3.webp" alt="icono de inventario" />Inventario</a>
+          </li>
+          <li>
+            <a href="/modules/produccion"><img src="/public/icono_4.webp" alt="icono Produccion" />Producción</a>
+          </li>
+          <li>
+            <a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
+                alt="icono de Mantenimiento" />Mantenimiento</a>
+          </li>
+          <li>
+            <a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes" />Compra</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <h1>Compra</h1>
+
+      <section class="section">
+        <div class="contenedor-menu">
+          <div class="menu">
+            <button class="btn-registro">Compra</button>
+            <button class="btn-requisicion active">Requisicion</button>
           </div>
+        </div>
 
-          <div class="contenido">
-            <div class="solicitudes">
-              <h2>Requisicion</h2>
-              <p>Tienes $ solicitudes:</p>
-              <div>
-                <div class="solicitud">
-                  <h2>Nueva Requisicion</h2>
-                  <div>
-                    <select name="" id="vproducts"></select>
-                    <input id="vcantidad" type="text" placeholder="CANTIDAD">
-                  </div>
-                  <div style="display: flex;">
-                    <a onclick="agregarRequisicion()" class="btn-nuevo">Crear</a>
-                  </div>
-                  </div>
-                  `
-              </div>
-              <div id="tarjetasSolicitudes">
-
-
-              </div>
-            </div>
-
-            <div class="registro-seccion">
-              <h2>Registro</h2>
-              <p>Tienes $ registradas:</p>
-
-              <div class="registros-hechos">
-                <div id="registros-hechos">
-
+        <div class="contenido">
+          <div class="solicitudes">
+            <h2>Requisicion</h2>
+            <p>Tienes $ solicitudes:</p>
+            <div>
+              <div class="solicitud">
+                <h2>Nueva Requisicion</h2>
+                <div>
+                  <select name="" id="vproducts"></select>
+                  <input id="vcantidad" type="text" placeholder="CANTIDAD">
+                </div>
+                <div style="display: flex;">
+                  <a onclick="agregarRequisicion()" class="btn-open">Crear</a>
                 </div>
               </div>
+              `
+            </div>
+            <div id="tarjetasSolicitudes">
+
+
             </div>
           </div>
 
-          <div id="modal" class="modal">
-            
+          <div class="registro-seccion">
+            <h2>Registro</h2>
+            <p>Tienes $ registradas:</p>
+
+            <div class="registros-hechos">
+              <div id="registros-hechos">
+
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
-    </div>
-  </body>
-  <script src="compras.js"></script>
-  <script src="producto.js"></script>
+        </div>
+
+        <div id="modal" class="modal">
+
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+<script src="compras.js"></script>
+<script src="producto.js"></script>
+
 </html>

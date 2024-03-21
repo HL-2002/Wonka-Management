@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="shortcut icon" href="/public/logotipo-op.webp" type="image/webp">
     <title>Distribución</title>
 </head>
+
 <body>
     <div class="lading-container">
 
@@ -30,23 +32,26 @@
                                 alt="icono Produccion">Producción</a></li>
                     <li><a href="/modules/mantenimiento"><img src="/public/icono_5.webp"
                                 alt="icono de Mantenimiento">Mantenimiento</a></li>
-                    <li><a href="/modules/compras"><img src="/public/icono_6.webp" alt="icono de Ingredientes">Compra</a></li>
-    
+                    <li><a href="/modules/compras"><img src="/public/icono_6.webp"
+                                alt="icono de Ingredientes">Compra</a></li>
+
 
                 </ul>
             </nav>
         </header>
     </div>
     <main>
-            <div class="facturacion" style="display: inline-block;">
-                <h1>Distribución</h1> <img src="/public/distribucion.webp" alt="factura" style="max-width: 100%; height: auto;"><br>
-                <h3>Coloqué el ID del pedido</h3><br>
-                <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button id="sumit">Enviar</button></label>
-            </div>
-            <div id="errornofactura" style="display: none;">
-                <div class="divfactura">
-                    <h2 id="texto_aviso"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong style="color:red">!</strong></h2>
-                </div>
+        <div class="facturacion" style="display: inline-block;">
+            <h1>Distribución</h1> <img src="/public/distribucion.webp" alt="factura"
+                style="max-width: 100%; height: auto;"><br>
+            <h3>Coloqué el ID del pedido</h3><br>
+            <label for="factura"><input type="number" placeholder="12345678" id="factura"> <button
+                    id="sumit">Enviar</button></label>
+        </div>
+        <div id="errornofactura" style="display: none;">
+            <div class="divfactura">
+                <h2 id="texto_aviso"><strong style="color: red">¡</strong> Numeró de ID no encontrado <strong
+                        style="color:red">!</strong></h2>
             </div>
             <div id="facturaexistente" style="display: none;">
                 <div class="divfactura">
@@ -70,16 +75,19 @@
                                     <hr>
                                     <div class="veruta"><a href="rutasT.html" >Mostrar todas las rutas</a></div>
                                 </div>
+
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-        
+        </div>
+
 
 
     </main>
     <script src="index.js"></script>
 </body>
+
 </html>

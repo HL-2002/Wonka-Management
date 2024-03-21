@@ -295,11 +295,11 @@ const m = 0
 async function crearHTML () {
   try {
     const orders = await Verificar()
-  if (orders.status === 'fabricado' || orders.status === 'entregado' ){
-    alert("Su orden ya fue procesada, porfavor verificar con ventas!")
-    return
-  }
-     // Espera a que se resuelva la promesa
+    if (orders.status === 'fabricado' || orders.status === 'entregado') {
+      alert('Su orden ya fue procesada, porfavor verificar con ventas!')
+      return
+    }
+    // Espera a que se resuelva la promesa
     const seccionOrder = document.getElementById('tabla_info')
     seccionOrder.innerHTML = ''
     seccionOrder.innerHTML += `
@@ -464,8 +464,8 @@ async function Producir () {
 
 async function generateProduction () {
   orders = await Verificar()
-  if (orders.status === 'fabricado' || orders.status === 'entregado' ){
-    alert("Su orden ya fue procesada, porfavor verificar con ventas!")
+  if (orders.status === 'fabricado' || orders.status === 'entregado') {
+    alert('Su orden ya fue procesada, porfavor verificar con ventas!')
     return
   }
   const prima = await getProductsa()
@@ -478,7 +478,7 @@ async function generateProduction () {
     const cantidadValue = producto.productQuantity
     const costoValue = producto.productPrice
     const obserValue = 'produccion'
-//comprometido orden 
+    // comprometido orden
     const addProduct = {
       productId: codValue,
       motivo: 'PRO',
@@ -496,7 +496,7 @@ async function generateProduction () {
     `
       n++
       cambiarstatus()
-      alert('Porduccion generada correctamente!')
+      alert('Produccion generada correctamente!')
       window.location.reload()
     } else {
       alert('Se necesita materia prima, ya se notifico a Compras!')
@@ -931,26 +931,22 @@ dialogs.forEach((dialog) => {
     e.preventDefault()
   })
 })
-async function cambiarstatus(){
-    
+async function cambiarstatus () {
   const id = document.getElementById('factura').value
   try {
+    const response = await fetch(`/api/ventas/orders/${id}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
 
-      let response = await fetch(`/api/ventas/orders/${id}/status`,{
-          method: 'PATCH', headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-
-              'status':'fabricado'
-          })
+        status: 'fabricado'
       })
-      if(response.ok){
-      }
+    })
+    if (response.ok) {
+    }
   } catch (error) {
   }
-  
-  
-  
 }
 // TERMINA MAQUINAS
