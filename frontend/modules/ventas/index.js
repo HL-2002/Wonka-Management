@@ -145,7 +145,7 @@ function populateSelect (products) {
 async function showStock (id) {
   const stock = document.getElementById('stock')
   const product = id ? filteredProducts.find(item => item.id === parseInt(id)) : lstProducts[0]
-  stock.value = product.stock - product.comprometido
+  stock.value = product.stock - product.comprometido >= 0 ? product.stock - product.comprometido : 0
 }
 
 async function addProduct () {
