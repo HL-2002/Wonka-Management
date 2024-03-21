@@ -19,10 +19,13 @@ async function resProducts(id) {
         products.products.forEach(producto => {
             const { productId, productQuantity } = producto
             const removeProduct = {
-                id: producto.productId,
-                sum: 0,
+                productId: producto.productId,
+                motivo: 'DES',
+                tipo: 'DESCARGO',
                 units: producto.productQuantity,
-            };
+                total: 1 * 1,
+                observacion: 'DESPACHO'
+              }
 
 
             console.log(removeProduct)
@@ -109,7 +112,7 @@ async function pesoCamion(id) {
 //Se encarga de restar del stock
 async function insertStock(params) {
     try {
-        const response = await fetch('/api/inventario/set/product/stock', {
+        const response = await fetch('/api/inventario/set/product/stock/ventas', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

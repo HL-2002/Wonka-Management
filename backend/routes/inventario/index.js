@@ -143,7 +143,7 @@ router.patch('/set/product/stock/ventas', async (req, res) => {
     })
     // Actualizar el stock del producto
     const { rows: products } = await client.execute({
-      sql: 'SELECT stock FROM PRODUCTS WHERE id = ?',
+      sql: 'SELECT stock, comprometido FROM PRODUCTS WHERE id = ?',
       args: [productId]
     })
 
@@ -152,10 +152,10 @@ router.patch('/set/product/stock/ventas', async (req, res) => {
     }
 
     const currentStock = products[0].stock
-    const newStock = tipo === 'CARGO' ? currentStock + parseInt(units) : currentStock - parseInt(units)
+    const newStock = tipo === 'CARGO' ? currentStock + parseInt(units) : parseInt(currentStock) - parseInt(units)
 
     const currentStockC = products[0].comprometido
-    const newStockC = tipo === 'CARGO' ? currentStockC + parseInt(units) : currentStockC - parseInt(units)
+    const newStockC = tipo === 'CARGO' ? currentStockC + parseInt(units) : parseInt(currentStockC) - parseInt(units)
 
     await client.execute({
       sql: 'UPDATE PRODUCTS SET stock = ? WHERE id = ?',
