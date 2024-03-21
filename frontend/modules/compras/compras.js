@@ -45,19 +45,19 @@ async function getProductName(id) {
 
 async function crearHtmlCompras () {
   const compras = await getCompras()
+  const comprasMostrarLaUltima = await compras.slice().reverse()
   console.log(compras)
   const seccionCompras = document.getElementById('registros-hechos')
   seccionCompras.innerHTML = ''
 
-  compras.forEach(async requisicion => {
+  comprasMostrarLaUltima.forEach(async requisicion => {
     const productName = await getProductName(requisicion.productId)
     seccionCompras.innerHTML += `
       <div class="solicitud">
       <h2>${productName}</h2>
       <p>Cantidad: ${requisicion.cantidad}</p>
       <div style="display: flex;">
-        <a onclick="cargarProductos('${requisicion.id}')" class="btn-open">Efectuar</a>
-        <a onclick="eliminarRequisicion('${requisicion.id}')" style="background-color: tomato; margin-left: 5px" class="btn-eliminar">Eliminar</a>
+        <a onclick="cargarProductos('${requisicion.id}')" class="btn-open">Ver</a>
       </div>
       </div>
       `
@@ -86,5 +86,5 @@ async function getCompras () {
   } catch (error) {
     console.error('Error al obtener la última orden:', error)
     alert('Hubo un error al obtener la última orden. Por favor, revise la consola para más detalles.')
-  }
+  }
 }
