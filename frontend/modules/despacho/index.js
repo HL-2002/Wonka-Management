@@ -3,47 +3,35 @@ const facturasProcesadas = [];
 // Resta del stock
 async function resProducts(id) {
     try {
-        if (facturasProcesadas.includes(id)) {
-            console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
-            return;
-        }
-
-        
-        
-
-
-        //if(estatus == )
-        let response = await fetch(`/api/ventas/orders/${id}`)
-        const products = await response.json()
-      if (response.ok) {
-          localStorage.setItem('direccionPedido', products.address)
+      if (facturasProcesadas.includes(id)) {
+        console.log(`La factura con ID ${id} ya ha sido procesada previamente.`);
+        return;
       }
-        products.products.forEach(producto => {
-            const { productId, productQuantity } = producto
-            const removeProduct = {
-                productId: producto.productId,
-                motivo: 'DES',
-                tipo: 'DESCARGO',
-                units: producto.productQuantity,
-                total: 1 * 1,
-                observacion: 'DESPACHO'
-              }
-
-
-            console.log(removeProduct)
-            insertStock(removeProduct);
-            facturasProcesadas.push(id)
-
-
-        });
-        
+  
+      let response = await fetch(`/api/ventas/orders/${id}`);
+      const products = await response.json();
+      if (response.ok) {
+        localStorage.setItem("direccionPedido", products.address);
+      }
+      products.products.forEach((producto) => {
+        const { productId, productQuantity } = producto;
+        const removeProduct = {
+          productId: producto.productId,
+          motivo: "DES",
+          tipo: "DESCARGO",
+          units: producto.productQuantity,
+          total: 1 * 1,
+          observacion: "DESPACHO",
+        };
+  
+        console.log(removeProduct);
+        insertStock(removeProduct);
+        facturasProcesadas.push(id);
+      });
     } catch (error) {
-        console.log('Error f:', error);
-
+      console.log("Error f:", error);
     }
-
-
-}
+  }
 let pesoTotalKilosGlobal = 0;
 let pesoTotal = 0;
 pesoTotal = 0;
@@ -120,7 +108,6 @@ async function pesoCamion(id, pesoTotalKilos) {
     
     
 }
-console.log(+'calvo')
 
 
 async function obtenerPesoTotalKilos() {
